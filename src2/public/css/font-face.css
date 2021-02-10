@@ -1,0 +1,172 @@
+@font-face {
+    font-family: 'Freight';
+    src: url('../font/Freight-BigBlack.eot');
+    src: url('../font/Freight-BigBlack.eot?#iefix') format('embedded-opentype'),
+        url('../font/Freight-BigBlack.woff2') format('woff2'),
+        url('../font/Freight-BigBlack.woff') format('woff'),
+        url('../font/Freight-BigBlack.ttf') format('truetype'),
+        url('../font/Freight-BigBlack.svg#Freight-BigBlack') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Freight';
+    src: url('../font/Freight-BigMedium.eot');
+    src: url('../font/Freight-BigMedium.eot?#iefix') format('embedded-opentype'),
+        url('../font/Freight-BigMedium.woff2') format('woff2'),
+        url('../font/Freight-BigMedium.woff') format('woff'),
+        url('../font/Freight-BigMedium.ttf') format('truetype'),
+        url('../font/Freight-BigMedium.svg#Freight-BigMedium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Freight';
+    src: url('../font/Freight-BigBook.eot');
+    src: url('../font/Freight-BigBook.eot?#iefix') format('embedded-opentype'),
+        url('../font/Freight-BigBook.woff2') format('woff2'),
+        url('../font/Freight-BigBook.woff') format('woff'),
+        url('../font/Freight-BigBook.ttf') format('truetype'),
+        url('../font/Freight-BigBook.svg#Freight-BigBook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Freight';
+    src: url('../font/Freight-BigBold.eot');
+    src: url('../font/Freight-BigBold.eot?#iefix') format('embedded-opentype'),
+        url('../font/Freight-BigBold.woff2') format('woff2'),
+        url('../font/Freight-BigBold.woff') format('woff'),
+        url('../font/Freight-BigBold.ttf') format('truetype'),
+        url('../font/Freight-BigBold.svg#Freight-BigBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Freight';
+    src: url('../font/Freight-BigLight.eot');
+    src: url('../font/Freight-BigLight.eot?#iefix') format('embedded-opentype'),
+        url('../font/Freight-BigLight.woff2') format('woff2'),
+        url('../font/Freight-BigLight.woff') format('woff'),
+        url('../font/Freight-BigLight.ttf') format('truetype'),
+        url('../font/Freight-BigLight.svg#Freight-BigLight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('../font/FuturaPT-Bold.eot');
+    src: url('../font/FuturaPT-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../font/FuturaPT-Bold.woff2') format('woff2'),
+        url('../font/FuturaPT-Bold.woff') format('woff'),
+        url('../font/FuturaPT-Bold.ttf') format('truetype'),
+        url('../font/FuturaPT-Bold.svg#FuturaPT-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('../font/FuturaPT-BoldObl.eot');
+    src: url('../font/FuturaPT-BoldObl.eot?#iefix') format('embedded-opentype'),
+        url('../font/FuturaPT-BoldObl.woff2') format('woff2'),
+        url('../font/FuturaPT-BoldObl.woff') format('woff'),
+        url('../font/FuturaPT-BoldObl.ttf') format('truetype'),
+        url('../font/FuturaPT-BoldObl.svg#FuturaPT-BoldObl') format('svg');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('../font/FuturaPT-Heavy.eot');
+    src: url('../font/FuturaPT-Heavy.eot?#iefix') format('embedded-opentype'),
+        url('../font/FuturaPT-Heavy.woff2') format('woff2'),
+        url('../font/FuturaPT-Heavy.woff') format('woff'),
+        url('../font/FuturaPT-Heavy.ttf') format('truetype'),
+        url('../font/FuturaPT-Heavy.svg#FuturaPT-Heavy') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('../font/FuturaPT-HeavyObl.eot');
+    src: url('../font/FuturaPT-HeavyObl.eot?#iefix') format('embedded-opentype'),
+        url('../font/FuturaPT-HeavyObl.woff2') format('woff2'),
+        url('../font/FuturaPT-HeavyObl.woff') format('woff'),
+        url('../font/FuturaPT-HeavyObl.ttf') format('truetype'),
+        url('../font/FuturaPT-HeavyObl.svg#FuturaPT-HeavyObl') format('svg');
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('../font/FuturaPT-Light.eot');
+    src: url('../font/FuturaPT-Light.eot?#iefix') format('embedded-opentype'),
+        url('../font/FuturaPT-Light.woff2') format('woff2'),
+        url('../font/FuturaPT-Light.woff') format('woff'),
+        url('../font/FuturaPT-Light.ttf') format('truetype'),
+        url('../font/FuturaPT-Light.svg#FuturaPT-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('../font/FuturaPT-LightObl.eot');
+    src: url('../font/FuturaPT-LightObl.eot?#iefix') format('embedded-opentype'),
+        url('../font/FuturaPT-LightObl.woff2') format('woff2'),
+        url('../font/FuturaPT-LightObl.woff') format('woff'),
+        url('../font/FuturaPT-LightObl.ttf') format('truetype'),
+        url('../font/FuturaPT-LightObl.svg#FuturaPT-LightObl') format('svg');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('../font/FuturaPT-MediumObl.eot');
+    src: url('../font/FuturaPT-MediumObl.eot?#iefix') format('embedded-opentype'),
+        url('../font/FuturaPT-MediumObl.woff2') format('woff2'),
+        url('../font/FuturaPT-MediumObl.woff') format('woff'),
+        url('../font/FuturaPT-MediumObl.ttf') format('truetype'),
+        url('../font/FuturaPT-MediumObl.svg#FuturaPT-MediumObl') format('svg');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futura PT';
+    src: url('../font/FuturaPT-Medium.eot');
+    src: url('../font/FuturaPT-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../font/FuturaPT-Medium.woff2') format('woff2'),
+        url('../font/FuturaPT-Medium.woff') format('woff'),
+        url('../font/FuturaPT-Medium.ttf') format('truetype'),
+        url('../font/FuturaPT-Medium.svg#FuturaPT-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* test */

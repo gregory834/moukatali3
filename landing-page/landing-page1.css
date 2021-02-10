@@ -1,0 +1,40 @@
+
+
+body{
+    background-color: #26252a!important;
+}
+
+
+.section{
+
+    max-width: auto;
+    background-color: #26252a;
+    /* height: 60vh; */
+}
+
+.chargement{
+
+    max-width: auto;
+    background-color: #26252a;
+    /* height: 20vh; */
+}
+
+h1 {
+    color:  #ffcc50;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+h2 {
+    color: #C33608;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+
+h5 {
+    color: white;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+p{
+    color: white;
+}

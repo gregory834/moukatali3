@@ -1,0 +1,40 @@
+.btn.btn-link.collapsed{
+    color: #fd7e17;
+    width: 68vh;
+   
+}
+
+.card{
+    background-color:#343a40;
+    border-color:aqua!important;
+    color: azure !important;
+}
+
+.card-header{
+    border-color:aqua!important;
+}
+
+
+
+
+    @media (MAX-width: 450px) { 
+        .btn.btn-link.collapsed{
+            color: #fd7e17;
+            width: 40vh!important;
+           
+        }
+     }
+
+
+
+    /* POLICE TEXTE OFFRE */
+
+.text-offre-p{
+    color: #000000!important;
+    letter-spacing: 2px!important;
+}
+
+.text-offre-h2{
+    color: rgba(230, 202, 44, 0.863)!important;
+    font-weight:bold;
+}
