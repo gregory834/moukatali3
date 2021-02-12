@@ -139,7 +139,7 @@
                     <div class="mb-3 ">
                         <label class="mb-0 text-dark" for="mot de passe1">Mot de passe* </label>
 
-                        <input type="password" class="form-control" id="password-1" name="password-1" required pattern="?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Saisir un mot de passe" minlength="1" maxlength="20" size="20" value="">
+                        <input type="password" class="form-control" id="password-connnect" name="password-connect" required pattern="?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Saisir un mot de passe" minlength="1" maxlength="20" size="20" value="">
                         </input>
 
                     </div>
@@ -148,7 +148,7 @@
 
                     <?php if (isset($_SESSION)) { ?>
                         <div class="mt-3 d-flex justify-content-center">
-                            <a href="../pages/liste-sujet.php"><button type="button" name="suivant" class="btn btn-dark">SUIVANT</button></a>
+                            <a href="../user/profile.php"><button type="button" name="suivant" class="btn btn-dark">SUIVANT</button></a>
                         </div>
                     <?php  } else { ?> <div class="mt-3 d-flex justify-content-center">
                             <button type="submit" name="connection" class="btn btn-dark">CONNEXION</button>
