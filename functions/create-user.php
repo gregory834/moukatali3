@@ -9,7 +9,7 @@ function create_user()
 {
 
     /******************************************
-     * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
+     * CONNECTION A LA BDD (attention : on a l'include qui apel la fonction de connection depuis connect-bdd.php) *
      ******************************************/
 
     require_once('bdd-connect.php');
@@ -23,7 +23,7 @@ function create_user()
     echo ' Entrer de fonction creat-user <br/>';
 
     echo ' Inititialisation varibles GLOBAL  <br/>Initialisation  du tableaux des erreurs (IN FONCTIONS)  <br/>';
-    // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIOSN DU TABLEAUX DES ERREURS DE LA FONCTION
+    // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIONS DU TABLEAU DES ERREURS DE LA FONCTION
     global $errors, $role, $pseudo, $email, $nom, $prenom, $pdo,  $password_hash;
 
     // INITIALISATION DES VARIBLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D INSERTION EN BASE DE DONNEE 

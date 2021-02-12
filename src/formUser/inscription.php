@@ -80,13 +80,13 @@
                             //APPEL DE LA FUNCTION DE CONNECTION A LA BDD AVEC INCLUDE
                             // include ('bdd-connect.php');
                             // connectPdoBdd(); //OK FONCTIONNE
-                            // connectSqliBdd(); //OK FONCTIONNE 
+                            // connectSqliBdd(); //OK FONCTIONNE
 
                             //APPEL DE LA FONCTION CREATE USER
                             //require once evite les boucles de includes
                             // require_once ('functions/registration-login.php');
                             require_once('../../functions/create-user.php');
-                            // ON LANCE NOTRE FONCTION CREATE USER SI BTN CLIQUER
+                            // ON LANCE NOTRE FONCTION CREATE USER SI BTN ['inscription'] EST CLIQUER
                             if (isset($_POST['inscription'])) {
                                 create_user();
                             }

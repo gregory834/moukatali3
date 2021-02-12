@@ -117,7 +117,7 @@
 
                     <!--  BOUTON CONNEXION -->
                     <div class="mt-3 d-flex justify-content-center">
-                        <button type="button" class="btn btn-dark">CONNEXION</button>
+                        <button type="button" action="" class="btn btn-dark">CONNEXION</button>
                     </div>
 
                     <div class="mt-1 d-flex justify-content-center text-dark"> <i>(* Champs obligatoires)</i></div>
