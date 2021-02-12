@@ -98,9 +98,33 @@
                 ?>
             </div>
 
+
+            <!-- MESSAGE D'ERREUR-->
+            <!-- en global pour l injecter dans le formulaire de type <form> et de method posT -->
+            <?php global $errors, $success_connect; ?>
+
+
             <!-- FORMULAIRE D'INSCRIPTION -->
             <div class="mb-5 box-formulaire col-lg-8 col-md-8 ">
                 <form class="col px-3 py-4" method="post">
+
+                    <!-- MESSAGE ERREUR DE CONNECTION-->
+                    <?php if (count($errors) > 0) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php foreach ($errors as $error) : ?>
+                                <p><?php echo $error ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif ?>
+
+                    <!-- MESSAGE CONFIRMATION CONNECTION AVANT REDIRECTION -->
+                    <?php if (count($success_connect) > 0) : ?>
+                        <div class="alert alert-success" role="alert">
+                            <?php foreach ($success_connect as $success_connects) : ?>
+                                <p><?php echo $success_connects ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif ?>
 
                     <!-- EMAIL -->
                     <div class="mb-3">
@@ -121,9 +145,15 @@
                     </div>
 
                     <!--  BOUTON CONNEXION -->
-                    <div class="mt-3 d-flex justify-content-center">
-                        <button type="button" action="" name="connection" class="btn btn-dark">CONNEXION</button>
-                    </div>
+
+                    <?php if (isset($_SESSION)) { ?>
+                        <div class="mt-3 d-flex justify-content-center">
+                            <a href="../pages/liste-sujet.php"><button type="button" name="suivant" class="btn btn-dark">SUIVANT</button></a>
+                        </div>
+                    <?php  } else { ?> <div class="mt-3 d-flex justify-content-center">
+                            <button type="submit" name="connection" class="btn btn-dark">CONNEXION</button>
+                        </div>
+                    <?php   }   ?>
 
                     <div class="mt-1 d-flex justify-content-center text-dark"> <i>(* Champs obligatoires)</i></div>
 
