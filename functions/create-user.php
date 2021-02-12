@@ -26,7 +26,7 @@ function create_user()
     // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIONS DU TABLEAU DES ERREURS DE LA FONCTION
     global $errors, $role, $pseudo, $email, $nom, $prenom, $pdo,  $password_hash;
 
-    // INITIALISATION DES VARIBLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D INSERTION EN BASE DE DONNEE 
+    // INITIALISATION DES VARIABLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D'INSERTION EN BASE DE DONNEE.
     $pseudo = ""; //initialisation
     $avatar = "";
     $email = "";
@@ -38,10 +38,12 @@ function create_user()
     $role = "user";
     echo ' suite... fin initilisation ... suite <br/>';
 
+    /****************************************************************************************** */
+
     if (isset($_POST["inscription"])) {
         echo ' Debut de la fonction create user ok <br/>';
         /************************************************************************************
-         * TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE INSCRIPTION APRES LE CLIQUE *
+         TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE INSCRIPTION APRES LE CLIQUE.
          *********************************************************************************/
         // ON RECUPERE LES VALEURS SAISIES DES POSTS ET ON LES TRAITE
         $pseudo = trim($_POST['pseudo']);
@@ -60,7 +62,7 @@ function create_user()
         // var_dump($password_1);
         echo ' suite... fin traitement des variables POST. <br/> Password pas encore haché ...suite <br/>';
 
-        /************************************
+        /****************************************
          * VALIDATION CHAMPS VIDE *
          ****************************************/
         // ON VERIFIE QUE LES CHAMPS SONT TOUS REMPLIES
@@ -114,7 +116,7 @@ function create_user()
         // Assurez-vous qu'aucun utilisateur n'est enregistré deux fois
         // l'e-mail et les noms d'utilisateur doivent être uniques
         /******************************************************
-         * VERIFICATION BOUBLON EMAIL METHODE PDO *
+         * VERIFICATION DOUBLON EMAIL METHODE PDO *
          *************************************************/
 
         echo 'start recherche doublons <br/>';
@@ -165,7 +167,7 @@ function create_user()
             //ON CRYPTE LE MOT DE PASSE AVANT L ENREGISTREMENT DANS LA BASE DE DONNEES
             echo 'Cryptage du mot de passe (hash) <br/>';
             $password_hash = password_hash($password_2, PASSWORD_DEFAULT); //NOUVELLE VARIABLE QUI ACCUILLE LE HASH DU MOT DE PASSE SAISIE QUI A ETE TRAITER EN AMONT
-            
+
             // Verification du hash
 
             var_dump($password_hash);
@@ -189,18 +191,18 @@ function create_user()
             echo 'Fin de la requete d insertion <br/>  Fin de la fonction create-user <br/>';
 
             //REDIRECTION SUR LA PAGE STATICS DE CONFIRMATION DE L INSCRIPTION
-           ?> <meta http-equiv="refresh" content="1; url=../pages/reussite-inscription.php" /> <?php
-      
-        }
-        // 888888888888888888888888888888888888888888888888888888888888888888888888888
-        // FIN CONDITION IF COUNT ERRORS == 0{}
-    }
-    // 888888888888888888888888888888888888888888888888888888888888888888888888888
-    // FIN DU ISSET CLIQUE INSCRIPTION
-}
-// 888888888888888888888888888888888888888888888888888888888888888888888888888
-// FIN FONCTION CREATE-USER
-echo 'sorti de la fonction <br/>'
-
 ?>
+            <meta http-equiv="refresh" content="1; url=../pages/reussite-inscription.php" /> <?php
 
+                                                                                            }
+                                                                                            // 888888888888888888888888888888888888888888888888888888888888888888888888888
+                                                                                            // FIN CONDITION IF COUNT ERRORS == 0{}
+                                                                                        }
+                                                                                        // 888888888888888888888888888888888888888888888888888888888888888888888888888
+                                                                                        // FIN DU ISSET CLIQUE INSCRIPTION
+                                                                                    }
+                                                                                    // 888888888888888888888888888888888888888888888888888888888888888888888888888
+                                                                                    // FIN FONCTION CREATE-USER
+                                                                                    echo 'sorti de la fonction <br/>'
+
+                                                                                                ?>
