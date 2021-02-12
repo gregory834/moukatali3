@@ -84,7 +84,8 @@
     <section id="form-connexion">
         <div class="container d-flex flex-column justify-content-center align-items-center">
 
-            <?php //Démarage de la fonction connect_user si le bouton ['connection'] est cliqué.
+            <div class="text-light">
+                <?php //Démarage de la fonction connect_user si le bouton ['connection'] est cliqué.
                 //La fonction Connect_BDD sera lancé et les vérifications également
 
                 require_once('../../functions/connect-user.php');
@@ -94,7 +95,8 @@
                     connect_user();
                 }
 
-            ?>
+                ?>
+            </div>
 
             <!-- FORMULAIRE D'INSCRIPTION -->
             <div class="mb-5 box-formulaire col-lg-8 col-md-8 ">
