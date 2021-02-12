@@ -9,7 +9,7 @@ function create_user()
 {
 
     /******************************************
-     * CONNECTION A LA BDD (attention : on a l'include qui apel la fonction de connection depuis connect-bdd.php) *
+     * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
      ******************************************/
 
     require_once('bdd-connect.php');
@@ -23,8 +23,8 @@ function create_user()
     echo ' Entrer de fonction creat-user <br/>';
 
     echo ' Inititialisation varibles GLOBAL  <br/>Initialisation  du tableaux des erreurs (IN FONCTIONS)  <br/>';
-    // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIONS DU TABLEAU DES ERREURS DE LA FONCTION
-    global $errors, $role, $pseudo, $email, $nom, $prenom, $pdo,  $password_hash;
+    // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIOSN DU TABLEAUX DES ERREURS DE LA FONCTION
+    global $errors, $success_inscription, $role, $pseudo, $email, $nom, $prenom, $pdo,  $password_hash;
 
     // INITIALISATION DES VARIBLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D INSERTION EN BASE DE DONNEE 
     $pseudo = ""; //initialisation
@@ -34,7 +34,7 @@ function create_user()
     $password_hash = "";
     // $telephone ="";
     $errors = array(); // VAR TABLEAUX QUI RECOIT LES MESSAGES D ERREUR POUR LE FORMULAIRE INSCRIPTION
-    $success_reg = false; //POUR DEFINIR LA REUSSITE DE L INSCRIPTION
+    $success_inscription = array();
     $role = "user";
     echo ' suite... fin initilisation ... suite <br/>';
 
@@ -45,7 +45,13 @@ function create_user()
          *********************************************************************************/
         // ON RECUPERE LES VALEURS SAISIES DES POSTS ET ON LES TRAITE
         $pseudo = trim($_POST['pseudo']);
-        $avatar = $_POST['avatar']; //POUR LA PHOTO DE PROFIL
+        $avatar = $_POST['avatar']; 
+        
+        //POUR LA PHOTO DE PROFIL
+
+        // $avatar = strtolower(time() . '-' . $_FILES[$_POST['avatar']]);
+
+
         $nom = htmlentities(trim(ucwords(strtolower($_POST['nom']))));
         $prenom = htmlentities(trim(ucwords(strtolower($_POST['prenom']))));
         $genre = trim($_POST['genre']); //BOLLEEN EN BDD
@@ -77,6 +83,25 @@ function create_user()
         if (empty($avatar)) {
             array_push($errors, "Entrer une photo de profil");
         }
+
+        // echo 'Vérification taille image avatar';
+        // // VERIFICATION TAILLE IMAGE
+        // if ($_FILES[$_POST['avatar']] > 200000) {
+        //     array_push($errors, "La taille de l'image ne doit pas dépasser 200 ko");
+        // }
+
+        // if (!in_array($picture_ext, ['jpg', 'jpeg', 'png'])) {
+        //     array_push($errors, "Votre image doit être .jpg, .jpeg ou .png");
+        // }
+
+        // image file directory
+        // $target_dir = ROOT_PATH . '/public/images/upload/' . basename($picture);
+
+        // if (!move_uploaded_file($_FILES['picture']['tmp_name'], $target_dir)) {
+        //     array_push($errors, "Échec du téléchargement de l'image.");
+        // }
+
+
         if (empty($nom)) {
             array_push($errors, "Entrer votre nom");
         }
@@ -119,7 +144,7 @@ function create_user()
 
         echo 'start recherche doublons <br/>';
         $pdo =  connectPdoBdd();
-        $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE pseudo =  email = '$email' LIMIT 1";
+        $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE  email = '$email' LIMIT 1";
         $reqEmail = $pdo->prepare("SELECT * FROM `users` WHERE email='$email'");
         $reqEmail->execute([$email]);
         $doublonEmail = $reqEmail->fetch();
@@ -162,10 +187,12 @@ function create_user()
         if (count($errors) == 0) {
             echo 'debut condition si aucune erreur <br/>';
 
+            array_push($success_inscription, "Inscription réussie !<br/> Veuillez patienter.. ");
+
             //ON CRYPTE LE MOT DE PASSE AVANT L ENREGISTREMENT DANS LA BASE DE DONNEES
             echo 'Cryptage du mot de passe (hash) <br/>';
             $password_hash = password_hash($password_2, PASSWORD_DEFAULT); //NOUVELLE VARIABLE QUI ACCUILLE LE HASH DU MOT DE PASSE SAISIE QUI A ETE TRAITER EN AMONT
-            
+
             // Verification du hash
 
             var_dump($password_hash);
@@ -189,18 +216,18 @@ function create_user()
             echo 'Fin de la requete d insertion <br/>  Fin de la fonction create-user <br/>';
 
             //REDIRECTION SUR LA PAGE STATICS DE CONFIRMATION DE L INSCRIPTION
-           ?> <meta http-equiv="refresh" content="1; url=../pages/reussite-inscription.php" /> <?php
-      
-        }
-        // 888888888888888888888888888888888888888888888888888888888888888888888888888
-        // FIN CONDITION IF COUNT ERRORS == 0{}
-    }
-    // 888888888888888888888888888888888888888888888888888888888888888888888888888
-    // FIN DU ISSET CLIQUE INSCRIPTION
-}
-// 888888888888888888888888888888888888888888888888888888888888888888888888888
-// FIN FONCTION CREATE-USER
-echo 'sorti de la fonction <br/>'
-
 ?>
+            <meta http-equiv="refresh" content="1; url=../pages/reussite-inscription.php" /> <?php
 
+                                                                                            }
+                                                                                            // 888888888888888888888888888888888888888888888888888888888888888888888888888
+                                                                                            // FIN CONDITION IF COUNT ERRORS == 0{}
+                                                                                        }
+                                                                                        // 888888888888888888888888888888888888888888888888888888888888888888888888888
+                                                                                        // FIN DU ISSET CLIQUE INSCRIPTION
+                                                                                    }
+                                                                                    // 888888888888888888888888888888888888888888888888888888888888888888888888888
+                                                                                    // FIN FONCTION CREATE-USER
+                                                                                    echo 'sorti de la fonction <br/>'
+
+                                                                                                ?>
