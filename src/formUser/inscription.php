@@ -19,9 +19,6 @@
 </head>
 
 
-
-
-
 <body>
 
     <!-- HEADER -->
@@ -105,6 +102,8 @@
                 <h2>MI VEU MOUKATER !! &#x1F60B;</h2>
             </div>
         </div>
+
+
     </section>
 
     <div class="container d-flex flex-column align-items-center justify-content-center">
@@ -124,7 +123,7 @@
             <!-- FORMULAIRE D'INSCRIPTION -->
             <div class="mb-5 box-formulaire col-lg-8 col-md-8 col-12">
 
-                <form class="col px-3 py-4" method="post" action="">
+                <form class="col px-3 py-4" method="POST" enctype="multipart/form-data">
 
                     <!-- MESSAGE D ERREUR -->
                     <?php if (count($errors) > 0) : ?>
@@ -188,7 +187,6 @@
                     </div>
 
 
-
                     <!-- ATTENTION GENRE ET AGE SUR LA MEME LIGNE-->
                     <div class="d-flex flex-column flex-md-row justify-content-between">
                         <!-- GENRE DATA TYPE SQL BOLEEN-->
@@ -212,7 +210,6 @@
                             <input type="number" class="form-control" id="age" name="age" placeholder="18" min=18 max=100 required>
                             </input>
                         </div>
-
 
                     </div>
 
@@ -253,7 +250,6 @@
                     </div>
 
 
-
                     <!-- VILLE DATA TYPE VARCHAR -->
                     <div class="mb-3">
 
@@ -268,16 +264,9 @@
                     </div>
 
 
-
-
-                    
-
-
-
-
                     <!-- BOUTON INSCRIPTION -->
                     <div class="d-flex justify-content-center">
-                        <button type="submit" action="" name="inscription" class="btn btn-dark">INSCRIPTION</button>
+                        <button type="submit" name="inscription" class="btn btn-dark">INSCRIPTION</button>
 
                     </div>
                     <div class="mt-3 d-flex justify-content-center"> <i>(* Champs obligatoires)</i></div>
@@ -296,9 +285,6 @@
             </form>
 
         </div>
-
-
-
 
 
     </section>

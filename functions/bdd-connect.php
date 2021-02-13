@@ -18,10 +18,6 @@ catch (PDOException $e) {print "Erreur !: " . $e->getMessage() . "<br/>";die();}
 ?>
 
 
-
-
-
-
 <!-- METHODE SQLI CONNECTION BDD-->
 
 <?php

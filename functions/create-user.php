@@ -26,7 +26,7 @@ function create_user()
     // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIOSN DU TABLEAUX DES ERREURS DE LA FONCTION
     global $errors, $success_inscription, $role, $pseudo, $email, $nom, $prenom, $pdo,  $password_hash;
 
-    // INITIALISATION DES VARIABLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D'INSERTION EN BASE DE DONNEE.
+    // INITIALISATION DES VARIBLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D INSERTION EN BASE DE DONNEE 
     $pseudo = ""; //initialisation
     $avatar = "";
     $email = "";
@@ -38,19 +38,17 @@ function create_user()
     $role = "user";
     echo ' suite... fin initilisation ... suite <br/>';
 
-    /****************************************************************************************** */
-
     if (isset($_POST["inscription"])) {
         echo ' Debut de la fonction create user ok <br/>';
         /************************************************************************************
-         TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE INSCRIPTION APRES LE CLIQUE.
+         * TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE INSCRIPTION APRES LE CLIQUE *
          *********************************************************************************/
         // ON RECUPERE LES VALEURS SAISIES DES POSTS ET ON LES TRAITE
         $pseudo = trim($_POST['pseudo']);
-        $avatar = $_POST['avatar']; 
-        
-        //POUR LA PHOTO DE PROFIL
+        // $avatar = $_POST['avatar']; 
 
+        //POUR LA PHOTO DE PROFIL
+        $avatar = strtolower(time() . '-' . $_FILES['avatar']['name']); //input de type file et securisation strtolower time (a etudier)
         // $avatar = strtolower(time() . '-' . $_FILES[$_POST['avatar']]);
 
 
@@ -68,7 +66,7 @@ function create_user()
         // var_dump($password_1);
         echo ' suite... fin traitement des variables POST. <br/> Password pas encore haché ...suite <br/>';
 
-        /****************************************
+        /************************************
          * VALIDATION CHAMPS VIDE *
          ****************************************/
         // ON VERIFIE QUE LES CHAMPS SONT TOUS REMPLIES
@@ -84,25 +82,84 @@ function create_user()
         // 
         if (empty($avatar)) {
             array_push($errors, "Entrer une photo de profil");
+            $uploadOk = 0;
         }
 
-        // echo 'Vérification taille image avatar';
-        // // VERIFICATION TAILLE IMAGE
-        // if ($_FILES[$_POST['avatar']] > 200000) {
-        //     array_push($errors, "La taille de l'image ne doit pas dépasser 200 ko");
+        /************************************************************************************
+         * IMAGE VALIDATATION ET UPLOAD
+         * SOURCE DU CODE ET RE ADAPTER EN FONCTION DE LA BDD ET DES CHEMINS D ACCES
+         * https://www.w3schools.com/php/php_file_upload.asp 
+         * ATTENTION NE PAS EFFACER LE DOSSIER QUI SE NOMME UPLOADS DANS LE FICHIER DES IMAGES!!
+         **************************************************************************************/
+
+
+        // PARAMETRAGE DES VARIBLES D ACCES, EXTENSION, UPLOAD, ET DU DOSSIER DE DESTINATION DES IMAGES UPLOADER
+        $target_dir = "../../images/uploads/";  //chemin du sossier ou les fichiers seront uploader
+        $target_file = $target_dir . basename($_FILES["avatar"]["name"]); //parametrage du nom de l image
+        $uploadOk = 1; //condition si uplooad aboutie
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); //définition de l extension de l image
+
+        //VERIFICATION SI L IMAGE EST UNE VRAI OU UNE FAUSSE
+        if (isset($_POST["inscription"])) {
+            $check = getimagesize($_FILES["avatar"]["tmp_name"]);
+            if ($check !== false) {
+                echo "File is an image - " . $check["mime"] . ".";
+
+
+                $uploadOk = 1;
+            } else {
+                echo "File is not an image.";
+                array_push($errors, "Ce fichier n'est pas une image !");
+                $uploadOk = 0; //CONDITION = 0 CAR N EST PAS UNE IMAGE
+            }
+        }
+
+        // // Check if file already exists
+        // if (file_exists($target_file)) {
+        //   echo "Sorry, file already exists.";
+        //   $uploadOk = 0;
         // }
 
-        // if (!in_array($picture_ext, ['jpg', 'jpeg', 'png'])) {
-        //     array_push($errors, "Votre image doit être .jpg, .jpeg ou .png");
-        // }
+        // VERIFICATION DE LA TAILLE DE L IMAGE
+        if ($_FILES["avatar"]["size"] > 600000) {
+            echo "Sorry, your file is too large.";
+            array_push($errors, "Image volumineux ! Elle ne peut dépasser 600ko .");
+            $uploadOk = 0;  //CONDITION = 0 CAR N EST TROP VOLUMINEUSE
+        }
 
-        // image file directory
-        // $target_dir = ROOT_PATH . '/public/images/upload/' . basename($picture);
+        // V2RIFICATION DES EXTENSIONS
+        if (
+            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 
-        // if (!move_uploaded_file($_FILES['picture']['tmp_name'], $target_dir)) {
-        //     array_push($errors, "Échec du téléchargement de l'image.");
-        // }
+        ) {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            array_push($errors, "Format d'image non accepté ! Requis : png, pjeg ou png");
+            $uploadOk = 0;
+        }
 
+        // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
+        if ($uploadOk == 0) {
+            echo "Sorry, your file was not uploaded.";
+            array_push($errors, "Désoler, votre image n'as pas été transférées.");
+            // SI AUCUNE ERREUR ALORS ON PRECEDE AU TELECHARGEMENT DANS LE DOSSIER UPLOAD PREALABLEMENT CREER.
+            // LA FONCTION MOVE UPLOAD FILE PREND DEUX PARAMETRE (VARIABLE DE NOTRE IMAGE TRAITER  , SON CHEMIN DE DESTINATION)
+        } else {
+            // CONDITION QUAND TRANSFERT REUSSI
+            if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
+                $avatar = $_FILES["avatar"]["name"];
+                echo "The file " . htmlspecialchars(basename($_FILES["avatar"]["name"])) . " has been uploaded. ";
+            }
+            // CONDITION QUAND LE TRANSFERT ECHOUE
+            else {
+                echo "Sorry, there was an error uploading your file.";
+                array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
+            }
+        }
+
+        // FIN DES VERIFICATIONS SUR IMAGES
+
+
+        // SUITE DES VERIFICATIONS SI CHAMPS VIDE
 
         if (empty($nom)) {
             array_push($errors, "Entrer votre nom");
@@ -138,23 +195,54 @@ function create_user()
 
         echo ' suite .. Fin des vérifications des champs vide .. suite <br/>';
 
-        // Assurez-vous qu'aucun utilisateur n'est enregistré deux fois
-        // l'e-mail et les noms d'utilisateur doivent être uniques
+
+
+
+
+
+
+
+
+        // 88888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+
+        /************************************
+         * DOUBLE SECURITE , ICI AU NIVEAU DE PHP (NOM MODIFIABLE DEPUIS L INSPECTEUR DES ELEMENTS HTMPL) *
+         ****************************************/
+
+        // RESTE A FAIRE 
+
+        // 8888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+
+
+
+
+
+
+
+
         /******************************************************
-         * VERIFICATION DOUBLON EMAIL METHODE PDO *
+         * VERIFICATION BOUBLON EMAIL METHODE PDO *
          *************************************************/
 
+        //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
+        // l'e-mail et les noms d'utilisateur doivent être uniques
+
         echo 'start recherche doublons <br/>';
-        $pdo =  connectPdoBdd();
-        $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE  email = '$email' LIMIT 1";
-        $reqEmail = $pdo->prepare("SELECT * FROM `users` WHERE email='$email'");
-        $reqEmail->execute([$email]);
-        $doublonEmail = $reqEmail->fetch();
-        if ($doublonEmail) { // email existant
+        $pdo =  connectPdoBdd(); //connection a la bdd
+        $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE  email = '$email' LIMIT 1"; //requete de selection dans table user en fonction de l email
+        $reqEmail = $pdo->prepare("SELECT * FROM `users` WHERE email='$email'"); //préparation de la requete
+        $reqEmail->execute([$email]);  //EXECUTION DE LA REQUETE
+        $doublonEmail = $reqEmail->fetch();  //RECUPERATION RESULTAT DE LA REQUETE AUTREMENT DIT SI UN DOUBLON EST TROUVER EN FONCTION DE L EMAIL FOURNI
+
+        // SI DOUBLON EXISTANT
+        if ($doublonEmail) {
             if ($doublonEmail['email'] === $email) {
                 array_push($errors, "Attention ! Cette addresse email existe déjà !");
             }
-        } else { // email n'existe pas
+            //SI AUCUN DOUBLON ECHO TEST ET ON CONTINUE
+        } else {
             echo 'AUCUN DOUBLON EMAIL TROUVER <br/>';
         }
 
@@ -162,6 +250,7 @@ function create_user()
          * VERIFICATION BOUBLON PSEUDONYME METHODE PDO *
          **********************************************/
 
+        //  IDEM QUE POUR L EMAIL. C EST UN CHOIX DE SEPARER LES DEUX REQUETE AU LIEU D EN FAIRE UNE POUR DEUX. LE BUT ETANT DE BIEN AVANCER ETAPE PAR ETAPE
         $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE pseudo = '$pseudo' LIMIT 1";
         $reqPseudo = $pdo->prepare("SELECT * FROM `users` WHERE pseudo='$pseudo'");
         $reqPseudo->execute([$pseudo]);
@@ -170,11 +259,20 @@ function create_user()
             if ($doublonPseudo['pseudo'] === $pseudo) {
                 array_push($errors, "Attention ! Ce Pseudonyme existe déjà !");
             }
+            // SI AUCUN DOUBLON ECHO TEST ET ON CONTINUE
         } else { // email n'existe pas
             echo 'AUCUN DOUBLON PSEUDO TROUVER <br/>';
         }
-
         echo 'Fin de recherche de doublons <br/>';
+
+        // FIN DES VERIFICATIONS A CE STADE TOUT EST BON. ON PEUT PASSER A LA REQUETE D INSERTION QUI CREER LE COMPTE UTILISATEUR 
+        // ENSUITE ON REDIRIGE LE CLIENT SUR UNE PAGE STATICS DE CONFIRMATION D INSCRIPTION AVANT DE SORTIR DE NOTRE FONCTION
+        // AVEC UNE BALISE META .
+        //LA PAGE CONTIENDRA UN BOUTON SUIVANT
+
+
+
+
 
         /***********************************************
          * INSERTION (CREATE) UTILISATEUR EN BDD *
@@ -219,17 +317,17 @@ function create_user()
 
             //REDIRECTION SUR LA PAGE STATICS DE CONFIRMATION DE L INSCRIPTION
 ?>
-            <meta http-equiv="refresh" content="1; url=../pages/reussite-inscription.php" /> <?php
+            <meta http-equiv="refresh" content="1; url=../pages/reussite-inscription.php" /><?php
 
-                                                                                            }
-                                                                                            // 888888888888888888888888888888888888888888888888888888888888888888888888888
-                                                                                            // FIN CONDITION IF COUNT ERRORS == 0{}
                                                                                         }
                                                                                         // 888888888888888888888888888888888888888888888888888888888888888888888888888
-                                                                                        // FIN DU ISSET CLIQUE INSCRIPTION
+                                                                                        // FIN CONDITION IF COUNT ERRORS == 0{}
                                                                                     }
                                                                                     // 888888888888888888888888888888888888888888888888888888888888888888888888888
-                                                                                    // FIN FONCTION CREATE-USER
-                                                                                    echo 'sorti de la fonction <br/>'
+                                                                                    // FIN DU ISSET CLIQUE INSCRIPTION
+                                                                                }
+                                                                                // 888888888888888888888888888888888888888888888888888888888888888888888888888
+                                                                                // FIN FONCTION CREATE-USER
+                                                                                echo 'sorti de la fonction <br/>'
 
-                                                                                                ?>
+                                                                                            ?>

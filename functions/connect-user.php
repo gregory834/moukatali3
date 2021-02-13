@@ -6,6 +6,9 @@
 echo 'hors de la fonction connecion <br/>';
 function connect_user()
 {
+
+    // la session user se lancera uniquement si on se connecte a votre compte
+    session_start();
     echo 'début de la function de connection <br/>';
     /******************************************
      * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
@@ -19,12 +22,13 @@ function connect_user()
     echo ' Entrer de fonction connect-user <br/>';
     echo ' Inititialisation varibles GLOBAL  <br/>Initialisation  du tableaux des erreurs (IN FONCTIONS)  <br/>';
     // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIOSN DU TABLEAUX DES ERREURS DE LA FONCTION
-    global $errors, $success_connect, $email, $password_connect, $pdo;
+    global $errors, $success_connect, $email, $password_connect, $pdo, $user;
     // INITIALISATION DES VARIABLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE DE RECUPERATION EN BASE DE DONNEE 
     $email = "";
     $password_connect = "";
     $errors = array();
     $success_connect = array();
+
     //TRAITEMENT DES POST
     echo 'Traitement des champs saisie <br/>';
     if (isset($_POST['connection'])) {
@@ -40,7 +44,7 @@ function connect_user()
             array_push($errors, "Mot de passe requis");
         }
         // SI LES CHAMPS SONT REMPLIE ON VERIFIE LES INFOS SAISIE AVEC LA BDD
-        var_dump($errors);
+        // var_dump($errors);
         /******************************************
          * REQUETE RECUPERATION POUR COMPARAISON *
          ******************************************/
@@ -53,12 +57,8 @@ function connect_user()
             $reqEmail->execute([$email]);
             $user = $reqEmail->fetch();
 
-
             // test
             // $user =  $reqEmail->fetch();
-
-
-
 
             echo 'Vérification du mot de passe et de l\' email. <br/>';
             if ($user) { // email existant
@@ -68,17 +68,12 @@ function connect_user()
                 // password_verify entre $password_connect et $doublonEmail['PASSWORD et non pas PASSWORD-CONNECT]. PASSWORD car cela correspond a commebnt il est nommé en bdd sur les ligne.
 
 
-
-
                 $passmatch = password_verify($password_connect, $user['password']);
                 var_dump($passmatch);
 
                 if ($passmatch = false) {
                     array_push($errors, "Mot de passe incorrect <br/>!");
                 }
-
-
-
 
 
                 if ($user['email'] === $email && password_verify($password_connect, $user['password'])) {
@@ -90,21 +85,24 @@ function connect_user()
                      * STOCKAGE DES INFORMATIONS BDD EN SESSION OU EN UTILISANT CEUX DU RESULTAT DE REQUETE *
                      *****************************************************************************************/
 
-                    $_SESSION = array();
+                    // $_SESSION = array();
                     // mettre les info utiles de l'utilisateur connecté dans le tableau de session
                     $_SESSION['user'] = ($user);
                     echo 'stockage en session par ID user';
                     echo 'Résultat de la requete qui possede aussi les infos stocké dans $user donc exploitable <br/>Mais necessite de redéclarer les requetes sur d autre pages';
 
-                    // test des donnée stocker ici exemple mot de passe
-                    var_dump($_SESSION['user']['password']);
+                    // test des donnée stocker ici exemple un id
+                    var_dump($_SESSION['user']['id']);
 
 
                     // test des données recu de la bdd
-                    var_dump($user['telephone']);
+                    var_dump($user['pseudo']);
                     array_push($success_connect, "Connexion réussie !<br/> Cliquez sur SUIVANT ");
 
 
+                    // on sort la valeur de l id de session (recuperer en bdd) pour l exploiter par la fonction read-user
+                    return $_SESSION['user']['id'];
+                    return $user['avatar'];
                     // ATTENTION !! POUR PAGE PROFIL SOIT ON REFAIT UNE REQUETE POUR AFFICHER LES INFOS SOIT ON UTILISE CEUX STOCKER EN SESSION
 
                 } else {
@@ -117,32 +115,22 @@ function connect_user()
 
         // fin verification en bdd
 
-
     }
 
-
-
-
-
-
-
-
-
-
-
+    // NE PAS EFFACER SERVIRA PEU ETRE PLUS TARD
     // Obtenir des informations sur l'utilisateur à partir de l'identifiant de l'utilisateur
-    function getUserById($id)
-    {
-        global $db;
-        $sql = "SELECT * FROM user_info WHERE user_id = $id LIMIT 1";
+    // function getUserById($id)
+    // {
+    //     global $db;
+    //     $sql = "SELECT * FROM user_info WHERE user_id = $id LIMIT 1";
 
-        $result = mysqli_query($db, $sql);
-        $user_info = mysqli_fetch_assoc($result);
+    //     $result = mysqli_query($db, $sql);
+    //     $user_info = mysqli_fetch_assoc($result);
 
-        //renvoie les info utilisateur dans un format de tableau:
-        // ['id' => 1, 'username' => 'Pseudo', 'email'=>'a@a.com', 'password'=> 'mot de passe']
-        return $user_info;
-    }
+    //     //renvoie les info utilisateur dans un format de tableau:
+    //     // ['id' => 1, 'username' => 'Pseudo', 'email'=>'a@a.com', 'password'=> 'mot de passe']
+    //     return $user_info;
+    // }
 
 
 
