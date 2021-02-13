@@ -12,20 +12,20 @@
 
 
 global $id;
-$id= 45 ;
+$id= $_SESSION['user']['id'];
 
 function readUserById($id) {
- 
-   /******************************************
+
+    /******************************************
      * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
      ******************************************/
-
+    
     require_once('bdd-connect.php');
     connectPdoBdd();
     echo 'Connection à la base de donnée OK <br/>';
 
     //faire sortir les resultat de la requete de lecture pour l exploiter sur les autres page en fonction de l id de session
-    global $user;
+    global $user, $id;
 
     $con = connectPdoBdd(); //RECUPERATION DE LA FONCTION DE CONNECTION A LA BDD ET STOCKE DANS LA VAR $con
     $requete = "SELECT * from `users` where id = '$id' ";
@@ -43,7 +43,7 @@ function readUserById($id) {
     return $user;
 }
 // test de notre read user  fonction une fois qu elle est est creer
-// readUserById(26);
+// readUserById($id);
 
 ?>
 

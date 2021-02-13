@@ -4,11 +4,17 @@
 
 <?php
 echo 'hors de la fonction connecion <br/>';
+
+
+
+
+global $user;
 function connect_user()
 {
 
     // la session user se lancera uniquement si on se connecte a votre compte
     session_start();
+   
     echo 'début de la function de connection <br/>';
     /******************************************
      * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
@@ -103,6 +109,10 @@ function connect_user()
                     // on sort la valeur de l id de session (recuperer en bdd) pour l exploiter par la fonction read-user
                     return $_SESSION['user']['id'];
                     return $user['avatar'];
+                    return $user['id'];
+
+                    $id=$_SESSION['user']['id'];
+                    return $id;
                     // ATTENTION !! POUR PAGE PROFIL SOIT ON REFAIT UNE REQUETE POUR AFFICHER LES INFOS SOIT ON UTILISE CEUX STOCKER EN SESSION
 
                 } else {
@@ -116,6 +126,15 @@ function connect_user()
         // fin verification en bdd
 
     }
+
+    global $user, $id;
+
+    echo 'test';
+
+    $id=$_SESSION['user']['id'];
+
+    var_dump($_SESSION['user']['id']);
+    var_dump($_SESSION['user']['id']);
 
     // NE PAS EFFACER SERVIRA PEU ETRE PLUS TARD
     // Obtenir des informations sur l'utilisateur à partir de l'identifiant de l'utilisateur
