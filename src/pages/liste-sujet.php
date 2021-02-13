@@ -133,24 +133,24 @@ global $user;
     <!-- AFFICHAGE EN FONCTION DE CONNECTION OU NON. SI PAS DESSION SA AFFICHE RIEN -->
     <?php
 
-    if (isset($_SESSION)) { ?>
+    if (isset($_SESSION['user']['id'])) { ?>
 
-<section>
-        <div class="container d-flex flex-column align-items-center justify-content-center">
+        <section>
+            <div class="container d-flex flex-column align-items-center justify-content-center">
 
-            <?php echo ('<img  id="img_avatar" src="../../images/uploads/' . $user['avatar'] . '" />'); ?>
-            <!-- TITRE -->
-            <div class="mt-5 ml-5 mr-5 box-offre col-lg-6 col-md-6 col-sm-4 d-flex justify-content-center">
+                <?php echo ('<img  id="img_avatar" src="../../images/uploads/' . $user['avatar'] . '" />'); ?>
+                <!-- TITRE -->
+                <div class="mt-5 ml-5 mr-5 box-offre col-lg-6 col-md-6 col-sm-4 d-flex justify-content-center">
 
-                <h4 class="mt-2">Connecté en tant que : <?php echo ($user['pseudo']) ?> </h5>
+                    <h4 class="mt-2">Connecté en tant que : <?php echo ($user['pseudo']) ?> </h5>
 
+                </div>
+
+                <button type="submit" name="deconnection">
+                    deconnection test
+                </button>
             </div>
-
-            <button type="submit" name="deconnection">
-                deconnection test
-            </button>
-        </div>
-    </section>
+        </section>
 
 
     <?php  }
@@ -159,14 +159,14 @@ global $user;
 
 
 
- 
+
 
 
 
     <?php
 
     if (isset($_SESSION)) {
-        echo ($_SESSION['user']['password']);
+        echo ($_SESSION['user']['id']);
     }
 
     ?>
@@ -179,9 +179,7 @@ global $user;
 
 
 
- 
 
-   
 
 
 
@@ -195,8 +193,8 @@ global $user;
 
             <!-- SUJET -->
             <div class="sujet bg-light p-3 mb-3 d-flex flex-column flex-md-row align-items-md-center">
-                <div class="image mb-2 mb-md-0 mr-md-2 d-lg-none"><img src="images/image-mobile.jpg" alt="Image du sujet"></div>
-                <div class="image mr-lg-2 d-none d-lg-block"><img src="images/image.jpg" alt="Image du sujet"></div>
+                <div class="image mb-2 mb-md-0 mr-md-2 d-lg-none"><img src="../../images/image-mobile.jpg" alt="Image du sujet"></div>
+                <div class="image mr-lg-2 d-none d-lg-block"><img src="../../images/image.jpg" alt="Image du sujet"></div>
                 <p class="text-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl.
                     Vestibulum mauris metus, luctus quis volutpat vitae, laoreet.</p>
             </div>
@@ -247,52 +245,61 @@ global $user;
             </div>
 
 
-<!-- 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888 -->
+            <!-- 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888 -->
 
-<?php
+            <?php
 
-if (isset($_SESSION)) {  ?>
+            if (isset($_SESSION['user']['id'])) {  ?>
 
-            <!-- MOUKATAGE -->
-            <div class="moukatage p-3 bg-light text-dark mb-3">
-                      <!-- PROFIL -->
-                      <div class="profil d-flex order-md-0 mb-3">
+                <!-- MOUKATAGE -->
+                <div class="moukatage p-3 bg-light text-dark mb-3">
+                    <!-- PROFIL -->
+                    <div class="profil d-flex order-md-0 mb-4">
                         <div class=" mr-2">
 
-                        <?php echo ('<img  src="../../images/uploads/' . $user['avatar'] . '" style="height:4.3em; width:4.3em; border-radius:5em; "/>' . "<br/>"); ?>
+                            <?php echo ('<img  src="../../images/uploads/' . $user['avatar'] . '" style="height:4.3em; width:4.3em; border-radius:5em; "/>' . "<br/>"); ?>
 
                         </div>
                         <div class="info-profil">
-                            <p class="mb-0 mt-3 ml-3 text-uppercase font-weight-bolder">  <?php  echo ($user['pseudo']);  ?>   </p>
+                            <p class="mb-0 mt-3 ml-3 text-uppercase font-weight-bolder"> <?php echo ($user['pseudo']);  ?> </p>
                             <p class="mb-0">1 janvier 2021 à 00h00</p>
                         </div>
                     </div>
-                <!-- TEXTE -->
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl. Vestibulum mauris
-                    metus, luctus quis volutpat vitae, laoreet. Lorem ipsum dolor sit amet.</p>
-                <div class="d-md-flex justify-content-md-between">
-                    <!-- LIKE DISLIKE -->
-                    <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
-                        <div class="d-flex align-items-center mr-3">
-                            <div class="mr-1"><img src="/images/icones/thumbs-up.svg" alt="Like"></div>
-                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
-                                1233</div>
+                    <!-- TEXTE -->
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl. Vestibulum mauris
+                        metus, luctus quis volutpat vitae, laoreet. Lorem ipsum dolor sit amet.</p>
+
+                    <div class="d-flex justify-content-end">
+
+
+                        <div class="d-flex justify-content-md-between">
+                            <!-- LIKE DISLIKE -->
+                            <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
+                                <div class="d-flex align-items-center mr-3">
+                                    <div class="mr-1"><img src="../../icons/like.png" alt="Like"></div>
+                                    <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
+                                        1233</div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-1"><img src="../../icons/dislike.png" alt="Dislike"></div>
+                                    <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
+                                        1233</div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="d-flex align-items-center">
-                            <div class="mr-1"><img src="/images/icones/thumbs-down.svg" alt="Dislike"></div>
-                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
-                                1233</div>
-                        </div>
+
+
+
                     </div>
-              
+
                 </div>
-            </div>
 
 
-  <?php  }
-?>
+            <?php  }
+            ?>
 
-<!-- 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888 -->
+            <!-- 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888 -->
 
 
 
@@ -303,35 +310,47 @@ if (isset($_SESSION)) {  ?>
 
 
             <!-- MOUKATAGE -->
-            <div class="moukatage p-3 bg-light text-dark mb-3">
+            <div class="moukatage p-3 bg-light text-dark mb-3 ">
+                <!-- PROFIL -->
+                <div class="profil d-flex order-md-0 mb-4">
+                    <div class="avatar mr-2">
+                        <img src="../../images/avatar-1.jpg" alt="Avatar">
+                    </div>
+                    <div class="info-profil">
+                        <p class="mb-0 mt-3 ml-3  text-uppercase font-weight-bolder">pseudo</p>
+                        <p class="mb-0">1 janvier 2021 à 00h00</p>
+                    </div>
+                </div>
+
+
                 <!-- TEXTE -->
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl. Vestibulum mauris
                     metus, luctus quis volutpat vitae, laoreet. Lorem ipsum dolor sit amet.</p>
-                <div class="d-md-flex justify-content-md-between">
+
+                    <div class="d-flex justify-content-end">
+
+                    <div class="d-flex justify-content-md-between">
                     <!-- LIKE DISLIKE -->
                     <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
                         <div class="d-flex align-items-center mr-3">
-                            <div class="mr-1"><img src="/images/icones/thumbs-up.svg" alt="Like"></div>
+                            <div class="mr-1"><img src="../../icons/like.png" alt="Like"></div>
                             <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
                                 1233</div>
                         </div>
                         <div class="d-flex align-items-center">
-                            <div class="mr-1"><img src="/images/icones/thumbs-down.svg" alt="Like"></div>
+                            <div class="mr-1"><img src="../../icons/dislike.png" alt="Dislike"></div>
                             <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
                                 1233</div>
                         </div>
                     </div>
-                    <!-- PROFIL -->
-                    <div class="profil d-flex order-md-0">
-                        <div class="avatar mr-2">
-                            <img src="../../images/avatar-1.jpg" alt="Avatar"> 
-                        </div>
-                        <div class="info-profil">
-                            <p class="mb-0 mt-3 ml-3  text-uppercase font-weight-bolder">pseudo</p>
-                            <p class="mb-0">1 janvier 2021 à 00h00</p>
-                        </div>
-                    </div>
+
                 </div>
+
+
+                    </div>
+
+
+           
             </div>
 
 
@@ -345,12 +364,12 @@ if (isset($_SESSION)) {  ?>
 
             <!-- AUTRE SUJET -->
             <div class="autre bg-light p-4 text-dark d-flex align-items-center mb-3 mb-md-0 mr-md-3">
-                <img src="/images/autre-sujet.jpg" class="mr-2" alt="Image sujet">
+                <img src="../../images/autre-sujet.jpg" class="mr-2" alt="Image sujet">
                 <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac.</p>
             </div>
             <!-- AUTRE SUJET -->
             <div class="autre bg-light p-4 text-dark d-flex align-items-center">
-                <img src="/images/autre-sujet.jpg" class="mr-2" alt="Image sujet">
+                <img src="../../images/autre-sujet.jpg" class="mr-2" alt="Image sujet">
                 <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac.</p>
             </div>
 
