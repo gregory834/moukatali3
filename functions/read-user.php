@@ -1,10 +1,8 @@
-
-
 <!-- CETTE FONCTION NOUS SERVIRA A RECUPERER LES INFORMATIONS EN BDD D UN UTILISATEUR CONNECTER EN FONCTION DE SON ID DE SESSION QUI A ETAIT DEFINIT DANS LA FONCTIO CONNECT-USER LORS DE SA CONNECTION -->
 <!-- SERVIRA EGALEMENT A FAIRE AFFICHER SES INFORMATIONS DANS SON PROFIL DIRECTEMENT DEPUIS LA BDD -->
 
 
-<?php 
+<?php
 
 //$id sera re affecter avec l id de session lors de l apel de la fonction en parametre genre readUser($_SESSION['user']['id]);
 
@@ -12,14 +10,15 @@
 
 
 global $id;
-$id= $_SESSION['user']['id'];
+$id = $_SESSION['user']['id'];
 
-function readUserById($id) {
+function readUserById($id)
+{
 
     /******************************************
      * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
      ******************************************/
-    
+
     require_once('bdd-connect.php');
     connectPdoBdd();
     echo 'Connection à la base de donnée OK <br/>';
@@ -31,13 +30,12 @@ function readUserById($id) {
     $requete = "SELECT * from `users` where id = '$id' ";
     $stmt = $con->query($requete);
     $user = $stmt->fetch();
-  
+
     if (!empty($user)) {
         //test du resultat de la requete si trouver par id avec id en brut
         // var_dump($user['telephone']);
         return $user;
-    }
-    else{
+    } else {
         echo 'La fonction readUserById n\' as pas fonctionnée ... <br/>';
     }
     return $user;
@@ -46,7 +44,3 @@ function readUserById($id) {
 // readUserById($id);
 
 ?>
-
-
-
-

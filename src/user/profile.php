@@ -94,7 +94,7 @@ global $user;
 
         // readUserById($_SESSION['user']['id']);
 
-        var_dump($_SESSION['user']['id']);
+        // var_dump($_SESSION['user']['id']);
         // var_dump($_SESSION['pseudo']);
         // var_dump($user);
         // var_dump($user['prenom']);
@@ -105,18 +105,18 @@ global $user;
         if (isset($_SESSION['user'])) {
 
             readUserById($_SESSION['user']['id']);
-            echo 'Donnée de session en cours : <br/>';
-            echo ('<img src="../../images/uploads/' . $user['avatar'] . '" style="height:4em; width:4em; border-radius:em; "/>' . "<br/>");
-            echo ($user['avatar'] . "<br/>");
-            echo ($user['pseudo'] . "<br/>");
-            echo ($user['id'] . "<br/>"); // ID QU ON A BESOIN POUR LA FONCTION READ USER BY ID AFIN D AFFICHER LES INFOS DEPUIS LA BDD ET NON DEPUIS LES VARIABLE DE SESSION. AVEC SESSION C EST MOIN SECURISEE
-            echo ($user['nom'] . "<br/>");
-            echo ($user['age'] . "<br/>");
-            echo ($user['genre'] . "<br/>");
-            echo ($user['telephone'] . "<br/>");
-            echo ($user['email'] . "<br/>");
-            echo ($user['password'] . "<br/>");
-            echo ($user['ville'] . "<br/>");
+             'Donnée de session en cours : <br/>';
+             ('<img src="../../images/uploads/' . $user['avatar'] . '" style="height:4em; width:4em; border-radius:em; "/>' . "<br/>");
+             ($user['avatar'] . "<br/>");
+             ($user['pseudo'] . "<br/>");
+             ($user['id'] . "<br/>"); // ID QU ON A BESOIN POUR LA FONCTION READ USER BY ID AFIN D AFFICHER LES INFOS DEPUIS LA BDD ET NON DEPUIS LES VARIABLE DE SESSION. AVEC SESSION C EST MOIN SECURISEE
+             ($user['nom'] . "<br/>");
+             ($user['age'] . "<br/>");
+             ($user['genre'] . "<br/>");
+             ($user['telephone'] . "<br/>");
+             ($user['email'] . "<br/>");
+             ($user['password'] . "<br/>");
+             ($user['ville'] . "<br/>");
         } else {
             echo 'Aucune saission en cours ! Veuillez vous connectez !<br/>';
         }
@@ -159,7 +159,7 @@ global $user;
                     </div>
                 </div>
 
-
+ 
                 <!---Information user (NOM, Prénom, Addresse, Tel Sexe...)-->
                 <div class="col  d-flex justify-content-center">
 
