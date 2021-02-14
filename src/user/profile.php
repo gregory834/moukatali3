@@ -1,3 +1,16 @@
+<!-- DERARAGE D UNE SESSION suite a une connexion on a besoin des infos de sessions pour afficher au bon endroit -->
+
+
+<?php
+session_start();
+global $user;
+//  echo  ($user);
+
+// header ("content-type: image/jpeg");
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -22,7 +35,7 @@
 
 <body>
 
-    
+
 
     <!-- HEADER -->
 
@@ -74,12 +87,40 @@
     </header>
 
     <div class=" text-light">
-        <?php
-        session_start(); //Lancement de session
-        echo "Les sessions est lancé... </br>"; //Message de confirmation
 
-        //Vérification si la session contient des informations suite à la fonction de connexion qui les ont stockés
-        var_dump($_SESSION) //à muter
+        <?php
+
+        include('../../functions/read-user.php');
+
+        // readUserById($_SESSION['user']['id']);
+
+        var_dump($_SESSION['user']['id']);
+        // var_dump($_SESSION['pseudo']);
+        // var_dump($user);
+        // var_dump($user['prenom']);
+        // var_dump($user['avatar']);
+        // Test si nos informations sont présente en variables de session suite à la fonction de connection qui les ont stockées
+        // var_dump($_SESSION); //a muté plus tard
+
+        if (isset($_SESSION['user'])) {
+
+            readUserById($_SESSION['user']['id']);
+            echo 'Donnée de session en cours : <br/>';
+            echo ('<img src="../../images/uploads/' . $user['avatar'] . '" style="height:4em; width:4em; border-radius:em; "/>' . "<br/>");
+            echo ($user['avatar'] . "<br/>");
+            echo ($user['pseudo'] . "<br/>");
+            echo ($user['id'] . "<br/>"); // ID QU ON A BESOIN POUR LA FONCTION READ USER BY ID AFIN D AFFICHER LES INFOS DEPUIS LA BDD ET NON DEPUIS LES VARIABLE DE SESSION. AVEC SESSION C EST MOIN SECURISEE
+            echo ($user['nom'] . "<br/>");
+            echo ($user['age'] . "<br/>");
+            echo ($user['genre'] . "<br/>");
+            echo ($user['telephone'] . "<br/>");
+            echo ($user['email'] . "<br/>");
+            echo ($user['password'] . "<br/>");
+            echo ($user['ville'] . "<br/>");
+        } else {
+            echo 'Aucune saission en cours ! Veuillez vous connectez !<br/>';
+        }
+
         ?>
     </div>
 
@@ -112,7 +153,9 @@
                 <div class="row">
                     <div class="col-12 text-center mb-3">
 
-                        <img id="img_avatar" src="../../images/avatar-3.jpg" alt="" class="img-fluid">
+
+                    <?php echo ('<img src="../../images/uploads/' . $user['avatar'] . '" style="height:4em; width:4em; border-radius:em;" class="rounded-circle"/>')?>
+
                     </div>
                 </div>
 
@@ -122,11 +165,16 @@
 
                     <div>
 
-                        <p> <img src="../../icons/user-fill.png" class="icon-size" /> Nom / Prénom</p>
-                        <p><img src="../../icons/cake-2-fill.png" class="icon-size" /> Age</p>
-                        <p><img src="../../icons/mail-open-fill.png" class="icon-size" /> Email</p>
-                        <p><img src="../../icons/phone-fill.png" class="icon-size" /> Telephone</p>
-                        <p><img src="../../icons/map-pin-fill.png" class="icon-size" /> Ville</p>
+                        <p> <img src="../../icons/user-fill.png" class="icon-size" />
+                            <?php echo ($user['nom']); ?> <?php echo ($user['prenom']); ?></p>
+                        <p><img src="../../icons/cake-2-fill.png" class="icon-size" /> 
+                        <?php echo ($user['age']);?></p>
+                        <p><img src="../../icons/mail-open-fill.png" class="icon-size" /> 
+                        <?php echo ($user['email']);?></p>
+                        <p><img src="../../icons/phone-fill.png" class="icon-size" /> 
+                        <?php echo ($user['telephone']);?></p>
+                        <p><img src="../../icons/map-pin-fill.png" class="icon-size" />
+                        <?php echo ($user['ville']);?></p>
 
 
                     </div>
