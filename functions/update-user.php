@@ -12,7 +12,7 @@ function update_user()
 
     require_once('bdd-connect.php');
     connectPdoBdd();
-    echo 'Connection à la base de donnée OK <br/>';
+    // echo 'Connection à la base de donnée OK <br/>';
     // $pdo =  connectPdoBdd(); //connection a la bdd
 
 
@@ -21,7 +21,7 @@ function update_user()
      ******************************************/
 
 
-    echo ' Inititialisation varibles GLOBAL  <br/>Initialisation  du tableaux des erreurs (IN FONCTIONS)  <br/>';
+    // echo ' Inititialisation varibles GLOBAL  <br/>Initialisation  du tableaux des erreurs (IN FONCTIONS)  <br/>';
     // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIOSN DU TABLEAUX DES ERREURS DE LA FONCTION
     global $errors, $success_modification, $pseudo, $email, $nom, $prenom, $pdo,  $password_hash, $modif_id_user;
 
@@ -36,11 +36,11 @@ function update_user()
     $errors = array(); // VAR TABLEAUX QUI RECOIT LES MESSAGES D ERREUR POUR LE FORMULAIRE MODIFICATION
     $success_modification = array();
     // $role = "user"; //le role est deja defini a l inscription,Ne faut pas le mettre ici car si on modifie étant un admin le role sera affecter , hors on souhaite garder son role de admin ou autre
-    echo ' suite... fin initilisation ... suite <br/>';
+    // echo ' suite... fin initilisation ... suite <br/>';
 
-    echo ' Entrer de fonction update-user <br/>';
+    // echo ' Entrer de fonction update-user <br/>';
     if (isset($_POST["modifier"])) {
-        echo ' Debut de la fonction update user ok <br/>';
+        // echo ' Debut de la fonction update user ok <br/>';
         /************************************************************************************
          * TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE MODIFICATION APRES LE CLIQUE *
          *********************************************************************************/
@@ -65,7 +65,7 @@ function update_user()
 
         // TEST SI UNE DES VARIABLE QUI RECCUPERE UN POST FONCTIONNE ICI AVEC LE POST PASSWORD
         // var_dump($password_1);
-        echo ' suite... fin traitement des variables POST. <br/> Password pas encore haché ...suite <br/>';
+        // echo ' suite... fin traitement des variables POST. <br/> Password pas encore haché ...suite <br/>';
 
         /************************************
          * VALIDATION CHAMPS VIDE *
@@ -104,12 +104,12 @@ function update_user()
         if (isset($_POST["modifier"])) {
             $check = getimagesize($_FILES["avatar"]["tmp_name"]);
             if ($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
+                // echo "File is an image - " . $check["mime"] . ".";
 
 
                 $uploadOk = 1;
             } else {
-                echo "File is not an image.";
+                // echo "File is not an image.";
                 array_push($errors, "Ce fichier n'est pas une image !");
                 $uploadOk = 0; //CONDITION = 0 CAR N EST PAS UNE IMAGE
             }
@@ -123,7 +123,7 @@ function update_user()
 
         // VERIFICATION DE LA TAILLE DE L IMAGE
         if ($_FILES["avatar"]["size"] > 600000) {
-            echo "Sorry, your file is too large.";
+            // echo "Sorry, your file is too large.";
             array_push($errors, "Image volumineux ! Elle ne peut dépasser 600ko .");
             $uploadOk = 0;  //CONDITION = 0 CAR N EST TROP VOLUMINEUSE
         }
@@ -133,14 +133,14 @@ function update_user()
             $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 
         ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            // echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
             array_push($errors, "Format d'image non accepté ! Requis : png, pjeg ou png");
             $uploadOk = 0;
         }
 
         // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
+            // echo "Sorry, your file was not uploaded.";
             array_push($errors, "Désoler, votre image n'as pas été transférées.");
             // SI AUCUNE ERREUR ALORS ON PRECEDE AU TELECHARGEMENT DANS LE DOSSIER UPLOAD PREALABLEMENT CREER.
             // LA FONCTION MOVE UPLOAD FILE PREND DEUX PARAMETRE (VARIABLE DE NOTRE IMAGE TRAITER  , SON CHEMIN DE DESTINATION)
@@ -148,11 +148,11 @@ function update_user()
             // CONDITION QUAND TRANSFERT REUSSI
             if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
                 $avatar = $_FILES["avatar"]["name"];
-                echo "The file " . htmlspecialchars(basename($_FILES["avatar"]["name"])) . " has been uploaded. ";
+                // echo "The file " . htmlspecialchars(basename($_FILES["avatar"]["name"])) . " has been uploaded. ";
             }
             // CONDITION QUAND LE TRANSFERT ECHOUE
             else {
-                echo "Sorry, there was an error uploading your file.";
+                // echo "Sorry, there was an error uploading your file.";
                 array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
             }
         }
@@ -189,12 +189,12 @@ function update_user()
             array_push($errors, "Vous avez oublié le mot de passe");
         }
         // ON VERIFIE SI LES DEUX MOTS DE PASSE SAISIE SONT IDENTIQUES
-        echo 'Vérification mots de passe si identique pendant la saisie des POSTS <br/>';
+        // echo 'Vérification mots de passe si identique pendant la saisie des POSTS <br/>';
         if ($password_1 != $password_2) {
             array_push($errors, "les deux mots de passe ne correspondent pas");
         }
 
-        echo ' suite .. Fin des vérifications des champs vide .. suite <br/>';
+        // echo ' suite .. Fin des vérifications des champs vide .. suite <br/>';
 
 
         // 88888888888888888888888888888888888888888888888888888888888888888888888888888888
@@ -233,12 +233,12 @@ function update_user()
         //CONDITION SI AUCUNE ERREUR EST PRESENTE VAR ERRORS = ["VIDE"];
 
         if (count($errors) == 0) {
-            echo 'debut condition si aucune erreur <br/>';
+            // echo 'debut condition si aucune erreur <br/>';
 
             array_push($success_modification, "Modification réussie !<br/> Veuillez patienter.. ");
 
             //ON CRYPTE LE MOT DE PASSE AVANT L ENREGISTREMENT DANS LA BASE DE DONNEES
-            echo 'Cryptage du mot de passe (hash) <br/>';
+            // echo 'Cryptage du mot de passe (hash) <br/>';
             $password_hash = password_hash($password_2, PASSWORD_DEFAULT); //NOUVELLE VARIABLE QUI ACCUILLE LE HASH DU MOT DE PASSE SAISIE QUI A ETE TRAITER EN AMONT
 
             // Verification du hash
@@ -247,10 +247,10 @@ function update_user()
 
             // resultat = string(60) "$2y$10$/guNGisFaPtfCJysQb9VketX1Vho3MlKDXSvNOZvhYNUtybhaD4vW" 
 
-            echo 'Début de la requete de modification UPDATE BY ID SESSION <br/>';
-            echo 'ID EN COURS = ';
-            echo ($_SESSION['user']['id']);
-            echo 'Attribution de la valeur de l id de session à $modif_user_id';
+            // echo 'Début de la requete de modification UPDATE BY ID SESSION <br/>';
+            // echo 'ID EN COURS = ';
+            // echo ($_SESSION['user']['id']);
+            // echo 'Attribution de la valeur de l id de session à $modif_user_id';
 
             // TEST REQUETE UPDATE FONCTIONNELLE EN BDD
 
@@ -282,7 +282,7 @@ function update_user()
 
             $reqUpdate->execute(); //execution de la requete
 
-            echo 'Fin de la requete update <br/>  Fin de la fonction update-user <br/>';
+            // echo 'Fin de la requete update <br/>  Fin de la fonction update-user <br/>';
        
             // apres la modification il faut reattribuer les nouvelle valeur aux variables de session ou par la recuperation en bdd
 
@@ -301,6 +301,6 @@ function update_user()
                                                                                         }
                                                                                         // 888888888888888888888888888888888888888888888888888888888888888888888888888
                                                                                         // FIN FONCTION CREATE-USER
-                                                                                        echo 'sorti de la fonction <br/>'
+                                                                                        // echo 'sorti de la fonction <br/>'
 
                                                                                                     ?>

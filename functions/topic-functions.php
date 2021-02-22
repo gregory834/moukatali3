@@ -149,7 +149,7 @@ function createTopic($request_values)
         // ____________________________________________________________________________________________
         // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
+            // echo "Sorry, your file was not uploaded.";
             array_push($errors, "Désoler, votre image n'as pas été transférées.");
             // SI AUCUNE ERREUR ALORS ON PRECEDE AU TELECHARGEMENT DANS LE DOSSIER UPLOAD PREALABLEMENT CREER.
             // LA FONCTION MOVE UPLOAD FILE PREND DEUX PARAMETRE (VARIABLE DE NOTRE IMAGE TRAITER  , SON CHEMIN DE DESTINATION)
@@ -161,7 +161,7 @@ function createTopic($request_values)
             }
             // CONDITION QUAND LE TRANSFERT ECHOUE
             else {
-                echo "Sorry, there was an error uploading your file.";
+                // echo "Sorry, there was an error uploading your file.";
                 array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
                 return $errors;
             }
@@ -271,7 +271,7 @@ function updateTopic($request_values)
     // ____________________________________________________________________________________________
     // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        // echo "Sorry, your file was not uploaded.";
         array_push($errors, "Désoler, votre image n'as pas été transférées.");
         // SI AUCUNE ERREUR ALORS ON PRECEDE AU TELECHARGEMENT DANS LE DOSSIER UPLOAD PREALABLEMENT CREER.
         // LA FONCTION MOVE UPLOAD FILE PREND DEUX PARAMETRE (VARIABLE DE NOTRE IMAGE TRAITER  , SON CHEMIN DE DESTINATION)
@@ -283,7 +283,7 @@ function updateTopic($request_values)
         }
         // CONDITION QUAND LE TRANSFERT ECHOUE
         else {
-            echo "Sorry, there was an error uploading your file.";
+            // echo "Sorry, there was an error uploading your file.";
             array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
             return $errors;
         }

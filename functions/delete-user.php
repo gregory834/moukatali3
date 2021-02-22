@@ -11,7 +11,7 @@ function delete_user()
     // INCLUSION DES INFORMATION DE CONNECTION
     require_once('bdd-connect.php');
     connectPdoBdd();
-    echo 'Connection à la base de donnée OK <br/>';
+    // echo 'Connection à la base de donnée OK <br/>';
     // INITIALISATION
     global  $pdo, $delete_id_user;
     $delete_id_user = $_SESSION['user']['id'];

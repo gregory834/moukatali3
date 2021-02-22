@@ -24,7 +24,7 @@ function readUserById($id)
 
     require_once('bdd-connect.php');
     connectPdoBdd();
-    echo 'Connection à la base de donnée OK <br/>';
+    // echo 'Connection à la base de donnée OK <br/>';
 
     //faire sortir les resultat de la requete de lecture pour l exploiter sur les autres page en fonction de l id de session
     global $user, $id;
@@ -39,7 +39,7 @@ function readUserById($id)
         // var_dump($user['telephone']);
         return $user;
     } else {
-        echo 'La fonction readUserById n\' as pas fonctionnée ... <br/>';
+        // echo 'La fonction readUserById n\' as pas fonctionnée ... <br/>';
     }
     return $user;
 }

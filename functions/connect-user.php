@@ -38,7 +38,7 @@ function connect_user()
         $email = trim($_POST['email']);
         $password_connect = trim($_POST['password-connect']);
         //TRAITEMENT DES CHAMPS VIDES
-        echo 'Traitement des champs vides <br/>';
+        // echo 'Traitement des champs vides <br/>';
         if (empty($email)) {
             array_push($errors, "Saisir une adresse email !");
         }
@@ -80,7 +80,7 @@ function connect_user()
 
 
                 if ($user['email'] === $email && password_verify($password_connect, $user['password'])) {
-                    echo 'compte trouvé en bdd ok <br/>';
+                    // echo 'compte trouvé en bdd ok <br/>';
                     // A CE STADE SI LE COMPTE EST TROUVER ALORS ON RECUPERE LES INFORMATIONS POUR LES STOCER EN SESSION. SERVIRA NOTAMENT POUR LE FORMULAIRE DE MODIFICATION DU COMPTE ET AUSSI POUR DEMARRER UNE SESSION UNE FOIS L UTILISATEUR CONNECTER
 
 

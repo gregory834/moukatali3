@@ -14,15 +14,12 @@ function create_user()
 
     require_once('bdd-connect.php');
     connectPdoBdd();
-    echo 'Connection à la base de donnée OK <br/>';
 
 
     /******************************************
      * INITIALISATION des variables *
      ******************************************/
-    echo ' Entrer de fonction creat-user <br/>';
 
-    echo ' Inititialisation varibles GLOBAL  <br/>Initialisation  du tableaux des erreurs (IN FONCTIONS)  <br/>';
     // NOUS SERT PAR EXEMPLE A SORTIR LES INFORMATIOSN DU TABLEAUX DES ERREURS DE LA FONCTION
     global $errors, $success_inscription, $role, $pseudo, $email, $nom, $prenom, $pdo,  $password_hash;
 
@@ -36,10 +33,8 @@ function create_user()
     $errors = array(); // VAR TABLEAUX QUI RECOIT LES MESSAGES D ERREUR POUR LE FORMULAIRE INSCRIPTION
     $success_inscription = array();
     $role = "User";
-    echo ' suite... fin initilisation ... suite <br/>';
 
     if (isset($_POST["inscription"])) {
-        echo ' Debut de la fonction create user ok <br/>';
         /************************************************************************************
          * TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE INSCRIPTION APRES LE CLIQUE *
          *********************************************************************************/
@@ -64,7 +59,6 @@ function create_user()
 
         // TEST SI UNE DES VARIABLE QUI RECCUPERE UN POST FONCTIONNE ICI AVEC LE POST PASSWORD
         // var_dump($password_1);
-        echo ' suite... fin traitement des variables POST. <br/> Password pas encore haché ...suite <br/>';
 
         /************************************
          * VALIDATION CHAMPS VIDE *
@@ -103,7 +97,7 @@ function create_user()
         if (isset($_POST["inscription"])) {
             $check = getimagesize($_FILES["avatar"]["tmp_name"]);
             if ($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
+                // echo "File is an image - " . $check["mime"] . ".";
 
 
                 $uploadOk = 1;
@@ -114,11 +108,7 @@ function create_user()
             }
         }
 
-        // // Check if file already exists
-        // if (file_exists($target_file)) {
-        //   echo "Sorry, file already exists.";
-        //   $uploadOk = 0;
-        // }
+     
 
         // VERIFICATION DE LA TAILLE DE L IMAGE
         if ($_FILES["avatar"]["size"] > 600000) {
@@ -132,14 +122,12 @@ function create_user()
             $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 
         ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
             array_push($errors, "Format d'image non accepté ! Requis : png, pjeg ou png");
             $uploadOk = 0;
         }
 
         // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
             array_push($errors, "Désoler, votre image n'as pas été transférées.");
             // SI AUCUNE ERREUR ALORS ON PRECEDE AU TELECHARGEMENT DANS LE DOSSIER UPLOAD PREALABLEMENT CREER.
             // LA FONCTION MOVE UPLOAD FILE PREND DEUX PARAMETRE (VARIABLE DE NOTRE IMAGE TRAITER  , SON CHEMIN DE DESTINATION)
@@ -147,11 +135,11 @@ function create_user()
             // CONDITION QUAND TRANSFERT REUSSI
             if (move_uploaded_file($_FILES["avatar"]["tmp_name"], $target_file)) {
                 $avatar = $_FILES["avatar"]["name"];
-                echo "The file " . htmlspecialchars(basename($_FILES["avatar"]["name"])) . " has been uploaded. ";
+                // echo "The file " . htmlspecialchars(basename($_FILES["avatar"]["name"])) . " has been uploaded. ";
             }
             // CONDITION QUAND LE TRANSFERT ECHOUE
             else {
-                echo "Sorry, there was an error uploading your file.";
+                // echo "Sorry, there was an error uploading your file.";
                 array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
             }
         }
@@ -187,12 +175,10 @@ function create_user()
             array_push($errors, "Vous avez oublié le mot de passe");
         }
         // ON VERIFIE SI LES DEUX MOTS DE PASSE SAISIE SONT IDENTIQUES
-        echo 'Vérification mots de passe si identique pendant la saisie des POSTS <br/>';
         if ($password_1 != $password_2) {
             array_push($errors, "les deux mots de passe ne correspondent pas");
         }
 
-        echo ' suite .. Fin des vérifications des champs vide .. suite <br/>';
 
 
 

@@ -11,8 +11,6 @@ function connectPdoBdd(){
          $db='moukatali';
          echo 'METHOD PDO CONNECTION REUSSI AVEC FONCTION connectPdoBdd<br/>'; return $pdo;} 
 catch (PDOException $e) {print "Erreur !: " . $e->getMessage() . "<br/>";die();}}
-//   ATTENTION NE PAS EFFACER 
-//FUNCTION CONNECTION METHODE PDO OK FONCTIONELLE
 // connectPdoBdd();
 
 ?>
@@ -32,7 +30,6 @@ catch (PDOException $e) {print "Erreur !: " . $e->getMessage() . "<br/>";die();}
         //On vérifie la connexion
         if($conn->connect_error){ die('Erreur : ' .$conn->connect_error);}
         echo 'METHOD SQLI CONNECTION REUSSI AVEC FONCTION connectSqliBdd ';}
-//   ATTENTION NE PAS EFFACER 
 //   connectSqliBdd();
 ?>
 

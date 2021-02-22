@@ -3,7 +3,7 @@
 // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 require_once('bdd-connect.php');
 connectPdoBdd();
-echo 'Connection à la base de donnée OK <br/>';
+// echo 'Connection à la base de donnée OK <br/>';
 $db = connectPdoBdd();
 // variables utilisateur Admin
 $admin_id = 0;
@@ -101,7 +101,7 @@ function createAdmin($request_values)
      *************************************************/
     //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
     // l'e-mail et les noms d'utilisateur doivent être uniques
-    echo 'start recherche doublons <br/>';
+    // echo 'start recherche doublons <br/>';
     $pdo =  connectPdoBdd(); //connection a la bdd
     $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE  email = '$email' LIMIT 1"; //requete de selection dans table user en fonction de l email
     $reqEmail = $pdo->prepare("SELECT * FROM `users` WHERE email='$email'"); //préparation de la requete
@@ -115,7 +115,7 @@ function createAdmin($request_values)
         }
         //SI AUCUN DOUBLON ECHO TEST ET ON CONTINUE
     } else {
-        echo 'AUCUN DOUBLON EMAIL TROUVER <br/>';
+        // echo 'AUCUN DOUBLON EMAIL TROUVER <br/>';
     }
     /**********************************************
      * VERIFICATION BOUBLON PSEUDONYME METHODE PDO *
@@ -132,9 +132,9 @@ function createAdmin($request_values)
         }
         // SI AUCUN DOUBLON ECHO TEST ET ON CONTINUE
     } else { // email n'existe pas
-        echo 'AUCUN DOUBLON PSEUDO TROUVER <br/>';
+        // echo 'AUCUN DOUBLON PSEUDO TROUVER <br/>';
     }
-    echo 'Fin de recherche de doublons <br/>';
+    // echo 'Fin de recherche de doublons <br/>';
     // 88888888888888888888888888888888888888888888888888888888888888888
     // enregistrer l'utilisateur s'il n'y a pas d'erreurs dans le formulaire
     if (count($errors) == 0) {
