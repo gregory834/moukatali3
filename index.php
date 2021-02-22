@@ -107,7 +107,7 @@
         } else {
         ?>
 
-            <h4 class="ml-2">Vous êtes connecté en tant que : <?php echo ($_SESSION['user']['nom']); ?>
+            <h4 class="ml-2">Vous êtes connecté en tant que : <?php echo ($_SESSION['user']['pseudo']); ?>
                 &nbsp;
                 <?php echo ($_SESSION['user']['prenom']); ?> </h'>
                 <div class="d-flex justify-content-center mt-5">

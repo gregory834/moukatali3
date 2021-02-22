@@ -1,7 +1,5 @@
 
-
 <!-- METHODE PDO CONNECTION BDD -->
-
 <?php 
 function connectPdoBdd(){
    
@@ -11,25 +9,7 @@ function connectPdoBdd(){
          $db='moukatali';
          echo 'METHOD PDO CONNECTION REUSSI AVEC FONCTION connectPdoBdd<br/>'; return $pdo;} 
 catch (PDOException $e) {print "Erreur !: " . $e->getMessage() . "<br/>";die();}}
-// connectPdoBdd();
-
 ?>
 
 
-
-
-
-
-<!-- METHODE SQLI CONNECTION BDD-->
-
-<?php
-      function connectSqliBdd(){
-        $servername = 'localhost'; $username = 'root'; $password = ''; $dbname = 'moukatali';
-        //On établit la connexion
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        //On vérifie la connexion
-        if($conn->connect_error){ die('Erreur : ' .$conn->connect_error);}
-        echo 'METHOD SQLI CONNECTION REUSSI AVEC FONCTION connectSqliBdd ';}
-//   connectSqliBdd();
-?>
 

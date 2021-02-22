@@ -1,17 +1,11 @@
 <!-- CONNETION USER WITH VALIDATION FORM AND SECURITY David -->
-<!-- NE PAS OUBLIER DE LANCER UNE SESSION ET DE STOCKER DES INFOS EN VARIABLES DE SESSION -->
-
-
 <?php
-
 
 global $user;
 function connect_user()
 {
-
-    // la session user se lancera uniquement si on se connecte a votre compte
     session_start();
-   
+
     // echo 'début de la function de connection <br/>';
     /******************************************
      * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
@@ -98,8 +92,7 @@ function connect_user()
                     // var_dump($_SESSION['user']['id']);
 
 
-                    // test des données recu de la bdd
-                    // var_dump($user['pseudo']);
+            
                     array_push($success_connect, "Connexion réussie !<br/> Cliquez sur SUIVANT ");
 
 
@@ -109,7 +102,7 @@ function connect_user()
                     return $user['id'];
                     return $user['role'];
 
-                    $id=$_SESSION['user']['id'];
+                    $id = $_SESSION['user']['id'];
                     return $id;
                     // ATTENTION !! POUR PAGE PROFIL SOIT ON REFAIT UNE REQUETE POUR AFFICHER LES INFOS SOIT ON UTILISE CEUX STOCKER EN SESSION
 
@@ -129,7 +122,7 @@ function connect_user()
 
     // echo 'test';
 
-    $id=$_SESSION['user']['id'];
+    $id = $_SESSION['user']['id'];
 
     // var_dump($_SESSION['user']['id']);
     // var_dump($_SESSION['user']['id']);
