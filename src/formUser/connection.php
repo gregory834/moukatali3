@@ -1,5 +1,9 @@
 <?php
 
+include('../../logs/path.php');
+include('../../class/Log.class.php');
+include('../../class/test-log.php');
+
 global $user;
 include('../../functions/read-user.php');
 include('../../functions/delete-user.php');
