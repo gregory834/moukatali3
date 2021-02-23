@@ -172,7 +172,7 @@
                         <!-- 
                         <a class="btn btn-profil text-uppercase font-weight-bold mb-3 mb-md-0" href="succes.html" role="button">Mes succès</a> -->
 
-                        <a class="btn btn-profil text-uppercase font-weight-bold mb-3 mb-md-0" href="../formUser/modification.php" type="submit" name="mofidier" role="button">Modifier</a>
+                        <a class="btn btn-profil text-uppercase font-weight-bold mb-3 mb-md-0" href="../formUser/modification.php" type="submit" name="modifier" role="button">Modifier</a>
 
                         
 

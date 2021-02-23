@@ -140,7 +140,7 @@
           </div>
           <!-- Titre -->
           <div class="form-floating">
-            <input type="text" class="form-control" placeholder="Title" name="title" value="<?= $titre ?>">
+            <input type="text" class="form-control" placeholder="Title" name="title" value="<?= $title ?>">
             <label for="title">Titre</label>
           </div>
           <!-- Description -->
