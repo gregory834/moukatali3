@@ -87,7 +87,7 @@ function register() {
          $target_file = $target_dir . basename($avatar); //parametrage du nom de l image
 
          // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
-         if ( !move_uploaded_file($avatar, $target_file) ) {
+         if ( !move_uploaded_file($_FILES['avatar']['tmp_name'], $target_dir) ) {
             array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
         }
 
@@ -96,11 +96,7 @@ function register() {
          *************************************************/
         //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
         // l'e-mail et les noms d'utilisateur doivent être uniques
-        $servername = 'localhost';
-$database = "moukatali";
-$login = 'root';
-$pwd = '';
-        $db_connect = new PDO("mysql:host=$servername; dbname=$database", $login, $pwd);
+        
         $reqt  = "SELECT * FROM  `users` WHERE  email = '$email' OR pseudo = '$pseudo' LIMIT 1"; //requete de selection dans table user en fonction de l email
         $reqEmail = $db_connect->prepare($reqt); //préparation de la requete
         $reqEmail->execute([$email]);  //EXECUTION DE LA REQUETE
