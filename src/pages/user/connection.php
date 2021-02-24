@@ -2,7 +2,7 @@
 
 include('../../logs/path.php');
 include('../../class/Log.class.php');
-include('../../class/test-log.php');
+include('../../class/log.php');
 
 global $user;
 include('../../functions/read-user.php');
