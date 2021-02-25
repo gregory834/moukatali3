@@ -65,17 +65,26 @@ include ('../../layout/head.php');
                             <div class="btn1-back ">
                                 <p>Est tu certain de vouloir supprimer ton compte? Cette action est irreversible !</p>
 
-                                <form action="" method="POST" class="yes ">
-                                    <button type="submit" name="supprimer" class="yes ">Oui</button>
-                                    <button class="no">Non</button>
+                                <form method="POST" class="yes">
+
+                                <button id="confirm" data-toggle="modal" data-target="#popup" type="submit" name="supprimer" class="yes ">Oui</button>
+                                <button class="no">Non</button>
+
                                 </form>
 
                             </div>
                             <div class="btn1-front text-uppercase font-weight-bold">Supprimer </div>
+                        </div>
 
-                            <!-- SCRIPT DELETE DAV -->
-                            <script src="../../script/btn1-delete.js"></script>
-
+                        <!----- POPUP ----->
+                        <div class="modal fade hidden" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <h5 class="modal-title text-dark" id="exampleModalLongTitle">Nous traitons votre demande !</h5>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -97,7 +106,25 @@ include ('../../layout/head.php');
             <a href="#">Mentions légales</a>
         </footer>
 
+        <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+            crossorigin="anonymous"></script>
         <script src="../../../public/js/btn-sup-modal.js"></script>
+        <script>
+
+            btn = document.getElementById('confirm');
+
+            popup = document.getElementById('popup');
+
+            btn.addEventListener('click', evt => {
+                popup.classList.remove('hidden')
+                popup.classList.add('visibility')
+            })
+        </script>
 
     </body>
 

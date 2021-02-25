@@ -34,7 +34,14 @@ include ('../layout/head.php');
             <div class="mb-5 box-formulaire col-lg-8 col-md-8 ">
                 <form class="col px-3 py-4" method="post">
 
-                    <form class="col px-3 py-4" method="post" action="">
+                   <!-- MESSAGE D ERREUR -->
+                   <?php if (count($errors) > 0) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php foreach ($errors as $error) : ?>
+                                <p><?php echo $error ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif ?>
 
                         <!-- EMAIL -->
                         <div class="mb-3">

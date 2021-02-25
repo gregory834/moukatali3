@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  jeu. 25 fév. 2021 à 05:47
+-- Généré le :  jeu. 25 fév. 2021 à 11:20
 -- Version du serveur :  5.7.17
 -- Version de PHP :  7.1.3
 
@@ -30,10 +30,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `like_dislike` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) NOT NULL,
-  `moukatage_id` int(10) NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `moukatage_id` int(10) UNSIGNED NOT NULL,
   `action` tinyint(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -42,14 +42,14 @@ CREATE TABLE `like_dislike` (
 --
 
 CREATE TABLE `moukatages` (
-  `id` int(10) NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL,
   `topics_id` int(10) UNSIGNED NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
-  `text` text CHARACTER SET utf8 NOT NULL,
-  `like` int(10) NOT NULL,
-  `dislike` int(10) NOT NULL,
+  `text` text NOT NULL,
+  `likes` int(10) NOT NULL DEFAULT '0',
+  `dislikes` int(10) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -59,13 +59,13 @@ CREATE TABLE `moukatages` (
 
 CREATE TABLE `topics` (
   `id` int(10) UNSIGNED NOT NULL,
-  `title` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `image` varchar(255) NOT NULL,
   `quota_note` int(10) NOT NULL,
   `published` int(10) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -75,14 +75,23 @@ CREATE TABLE `topics` (
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `pseudo` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `first_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `password` varchar(200) CHARACTER SET utf8 NOT NULL,
-  `role` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `pseudo` varchar(255) NOT NULL,
+  `avatar` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `delete_account` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `users`
+--
+
+INSERT INTO `users` (`id`, `pseudo`, `avatar`, `last_name`, `first_name`, `email`, `password`, `role`, `created_at`, `delete_account`) VALUES
+(1, 'admin', 'admin.jpg', 'Admin', 'Admin', 'admin@admin.com', '$2y$10$q9Qt/671Qtkopks.2csdheV9HzjSxCWI/jx8/.YpddBvRsy9ZFn9a', 'admin', '2021-02-25 10:19:16', 0);
 
 --
 -- Index pour les tables déchargées
@@ -92,13 +101,17 @@ CREATE TABLE `users` (
 -- Index pour la table `like_dislike`
 --
 ALTER TABLE `like_dislike`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `moukatage_id` (`moukatage_id`);
 
 --
 -- Index pour la table `moukatages`
 --
 ALTER TABLE `moukatages`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`),
+  ADD KEY `topics_id` (`topics_id`);
 
 --
 -- Index pour la table `topics`
@@ -127,7 +140,7 @@ ALTER TABLE `like_dislike`
 -- AUTO_INCREMENT pour la table `moukatages`
 --
 ALTER TABLE `moukatages`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `topics`
 --
@@ -137,7 +150,25 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `like_dislike`
+--
+ALTER TABLE `like_dislike`
+  ADD CONSTRAINT `like_dislike_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `like_dislike_ibfk_2` FOREIGN KEY (`moukatage_id`) REFERENCES `moukatages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `moukatages`
+--
+ALTER TABLE `moukatages`
+  ADD CONSTRAINT `moukatages_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `moukatages_ibfk_2` FOREIGN KEY (`topics_id`) REFERENCES `topics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

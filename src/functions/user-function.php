@@ -23,6 +23,11 @@ if ( isset($_POST['modifier']) ) {
     updateUser();
 }
 
+// si je clique sur supprimer
+if ( isset($_POST['supprimer']) ) {
+    deleteUser();
+}
+
 
 
 
@@ -95,7 +100,7 @@ function registerUser() {
         }
 
          // PARAMETRAGE DES VARIBLES D ACCES, EXTENSION, UPLOAD, ET DU DOSSIER DE DESTINATION DES IMAGES UPLOADER
-         $target_dir = BASE_URL . "/public/images/uploads/";  //chemin du sossier ou les fichiers seront uploader
+         $target_dir = "../../public/images/uploads/";  //chemin du sossier ou les fichiers seront uploader
          $target_file = $target_dir . basename($avatar); //parametrage du nom de l image
 
          // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
@@ -157,60 +162,60 @@ function connexionUser() {
         }
 
     /******************************************
-         * REQUETE RECUPERATION POUR COMPARAISON *
-         ******************************************/
-        // echo ' vérification des conditions <br/>';
-        if (empty($errors)) {
-          
+     * REQUETE RECUPERATION POUR COMPARAISON *
+     ******************************************/
+    // echo ' vérification des conditions <br/>';
+    if (empty($errors)) {
+        
+        
+        $reqt  = "SELECT * FROM  `users` WHERE  email = '$email' LIMIT 1";
+        $reqEmail = $db_connect->prepare($reqt);
+        $reqEmail->execute([$email]);
+        $user = $reqEmail->fetch();
+
+        // test
+        // $user =  $reqEmail->fetch();
+
+        // echo 'Vérification du mot de passe et de l\' email. <br/>';
+        if ($user && $user['delete_account'] == 0 ) { // email existant
+            // VERIFICATION DES CHAMPS SAISIE AVEC LES MATCH EN BDD
+            // VERIFICATION DES CORRESPONDANCE DES MOTS DE PASSE (saisie à l'input et présente en bdd)
+            // utilisation de la fonction password_verify qui compart le hasf password en bdd avec le mot de passe saisie à l'input lors de la connection
+            // password_verify entre $password_connect et $doublonEmail['PASSWORD et non pas PASSWORD-CONNECT]. PASSWORD car cela correspond a commebnt il est nommé en bdd sur les ligne.
+
+
+            $passmatch = password_verify($password_connect, $user['password']);
             
-            $reqt  = "SELECT * FROM  `users` WHERE  email = '$email' LIMIT 1";
-            $reqEmail = $db_connect->prepare($reqt);
-            $reqEmail->execute([$email]);
-            $user = $reqEmail->fetch();
+            if ($passmatch = false) {
+                array_push($errors, "Mot de passe incorrect <br/>!");
+            }
 
-            // test
-            // $user =  $reqEmail->fetch();
-
-            // echo 'Vérification du mot de passe et de l\' email. <br/>';
-            if ($user && $user['delete_account'] == 0 ) { // email existant
-                // VERIFICATION DES CHAMPS SAISIE AVEC LES MATCH EN BDD
-                // VERIFICATION DES CORRESPONDANCE DES MOTS DE PASSE (saisie à l'input et présente en bdd)
-                // utilisation de la fonction password_verify qui compart le hasf password en bdd avec le mot de passe saisie à l'input lors de la connection
-                // password_verify entre $password_connect et $doublonEmail['PASSWORD et non pas PASSWORD-CONNECT]. PASSWORD car cela correspond a commebnt il est nommé en bdd sur les ligne.
+            if ( $user['email'] === $email && password_verify($password_connect, $user['password']) ) {
+                
+                // A CE STADE SI LE COMPTE EST TROUVER ALORS ON RECUPERE LES INFORMATIONS POUR LES STOCER EN SESSION. SERVIRA NOTAMENT POUR LE FORMULAIRE DE MODIFICATION DU COMPTE ET AUSSI POUR DEMARRER UNE SESSION UNE FOIS L UTILISATEUR CONNECTER
 
 
-                $passmatch = password_verify($password_connect, $user['password']);
-               
-                if ($passmatch = false) {
-                    array_push($errors, "Mot de passe incorrect <br/>!");
-                }
+                /***************************************************************************************
+                 * STOCKAGE DES INFORMATIONS BDD EN SESSION OU EN UTILISANT CEUX DU RESULTAT DE REQUETE *
+                 *****************************************************************************************/
 
-                if ( $user['email'] === $email && password_verify($password_connect, $user['password']) ) {
-                    
-                    // A CE STADE SI LE COMPTE EST TROUVER ALORS ON RECUPERE LES INFORMATIONS POUR LES STOCER EN SESSION. SERVIRA NOTAMENT POUR LE FORMULAIRE DE MODIFICATION DU COMPTE ET AUSSI POUR DEMARRER UNE SESSION UNE FOIS L UTILISATEUR CONNECTER
-
-
-                    /***************************************************************************************
-                     * STOCKAGE DES INFORMATIONS BDD EN SESSION OU EN UTILISANT CEUX DU RESULTAT DE REQUETE *
-                     *****************************************************************************************/
-
-                    // $_SESSION = array();
-                    // mettre les info utiles de l'utilisateur connecté dans le tableau de session
-                    $_SESSION['user']['pseudo'] = $user['pseudo'];
-                    header('location: ./moukatages.php');
-
-                } else {
-
-                    array_push($errors, " Mot de passe erroné ! <br/> Vérifier vos informations ");
-
-                }
+                // $_SESSION = array();
+                // mettre les info utiles de l'utilisateur connecté dans le tableau de session
+                $_SESSION['user']['pseudo'] = $user['pseudo'];
+                header('location: ./moukatages.php');
 
             } else {
 
-                array_push($errors, " Compte inexistant... <br/> Veuillez creer un compte.");
+                array_push($errors, " Mot de passe erroné ! <br/> Vérifier vos informations ");
 
             }
+
+        } else {
+
+            array_push($errors, " Compte inexistant... <br/> Veuillez creer un compte.");
+
         }
+    }
 
 }
 
@@ -306,6 +311,28 @@ function updateUser() {
 
         header('location: ./profile.php');
     }
+
+}
+
+function deleteUser() {
+
+    global  $db_connect;
+
+    // si le bouton supprimer est cliqué alors :
+   
+        // requete de suppression methode PDO
+        $user_pseudo = $_SESSION['user']['pseudo'];
+        $delete_account = 1;
+        $reqt = "UPDATE `users` SET delete_account = '$delete_account' WHERE pseudo = '$user_pseudo' "; //supprime la ligne du compte en repérant l id en bdd en fontion de l id de session . L id de session est stocker dans la varaible $delete_id_user.
+        $reqUpdate = $db_connect->prepare($reqt); //preparation de la requete
+        $reqUpdate->execute(); //execution de la requete
+
+        // On efface également les donnée en session pour evité des bug d affichage
+        //si le compte disparait et que la session est tjs active ainsi on détruit aussi la session
+        session_destroy();
+        unset($_SESSION['user']);
+
+        header('location: ../../index.php');
 
 }
 
