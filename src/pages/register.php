@@ -42,6 +42,15 @@ include ('../layout/head.php');
 
                 <form class="col px-3 py-4" method="POST" enctype="multipart/form-data">
 
+                    <!-- MESSAGE D ERREUR -->
+                    <?php if (count($errors) > 0) : ?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php foreach ($errors as $error) : ?>
+                                <p><?php echo $error ?></p>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif ?>
+
                     <!-- PSEUDONYME DATA TYPE VARCHAR-->
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Pseudonyme*</label>

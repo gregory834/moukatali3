@@ -10,14 +10,16 @@ $errors = array(); // VAR TABLEAUX QUI RECOIT LES MESSAGES D ERREUR POUR LE FORM
 
 // Si je clique sur le bouton inscription
 if ( isset($_POST['register']) ) {
-    register();
+    registerUser();
 }
 
 
 
 
 // FONCTION INSCRIPTION
-function register() {
+function registerUser() {
+
+        global $db_connect, $errors;
 
         /************************************************************************************
          * TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE INSCRIPTION APRES LE CLIQUE *
@@ -73,21 +75,21 @@ function register() {
 
         // VERIFICATION DE LA TAILLE DE L IMAGE
         if ($_FILES["avatar"]["size"] > 600000) {
-            array_push($errors, "Image volumineux ! Elle ne peut dépasser 600ko .");
+            array_push($errors, "Image volumineuse ! Elle ne peut dépasser 600ko .");
         }
 
         $imageFileType = strtolower(pathinfo($avatar, PATHINFO_EXTENSION)); //définition de l extension de l image
         // VERIFICATION DES EXTENSIONS
         if ( $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" ) {
-            array_push($errors, "Format d'image non accepté ! Requis : png, pjeg ou png");
+            array_push($errors, "Format d'image non accepté ! Requis : png, jpeg, jpg ou png");
         }
 
          // PARAMETRAGE DES VARIBLES D ACCES, EXTENSION, UPLOAD, ET DU DOSSIER DE DESTINATION DES IMAGES UPLOADER
-         $target_dir = "../public/images/uploads/";  //chemin du sossier ou les fichiers seront uploader
+         $target_dir = "../../public/images/uploads/";  //chemin du sossier ou les fichiers seront uploader
          $target_file = $target_dir . basename($avatar); //parametrage du nom de l image
 
          // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
-         if ( !move_uploaded_file($_FILES['avatar']['tmp_name'], $target_dir) ) {
+         if ( !move_uploaded_file($_FILES['avatar']['tmp_name'], $target_file) ) {
             array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
         }
 
@@ -116,7 +118,7 @@ function register() {
 
             $reqt = "INSERT INTO `users` ( pseudo, first_name, last_name, avatar, email, password, role, created_at ) VALUES ( '$pseudo','$first_name','$last_name', '$avatar', '$email', '$password_hash', '$role', now() )";
 
-            $reqInsert = $pdo->prepare($reqt); //preparation de la requete
+            $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
             $reqInsert->execute(); //execution de la requete
 
             header('location: login.php');
