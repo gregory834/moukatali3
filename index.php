@@ -96,7 +96,6 @@
             <!-- BOUTONS -->
             <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
                 <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="src/formUser/connection.php" role="button">CONNECTION</a>
-                <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="src/formUser/inscription.php" role="button">INSCRIPTION</a>
 
             </div>
 
@@ -107,9 +106,12 @@
         } else {
         ?>
 
-            <h4 class="ml-2">Vous êtes connecté en tant que : <?php echo ($_SESSION['user']['nom']); ?>
+            <h4 class="ml-2">Vous êtes connecté en tant que :
+             <?php echo ($_SESSION['user']['first_name']); ?>
                 &nbsp;
-                <?php echo ($_SESSION['user']['prenom']); ?> </h'>
+            <?php echo ($_SESSION['user']['name']); ?> </h'>
+
+
                 <div class="d-flex justify-content-center mt-5">
                     <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="src/pages/liste-sujet.php" role="submit" name="moukatali">MOUKATALI !!</a>
                 </div>

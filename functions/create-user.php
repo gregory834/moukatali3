@@ -1,13 +1,8 @@
 <!-- CREATE USER WITH VALIDATION FORM AND SECURITY David -->
-
-
-
-
 <?php
 
 function create_user()
 {
-
     /******************************************
      * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
      ******************************************/
@@ -27,9 +22,7 @@ function create_user()
     $pseudo = ""; //initialisation
     $avatar = "";
     $email = "";
-    $ville = "";
     $password_hash = "";
-    // $telephone ="";
     $errors = array(); // VAR TABLEAUX QUI RECOIT LES MESSAGES D ERREUR POUR LE FORMULAIRE INSCRIPTION
     $success_inscription = array();
     $role = "User";
@@ -40,7 +33,7 @@ function create_user()
          *********************************************************************************/
         // ON RECUPERE LES VALEURS SAISIES DES POSTS ET ON LES TRAITE
         $pseudo = trim($_POST['pseudo']);
-        // $avatar = $_POST['avatar']; 
+        // $avatar = $_POST['avatar'];
 
         //POUR LA PHOTO DE PROFIL
         $avatar = strtolower(time() . '-' . $_FILES['avatar']['name']); //input de type file et securisation strtolower time (a etudier)
@@ -73,7 +66,6 @@ function create_user()
         // TEST SI UN CHAMP EST VIDE
         // echo 'CHAMP VIDE POUR PSEUDO! </br>';
         //     var_dump($errors);
-        // 
         if (empty($avatar)) {
             array_push($errors, "Entrer une photo de profil");
             $uploadOk = 0;
@@ -108,7 +100,7 @@ function create_user()
             }
         }
 
-     
+
 
         // VERIFICATION DE LA TAILLE DE L IMAGE
         if ($_FILES["avatar"]["size"] > 600000) {
@@ -154,23 +146,23 @@ function create_user()
         if (empty($prenom)) {
             array_push($errors, "Entrer votre prenom");
         }
-        if (empty($genre)) {
-            array_push($errors, "Entrer votre genre");
-        }
-        if (empty($age)) {
-            array_push($errors, "Entrer votre age");
-        }
+        // if (empty($genre)) {
+        //     array_push($errors, "Entrer votre genre");
+        // }
+        // if (empty($age)) {
+        //     array_push($errors, "Entrer votre age");
+        // }
 
         if (empty($email)) {
             array_push($errors, "Entrer une adresse mail");
         }
 
-        if (empty($telephone)) {
-            array_push($errors, "Entrer votre numéro de téléphone");
-        }
-        if (empty($ville)) {
-            array_push($errors, "Entrer votre ville");
-        }
+        // if (empty($telephone)) {
+        //     array_push($errors, "Entrer votre numéro de téléphone");
+        // }
+        // if (empty($ville)) {
+        //     array_push($errors, "Entrer votre ville");
+        // }
         if (empty($password_1)) {
             array_push($errors, "Vous avez oublié le mot de passe");
         }
@@ -195,7 +187,7 @@ function create_user()
          * DOUBLE SECURITE , ICI AU NIVEAU DE PHP (NOM MODIFIABLE DEPUIS L INSPECTEUR DES ELEMENTS HTMPL) *
          ****************************************/
 
-        // RESTE A FAIRE 
+        // RESTE A FAIRE
 
         // 8888888888888888888888888888888888888888888888888888888888888888888888888888888
 
@@ -217,7 +209,7 @@ function create_user()
         echo 'start recherche doublons <br/>';
         $pdo =  connectPdoBdd(); //connection a la bdd
         $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE  email = '$email' LIMIT 1"; //requete de selection dans table user en fonction de l email
-        $reqEmail = $pdo->prepare("SELECT * FROM `users` WHERE email='$email'"); //préparation de la requete
+        $reqEmail = $pdo->prepare($reqt); //préparation de la requete
         $reqEmail->execute([$email]);  //EXECUTION DE LA REQUETE
         $doublonEmail = $reqEmail->fetch();  //RECUPERATION RESULTAT DE LA REQUETE AUTREMENT DIT SI UN DOUBLON EST TROUVER EN FONCTION DE L EMAIL FOURNI
 
@@ -244,7 +236,7 @@ function create_user()
             if ($doublonPseudo['pseudo'] === $pseudo) {
                 array_push($errors, "Attention ! Ce Pseudonyme existe déjà !");
             }
-            // SI AUCUN DOUBLON ECHO TEST ET ON CONTINUE
+            // SI AUCUN DOUBLON ECHO TEST ET ON CONTINUE.
         } else { // email n'existe pas
             echo 'AUCUN DOUBLON PSEUDO TROUVER <br/>';
         }
@@ -254,6 +246,10 @@ function create_user()
         // ENSUITE ON REDIRIGE LE CLIENT SUR UNE PAGE STATICS DE CONFIRMATION D INSCRIPTION AVANT DE SORTIR DE NOTRE FONCTION
         // AVEC UNE BALISE META .
         //LA PAGE CONTIENDRA UN BOUTON SUIVANT
+
+
+
+
 
 
 
@@ -282,7 +278,7 @@ function create_user()
 
             var_dump($password_hash);
 
-            // resultat = string(60) "$2y$10$/guNGisFaPtfCJysQb9VketX1Vho3MlKDXSvNOZvhYNUtybhaD4vW" 
+            // resultat = string(60) "$2y$10$/guNGisFaPtfCJysQb9VketX1Vho3MlKDXSvNOZvhYNUtybhaD4vW"
 
             echo 'Début de la requete d\' insertion <br/>';
 
@@ -293,7 +289,7 @@ function create_user()
             // REQUETE D INSERTION (CREATION) UTILISATEUR EN BASSE DE DONEE. 13 INFORMATIONS AU TOTAL INSERTION DANS L ODRE DE LA TABLE EN BASSE DE DONNEE
             //  ID EST AUTO INCREMENTER EN BDD
 
-            $reqt = "INSERT INTO `users` ( pseudo, prenom, nom, age, avatar, ville, telephone, email, password, genre, role, date_inscription) VALUES ( '$pseudo','$prenom','$nom', '$age', '$avatar', '$ville', '$telephone', '$email', '$password_hash', '$genre', '$role', now())";
+            $reqt = "INSERT INTO `users` ( pseudo, name, first_name, avatar, email, password, role, date_inscription) VALUES ( '$pseudo','$prenom','$nom', '$avatar', '$email', '$password_hash','$role', now())";
 
             $reqInsert = $pdo->prepare($reqt); //preparation de la requete
             $reqInsert->execute(); //execution de la requete
@@ -302,7 +298,7 @@ function create_user()
 
             //REDIRECTION SUR LA PAGE STATICS DE CONFIRMATION DE L INSCRIPTION
 ?>
-            <meta http-equiv="refresh" content="1; url=../pages/reussite-inscription.php" /><?php
+            <meta http-equiv="refresh" content="1; url=../formUser/connection.php" /><?php
 
                                                                                         }
                                                                                         // 888888888888888888888888888888888888888888888888888888888888888888888888888

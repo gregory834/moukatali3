@@ -57,20 +57,15 @@
                             
                             
                             
-                            <a href="liste-sujet.php">
+                            <a href="../pages/liste-sujet.php">
                                 <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> MouKatAli !!</li>
                             </a>
                             <a href="../user/profile.php">
                                 <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Mon profil</li>
                             </a>
-                            <a href="succes.html">
-                                <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Mes succès</li>
-                            </a>
+                         
                             <a href="../pages/offre.php">
                                 <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " />Offre et abonnemnt</li>
-                            </a>
-                            <a href="#">
-                                <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Contact</li>
                             </a>
 
                             <li class="header-liste-p d-flex justify-content-around mr-5">
@@ -124,18 +119,14 @@
                             if (isset($_SESSION['user'])) {
 
                                 readUserById($_SESSION['user']['id']);
-                                echo 'Donnée de session en cours : <br/>';
-                                echo ('<img src="../../images/uploads/' . $user['avatar'] . '" style="height:4em; width:4em; border-radius:em; "/>' . "<br/>");
-                                echo ($user['avatar'] . "<br/>");
-                                echo ($user['pseudo'] . "<br/>");
-                                echo ($user['id'] . "<br/>"); // ID QU ON A BESOIN POUR LA FONCTION READ USER BY ID AFIN D AFFICHER LES INFOS DEPUIS LA BDD ET NON DEPUIS LES VARIABLE DE SESSION. AVEC SESSION C EST MOIN SECURISEE
-                                echo ($user['nom'] . "<br/>");
-                                echo ($user['age'] . "<br/>");
-                                echo ($user['genre'] . "<br/>");
-                                echo ($user['telephone'] . "<br/>");
-                                echo ($user['email'] . "<br/>");
-                                echo ($user['password'] . "<br/>");
-                                echo ($user['ville'] . "<br/>");
+                                // echo 'Donnée de session en cours : <br/>';
+                                // echo ('<img src="../../images/uploads/' . $user['avatar'] . '" style="height:4em; width:4em; border-radius:em; "/>' . "<br/>");
+                                // echo ($user['avatar'] . "<br/>");
+                                // echo ($user['pseudo'] . "<br/>");
+                                // echo ($user['id'] . "<br/>"); // ID QU ON A BESOIN POUR LA FONCTION READ USER BY ID AFIN D AFFICHER LES INFOS DEPUIS LA BDD ET NON DEPUIS LES VARIABLE DE SESSION. AVEC SESSION C EST MOIN SECURISEE
+                                // echo ($user['name'] . "<br/>");
+                                // echo ($user['email'] . "<br/>");
+                                // echo ($user['password'] . "<br/>");
                             }
 
 
@@ -231,7 +222,7 @@
 
                             <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Nom*</label>
                             <input type="text" class="form-control" id="nom" name="nom" placeholder="DUPONT" title="Veuillez inscrire votre Nom" required pattern="([A-z0-9À-ž\s]){2,}" minlength="4" maxlength="50" size="50" 
-                            value = "<?php   echo ($user['nom']);    ?>">
+                            value = "<?php   echo ($user['first_name']);    ?>">
                             </input>
                         </div>
 
@@ -239,7 +230,7 @@
                         <div class="col-md-6 col-12 px-0 pl-md-1">
                             <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Prénom*</label>
                             <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Vinshan" title="Veuillez inscrire votre prénom" required pattern="([A-z0-9À-ž\s]){2,}" minlength="4" maxlength="50" size="50"
-                             value = "<?php   echo ($user['prenom']);    ?>">
+                             value = "<?php   echo ($user['name']);    ?>">
                             </input>
                         </div>
                     </div>
@@ -251,22 +242,22 @@
 
                         <div class="col-md-6 px-0 mb-3 mb-md-0 pr-md-1">
 
-                            <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Genre</label>
+                            <!-- <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Genre</label>
 
                             <select class="custom-select" id="inputGroupSelect01" name="genre" >
-                                <option><?php   echo ($user['genre']);    ?></option>
+                                <option></option>
                                 <option>Homme</option>
                                 <option>Femme</option>
-                            </select>
+                            </select> -->
                         </div>
 
 
                         <!-- AGE DATATPE SQL INT(10)-->
                         <div class="col-md-6 px-0 mb-3 mb-md-0 pl-md-1">
-                            <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Age*</label>
+                            <!-- <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Age*</label>
                             <input type="number" class="form-control" id="age" name="age" placeholder="18" min=18 max=100 required
-                            value = "<?php   echo ($user['age']);    ?>" >
-                            </input>
+                            value = "" >
+                            </input> -->
                         </div>
 
                     </div>
@@ -304,22 +295,22 @@
 
                     <!-- TELEPHONE DATA TYPE VARCHAR-->
                     <div class="mb-3 mt-3 text-start">
-                        <label for="phone" class="form-label">Téléphone</label>
-                        <input type="tel" class="form-control" id="telephone" name="telephone" placeholder="0692010203" title="Inscrire votre numéro de téléphone (format 0692010203)" required pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$" value = "<?php   echo ($user['telephone']);    ?>">
+                        <!-- <label for="phone" class="form-label">Téléphone</label>
+                        <input type="tel" class="form-control" id="telephone" name="telephone" placeholder="0692010203" title="Inscrire votre numéro de téléphone (format 0692010203)" required pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$" value = "<?php   echo ($user['telephone']);    ?>"> -->
                     </div>
 
 
                     <!-- VILLE DATA TYPE VARCHAR -->
                     <div class="mb-3">
 
-                        <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Ville</label>
+                        <!-- <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Ville</label>
 
                         <select class="custom-select" id="inputGroupSelect01" name="ville">
-                            <option selected><?php   echo ($user['ville']);    ?></option>
+                            <option selected><></option>
                             <option>Saint-Marie</option>
                             <option>Saint-Suzanne</option>
                             <option>Tampon</option>
-                        </select>
+                        </select> -->
                     </div>
 
 

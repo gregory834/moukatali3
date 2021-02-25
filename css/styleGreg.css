@@ -1,5 +1,10 @@
-
-
+.visibility{
+    display: block;
+}
+.hidden{
+    display: none!important;
+    background-color: #ff0000!important;
+}
 /************ TEST ANIMATION ***********/
 .block {
 	position: relative;

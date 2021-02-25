@@ -3,6 +3,12 @@
 /* button #26252A */
 /* body #26252A*/
 
+#popup{
+    display: none;
+}
+.modal{
+    display: none;
+}
 
 #id-navbar{
     background-color: #ffcc50;

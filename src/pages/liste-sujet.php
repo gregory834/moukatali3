@@ -1,18 +1,18 @@
 <!-- DERARAGE D UNE SESSION suite a une connexion on a besoin des infos de sessions pour afficher au bon endroit -->
+<?php session_start(); ?>
+
+
 
 <div class="text-light">
     <?php
-    session_start();
+
     global $user;
-    // global $topic;
 
     include('../../functions/bdd-connect.php');
     include('../../functions/read-user.php');
     include('../../functions/delete-user.php');
     include('../../functions/deconnect-user.php');
     include('../../functions/topic-functions.php');
-    //  echo  ($user);
-    // header ("content-type: image/jpeg");
     ?>
 
     <!doctype html>
@@ -37,7 +37,7 @@
     </head>
 
     <body>
-        <!-- 888888888888888888888888888888888888888888888888888888 -->
+
         <!-- HEADER -->
         <header class="header-liste ">
             <div class="container">
@@ -57,6 +57,7 @@
                                 <li class="header-liste-p"> <img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Accueil</li>
                             </a>
 
+
                             <?php
                             if (isset($_SESSION['user']['id'])) {  ?>
 
@@ -68,14 +69,8 @@
                                 <a href="../user/profile.php">
                                     <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Mon profil</li>
                                 </a>
-                                <a href="succes.html">
-                                    <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Mes succès</li>
-                                </a>
                                 <a href="../pages/offre.php">
                                     <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " />Offre et abonnemnt</li>
-                                </a>
-                                <a href="#">
-                                    <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Contact</li>
                                 </a>
 
                                 <li class="header-liste-p d-flex justify-content-around mr-5">
@@ -106,11 +101,12 @@
             </div>
         </header>
         <!-- FIN DE LA NAV -->
+
+
         <!-- VERIFICATION DES MESSAGE ERREUR -->
         <div class="text-light">
 
             <?php
-            // 888888888888888888888888888888888888888888888
             // SI ID EXISTANT
             if (isset($_SESSION['user']['id'])) {
                 //READ USER Lancement de la fonction de lecture avec id de session en parametre
@@ -120,7 +116,6 @@
                 if (isset($_POST['supprimer'])) {
                     delete_user($_SESSION['user']['id']);
                 }
-
                 // DECONNECTION SESSION
                 if (isset($_POST['deconnection'])) {
                     deconnect_user();
@@ -129,7 +124,6 @@
                 echo 'Aucune saission en cours ! Veuillez vous connectez !<br/>';
             }
 
-            // 888888888888888888888888888888888888888888888888888888888888888888888888888888
             //recuperation des topics a publier
             $etatPublish = 1; //Pour recuperer tout sont qui sont publier
             $etatUnpublish = 0; //reccuperer tout ceux qui sont non publier ou en attente de publication
@@ -138,27 +132,19 @@
             $sql = "SELECT * FROM topics  WHERE published = $etatPublish";
             $pdoStat = $db->prepare($sql);
             $executeIsOk = $pdoStat->execute();
-            // $listes_AllTpics = $pdoStat->fetchAll();
             $topics = $pdoStat->fetchAll();
 
             foreach ($topics as $topic) {
-                // $topic['author'] = getTopicAuthorById($topic['id']);
                 array_push($final_topics, $topic);
-                // var_dump($topic['image']);
             }
             $sql2 = "SELECT * FROM topics  WHERE published = $etatUnpublish";
             $pdoStat2 = $db->prepare($sql2);
             $executeIsOk = $pdoStat2->execute();
-            // $listes_AllTpics = $pdoStat->fetchAll();
             $topics_autres = $pdoStat2->fetchAll();
 
             foreach ($topics_autres as $topic_autre) {
-                // $topic['author'] = getTopicAuthorById($topic['id']);
                 array_push($final_topics_autres, $topic_autre);
-                // var_dump($topic['image']);
             }
-            //  var_dump($final_topics['id'])
-            // 888888888888888888888888888888888888888888888888888888888888888888888888888888
             ?>
         </div>
 
@@ -185,14 +171,14 @@
 </div>
 </section> <?php  }  ?>
 
-<!-- 88888888888888888888888888888888888888888888888888888888888 -->
+<!-- _________________________________________________________________________________________________ -->
+
 <!-- SECTION -->
 
 <section>
     <div class="container pt-4">
 
-        <?php 
-        
+        <?php
         global $topic, $topic_id;
         if (empty($topics)) : ?>
             <h1 style="text-align: center; margin-top: 20px;">Aucun sujet publié.</h1>
@@ -211,13 +197,6 @@
         <?php      }
         endif; ?>
 
-        <!-- SUJET BRUT-->
-        <!-- <div class="sujet bg-light p-3 mb-3 d-flex flex-column flex-md-row align-items-md-center">
-            <div class="image mb-2 mb-md-0 mr-md-2 d-lg-none"><img src="../../images/image-mobile.jpg" alt="Image du sujet"></div>
-            <div class="image mr-lg-2 d-none d-lg-block"><img src="../../images/image.jpg" alt="Image du sujet"></div>
-            <p class="text-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl.
-                Vestibulum mauris metus, luctus quis volutpat vitae, laoreet.</p>
-        </div> -->
 
         <!-- PROGRESS BAR -->
         <div class="info p-3 mb-3 bg-light">
@@ -264,8 +243,9 @@
                     moukatages</button>
             </div>
         </div>
-        <!-- 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888 -->
 
+
+        <!-- _______________________________________________________________________________________________ -->
         <?php
         if (isset($_SESSION['user']['id'])) {  ?>
             <!-- MOUKATAGE -->
@@ -280,6 +260,7 @@
                         <p class="mb-0">1 janvier 2021 à 00h00</p>
                     </div>
                 </div>
+
                 <!-- TEXTE -->
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl. Vestibulum mauris
                     metus, luctus quis volutpat vitae, laoreet. Lorem ipsum dolor sit amet.</p>
@@ -301,7 +282,10 @@
                     </div>
                 </div>
             </div> <?php  }  ?>
-        <!-- 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888 -->
+
+
+            <!-- ____________________________________________________________________________________________________________ -->
+
 
         <!-- MOUKATAGE -->
         <div class="moukatage p-3 bg-light text-dark mb-3 ">
@@ -356,8 +340,7 @@
         </div>
     </section>
 <?php else :
-    // si l etat de la publication est egal a publihed = 1 en bdd alors on l affiche
-
+    // si l etat de la publication est egal a publihed = 1 en base de donnée alors on l'affiche.
 
 ?>
 
@@ -370,7 +353,6 @@
             foreach ($topics_autres as $topic_autre) { ?>
 
                 <!-- AFFICHAGE DU TOPICS CREER ET PUBLIER PAR L ADMIN -->
-                <!-- SUJET -->
 
                 <!-- AUTRE SUJET -->
                 <div class="autre bg-light m-2 p-2 text-dark  col-md-5 col-sm-12 d-flex  align-items-center mb-3 mb-md-0 ">
@@ -386,20 +368,6 @@
 
 
 
-        <!-- AUTRE SUJET -->
-        <!-- <div class="autre bg-light p-4 text-dark d-flex align-items-center mb-3 mb-md-0 mr-md-3">
-            <img src="../../images/autre-sujet.jpg" class="mr-2" alt="Image sujet">
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac.</p>
-        </div> -->
-
-
-
-
-        <!-- AUTRE SUJET -->
-        <!-- <div class="autre bg-light p-4 text-dark d-flex align-items-center">
-            <img src="../../images/autre-sujet.jpg" class="mr-2" alt="Image sujet">
-            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac.</p>
-        </div> -->
 
         </div>
     </section>
@@ -418,7 +386,7 @@
         // echo ($user['telephone'] . "<br/>");
         // echo ($user['email'] . "<br/>");
         // echo ($user['password'] . "<br/>");
-        // echo ($user['ville'] . "<br/>");   
+        // echo ($user['ville'] . "<br/>");
         ?>
 
     </div>

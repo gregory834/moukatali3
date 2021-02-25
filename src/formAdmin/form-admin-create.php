@@ -4,14 +4,10 @@
   // include(ROOT_PATH . '/admin/includes/admin-functions.php');
   // récupére tous les administrateurs de la BDD ayant un rôle
   session_start();
-  //APPEL DE LA FONCTION CREATE 
+  //APPEL DE LA FONCTION CREATE
   include('../../functions/create-admin.php');
   $roles = ['Admin', 'Author', 'Moderator', 'User'];
   $role = ['Admin'];
-
-
-
-
 
   if (isset($_GET['logout'])) {
     session_destroy();
@@ -90,13 +86,13 @@
     //APPEL DE LA FUNCTION DE CONNECTION A LA BDD AVEC INCLUDE
     // include('../../functions/bdd-connect.php');
     // connectPdoBdd(); //OK FONCTIONNE
-    // connectSqliBdd(); //OK FONCTIONNE 
+    // connectSqliBdd(); //OK FONCTIONNE
 
 
 
     // require_once('../../functions/create-admin.php');
     // ON LANCE NOTRE FONCTION CREATE USER SI BTN CLIQUER
-    //APPEL DE LA FONCTION CREATE 
+    //APPEL DE LA FONCTION CREATE
     // $admins = getAdminUsers();
     $roles = ['admin', 'author', 'moderator', 'user'];
     //role présent en bdd en fonction des roles

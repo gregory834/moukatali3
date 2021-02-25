@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 global $user;
 include('../../functions/read-user.php');
 include('../../functions/delete-user.php');
@@ -34,7 +36,7 @@ require_once('../../functions/connect-user.php');
 </head>
 
 <body>
-  
+
     <!-- 888888888888888888888888888888888888888888888888888888 -->
     <!-- HEADER -->
     <header class="header-liste ">
@@ -57,9 +59,9 @@ require_once('../../functions/connect-user.php');
 
                         <?php
                         if (isset($_SESSION['user']['id'])) {  ?>
-                            
-                            
-                            
+
+
+
                             <a href="liste-sujet.php">
                                 <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> MouKatAli !!</li>
                             </a>
@@ -144,7 +146,6 @@ require_once('../../functions/connect-user.php');
 
             <!-- FORMULAIRE D'INSCRIPTION -->
             <div class="mb-5 box-formulaire col-lg-8 col-md-8 ">
-                <form class="col px-3 py-4" method="post">
 
                     <form class="col px-3 py-4" method="post" action="">
 
@@ -193,14 +194,14 @@ require_once('../../functions/connect-user.php');
 
 
                         <!--  BOUTON SUIVANT-->
-                        <?php if (isset($_SESSION)) { ?>
+                        <?php if (isset($_SESSION["user"])) { ?>
 
 
 
 
 
 
-                        
+
                             <div class="mt-3 d-flex justify-content-center">
                                 <a href="../pages/liste-sujet.php"><button type="button" name="suivant" class="btn btn-dark">SUIVANT</button></a>
                             </div>

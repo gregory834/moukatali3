@@ -35,12 +35,10 @@ function update_user()
     // $telephone ="";
     $errors = array(); // VAR TABLEAUX QUI RECOIT LES MESSAGES D ERREUR POUR LE FORMULAIRE MODIFICATION
     $success_modification = array();
-    // $role = "user"; //le role est deja defini a l inscription,Ne faut pas le mettre ici car si on modifie étant un admin le role sera affecter , hors on souhaite garder son role de admin ou autre
-    // echo ' suite... fin initilisation ... suite <br/>';
 
-    // echo ' Entrer de fonction update-user <br/>';
+
     if (isset($_POST["modifier"])) {
-        // echo ' Debut de la fonction update user ok <br/>';
+        
         /************************************************************************************
          * TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE MODIFICATION APRES LE CLIQUE *
          *********************************************************************************/
@@ -55,17 +53,10 @@ function update_user()
 
         $nom = htmlentities(trim(ucwords(strtolower($_POST['nom']))));
         $prenom = htmlentities(trim(ucwords(strtolower($_POST['prenom']))));
-        $genre = trim($_POST['genre']); //BOLLEEN EN BDD
-        $age = trim($_POST['age']); // TYPE DATE EN BDD
         $email = trim($_POST['email']);
-        $telephone = trim($_POST['telephone']);
         $password_1 = trim($_POST['password_1']);
         $password_2 = trim($_POST['password_2']);
-        $ville = htmlentities(trim(ucwords(strtolower($_POST['ville']))));
 
-        // TEST SI UNE DES VARIABLE QUI RECCUPERE UN POST FONCTIONNE ICI AVEC LE POST PASSWORD
-        // var_dump($password_1);
-        // echo ' suite... fin traitement des variables POST. <br/> Password pas encore haché ...suite <br/>';
 
         /************************************
          * VALIDATION CHAMPS VIDE *
@@ -78,8 +69,6 @@ function update_user()
         }
 
         // TEST SI UN CHAMP EST VIDE
-        // echo 'CHAMP VIDE POUR PSEUDO! </br>';
-        //     var_dump($errors);
         // 
         if (empty($avatar)) {
             array_push($errors, "Entrer une photo de profil");
@@ -168,23 +157,10 @@ function update_user()
         if (empty($prenom)) {
             array_push($errors, "Entrer votre prenom");
         }
-        if (empty($genre)) {
-            array_push($errors, "Entrer votre genre");
-        }
-        if (empty($age)) {
-            array_push($errors, "Entrer votre age");
-        }
-
         if (empty($email)) {
             array_push($errors, "Entrer une adresse mail");
         }
 
-        if (empty($telephone)) {
-            array_push($errors, "Entrer votre numéro de téléphone");
-        }
-        if (empty($ville)) {
-            array_push($errors, "Entrer votre ville");
-        }
         if (empty($password_1)) {
             array_push($errors, "Vous avez oublié le mot de passe");
         }
@@ -245,7 +221,7 @@ function update_user()
 
             var_dump($password_hash);
 
-            // resultat = string(60) "$2y$10$/guNGisFaPtfCJysQb9VketX1Vho3MlKDXSvNOZvhYNUtybhaD4vW" 
+            // resultat = string(60) "$2y$10$/guNGisFaPtfCJysQb9VketX1Vho3MlKDXSvNOZvhYNUtybhaD4vW"
 
             // echo 'Début de la requete de modification UPDATE BY ID SESSION <br/>';
             // echo 'ID EN COURS = ';
@@ -267,30 +243,28 @@ function update_user()
             //                              telephone = '0692346790' ,
             //                              email = 'Sacha@gmail.com' ,
             //                              password = 'motdepassedetest' ,
-            //                              genre = '2' 
+            //                              genre = '2'
 
             //                             WHERE id = 116 ;
 
             // ";
 
+            $reqt = "UPDATE  `users` SET pseudo =  '$pseudo' ,first_name =  '$prenom' , name = '$nom' ,  avatar = '$avatar' , email = '$email' , password = '$password_hash'  WHERE id = $modif_id_user";
 
-
-            $reqt = "UPDATE  `users` SET pseudo =  '$pseudo' ,prenom =  '$prenom' , nom = '$nom' , age = '$age' , avatar = '$avatar' ,ville = '$ville' , telephone = '$telephone' , email = '$email' , password = '$password_hash' , genre = '$genre' WHERE id = $modif_id_user";
-
-            $pdo =  connectPdoBdd(); 
+            $pdo =  connectPdoBdd();
             $reqUpdate = $pdo->prepare($reqt); //preparation de la requete
 
             $reqUpdate->execute(); //execution de la requete
 
             // echo 'Fin de la requete update <br/>  Fin de la fonction update-user <br/>';
-       
+
             // apres la modification il faut reattribuer les nouvelle valeur aux variables de session ou par la recuperation en bdd
 
             //REDIRECTION SUR LA PAGE STATICS DE CONFIRMATION DE LA MODIFICATION
 
             // apres la modification il faut reattribuer les nouvelle valeur aux variables de session ou par la recuperation en bdd
 ?>
-            <meta http-equiv="refresh" content="1; url=../pages/reussite-modification.php" /><?php
+            <meta http-equiv="refresh" content="1; url=../user/profile.php" /><?php
 
                                                                                                 }
                                                                                                 // 888888888888888888888888888888888888888888888888888888888888888888888888888

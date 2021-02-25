@@ -11,10 +11,8 @@
     include('../../functions/deconnect-user.php');
     include('../../functions/topic-functions.php');
     readUserById($_SESSION['user']['id']);
-    // echo  ($_SESSION['user']['id']);
-    //  echo  ($user['pseudo']);
 
-    // header ("content-type: image/jpeg");
+
     ?>
     <!DOCTYPE html>
     <html lang="fr">
@@ -43,8 +41,9 @@
 
     </head>
 
+
     <body>
-        <!-- 888888888888888888888888888888888888888888888888888888 -->
+
         <!-- HEADER -->
         <header class="header-liste ">
             <div class="container">
@@ -72,15 +71,11 @@
                                 <a href="../user/profile.php">
                                     <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Mon profil</li>
                                 </a>
-                                <a href="succes.html">
-                                    <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Mes succès</li>
-                                </a>
+
                                 <a href="../pages/offre.php">
                                     <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " />Offre et abonnemnt</li>
                                 </a>
-                                <a href="#">
-                                    <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Contact</li>
-                                </a>
+
                                 <li class="header-liste-p d-flex justify-content-around mr-5">
 
                                     <form method="POST">
@@ -96,9 +91,7 @@
                                 <a href="../formUser/inscription.php">
                                     <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> S'inscrire</li>
                                 </a>
-                                <a href="#">
-                                    <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> Contact</li>
-                                </a>
+
                             <?php    }  ?>
                         </ul>
                     </div>
@@ -106,9 +99,10 @@
             </div>
         </header>
 
+        <!-- ____________________________________________________________________________________________________ -->
+
         <div class="text-light">
             <?php
-            // 888888888888888888888888888888888888888888888
             // SI ID EXISTANT
             if (isset($_SESSION['user']['id'])) {
                 //READ USER Lancement de la fonction de lecture avec id de session en parametre
@@ -124,13 +118,29 @@
             } else {
                 echo 'Aucune saission en cours ! Veuillez vous connectez !<br/>';
             }
-            // 888888888888888888888888888888888888888888888888888888888888888888888888888888
             ?>
         </div>
         <!------------------------------------------------------------------------------------------------->
-        <!-- CONTAINER  -->
-        <!-- <h3 class="pt-3 mb-5 text-white text-center">DASHBOARD</h3> -->
-        <!-- user_info -->
+
+        <!----- POPUP ----->
+        <div class="modal fade hidden" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h5 class="modal-title text-dark" id="exampleModalLongTitle">Nous traitons votre demande !</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ____________________________________________________________________________________________________ -->
+
+
+        <!-- INFORMATION UTILISATEUR (avatar, nom, prénom, email) + bouton (modifier et supprimer) -->
         <section>
             <div class="container col-lg-8 col-md-8 d-flex justify-content-center">
                 <div id="user_info">
@@ -150,31 +160,17 @@
                     <!---Information user (NOM, Prénom, Addresse, Tel Sexe...)-->
                     <div class="col  d-flex justify-content-around  text-dark">
                         <div class="justify-content-around">
-                            <h5><img src="../../icons/user-fill.png" class="icon-size mr-4" /><?php echo ($user['nom']) ?>&nbsp;<?php echo ($user['prenom']) ?></h5>
-                            <h5><img src="../../icons/cake-2-fill.png" class="icon-size mr-4" /><?php echo ($user['age']) ?> ans</h5>
+                            <h5><img src="../../icons/user-fill.png" class="icon-size mr-4" /><?php echo ($user['name']) ?>&nbsp;<?php echo ($user['first_name']) ?></h5>
                             <h5><img src="../../icons/mail-open-fill.png" class="icon-size mr-4" /><?php echo ($user['email']) ?></h5>
-                            <h5><img src="../../icons/phone-fill.png" class="icon-size mr-4" /><?php echo ($user['telephone']) ?></h5>
-                            <h5><img src="../../icons/map-pin-fill.png" class="icon-size mr-4" />Ville de <?php echo ($user['ville']) ?></h5>
                         </div>
                     </div>
 
 
-
-                    <!-- mes  succès et modifier profile -->
-                    <!--
-                    <div class="container-fluid d-flex justify-content-around mb-3  " style="height: 40px;">
-                        <a href="succes.html"><button id="btn_succes" class="btn btn-dark text-light  rounded-pill btn-sm fw-bolder" type="submit">Mes succès</button></a>
-                        <button id="btn_editer" class="btn btn-dark text-light  rounded-pill btn-sm fw-bolder" type="submit">Editer</button>
-                        <button id="btn_modif" class="btn btn-dark text-light rounded-pill btn-sm fw-bolder" type="submit">Modifer profile</button>
-                    </div>
-                    -->
                     <div class="d-flex flex-column flex-md-row text-center align-items-center justify-content-md-around mt-4">
-                        <!-- 
+                        <!--
                         <a class="btn btn-profil text-uppercase font-weight-bold mb-3 mb-md-0" href="succes.html" role="button">Mes succès</a> -->
 
                         <a class="btn btn-profil text-uppercase font-weight-bold mb-3 mb-md-0" href="../formUser/modification.php" type="submit" name="mofidier" role="button">Modifier</a>
-
-                        
 
 
                         <!-- JAVASCRIPT ANIMATION BTN DELETE AND FONCTIONALITY -->
@@ -183,46 +179,43 @@
                                 <p>Est tu certain de vouloir supprimer ton compte? Cette action est irreversible !</p>
 
                                 <form action="" method="POST" class="yes ">
-                                    <button type="submit" name="supprimer" class="yes ">Oui</button>
+                                    <button id="confirm" data-toggle="modal" data-target="#popup" type="submit" name="supprimer" class="yes ">Oui</button>
                                     <button class="no">Non</button>
                                 </form>
 
+
+
                             </div>
                             <div class="btn1-front text-uppercase font-weight-bold">Supprimer </div>
-
                             <!-- SCRIPT DELETE DAV -->
                             <script src="../../script/btn1-delete.js"></script>
-
                         </div>
-
-
-
-
                     </div>
-
-
                 </div>
-
-                <!-- FONCTIONELLE -->
-                <!-- <form action="" method="POST">
-                    <button type="submit" name="supprimer">
-                        supprimer compte (fonctionne)
-                    </button>
-                </form> -->
-
-
-
             </div>
         </section>
-
-        <!-- FOOTER -->
-        <footer class="text-center py-5 d-flex flex-column">
-            <a href="#" class="mb-1">Contact</a>
-            <a href="#" class="mb-1">C.G.V.</a>
-            <a href="#" class="mb-1">C.G.U.</a>
-            <a href="#">Mentions légales</a>
-        </footer>
+        <!-- _____________________________________________________________________________________________________ -->
 
     </body>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-5 d-flex flex-column">
+        <a href="#" class="mb-1">Contact</a>
+        <a href="#" class="mb-1">C.G.V.</a>
+        <a href="#" class="mb-1">C.G.U.</a>
+        <a href="#">Mentions légales</a>
+    </footer>
+
+    </body>
+
+    <script>
+        btn = document.getElementById('confirm');
+        popup = document.getElementById('popup');
+        btn.addEventListener('click', evt => {
+
+            popup.classList.remove('hidden')
+            popup.classList.add('visibility')
+        })
+    </script>
 
     </html>

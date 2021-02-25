@@ -43,9 +43,9 @@
 
                         <?php
                         if (isset($_SESSION['user']['id'])) {  ?>
-                            
-                            
-                            
+
+
+
                             <a href="liste-sujet.php">
                                 <li class="header-liste-p"><img src="../../icons/chevron-right-solid-24.png" class="icon-size " class="icon-size " /> MouKatAli !!</li>
                             </a>
@@ -90,7 +90,7 @@
         </div>
     </header>
 
-  
+
     <!--88888888888888888888888888888888888888888 -->
     <!-- VERIFICATION DES MESSAGE ERREUR ET ETAT DE CONNECTION TEXT EN BLC SUR FOND NOIR -->
     <div class="text-light"><?php
@@ -209,7 +209,7 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between">
                         <!-- GENRE DATA TYPE SQL BOLEEN-->
 
-                        <div class="col-md-6 px-0 mb-3 mb-md-0 pr-md-1">
+                        <!-- <div class="col-md-6 px-0 mb-3 mb-md-0 pr-md-1">
 
                             <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Genre</label>
 
@@ -219,14 +219,14 @@
                                 <option >Femme</option>
                                 <option >3ième type</option>
                             </select>
-                        </div>
+                        </div> -->
 
 
                         <!-- AGE DATATPE SQL INT(10)-->
                         <div class="col-md-6 px-0 mb-3 mb-md-0 pl-md-1">
-                            <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Age*</label>
+                            <!-- <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Age*</label>
                             <input type="number" class="form-control" id="age" name="age" placeholder="18" min=18 max=100 required>
-                            </input>
+                            </input> -->
                         </div>
 
                     </div>
@@ -262,14 +262,14 @@
 
 
                     <!-- TELEPHONE DATA TYPE VARCHAR-->
-                    <div class="mb-3 mt-3 text-start">
+                    <!-- <div class="mb-3 mt-3 text-start">
                         <label for="phone" class="form-label">Téléphone</label>
                         <input type="tel" class="form-control" id="telephone" name="telephone" placeholder="0692010203" title="Inscrire votre numéro de téléphone (format 00 00 00 00 00)" required pattern="^(?:0|\(?\+33\)?\s?|0033\s?)[1-79](?:[\.\-\s]?\d\d){4}$" value="">
-                    </div>
+                    </div> -->
 
 
                     <!-- VILLE DATA TYPE VARCHAR -->
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
 
                         <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Ville</label>
 
@@ -279,7 +279,7 @@
                             <option>Saint-Suzanne</option>
                             <option>Tampon</option>
                         </select>
-                    </div>
+                    </div> -->
 
 
                     <!-- BOUTON INSCRIPTION -->

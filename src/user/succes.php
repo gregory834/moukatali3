@@ -9,14 +9,9 @@
 
 
     <!-- BOOSTRAP 4 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="css/styleGreg.css">
     <link rel="stylesheet" href="css/mon-style.css">
@@ -44,28 +39,28 @@
 
                     <ul class="menu">
                         <a href="index.html">
-                            <li  class="header-liste-p"> <img src="icons/chevron-right-solid-24.png"  class="icon-size " />  Accueil</li>
+                            <li class="header-liste-p"> <img src="icons/chevron-right-solid-24.png" class="icon-size " /> Accueil</li>
                         </a>
                         <a href="liste-sujet.html">
-                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png"  class="icon-size " /> Moukatages</li>
+                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png" class="icon-size " /> Moukatages</li>
                         </a>
                         <a href="connection.html">
-                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png"  class="icon-size " /> Se connecter</li>
+                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png" class="icon-size " /> Se connecter</li>
                         </a>
                         <a href="profile.html">
-                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png"  class="icon-size " /> Mon espace</li>
+                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png" class="icon-size " /> Mon espace</li>
                         </a>
                         <a href="abonnement.html">
-                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png"  class="icon-size " /> S'abonner</li>
+                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png" class="icon-size " /> S'abonner</li>
                         </a>
                         <a href="succes.html">
-                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png"  class="icon-size " /> Mes succès</li>
+                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png" class="icon-size " /> Mes succès</li>
                         </a>
                         <a href="#">
-                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png"  class="icon-size " /> Contact</li>
+                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png" class="icon-size " /> Contact</li>
                         </a>
                         <a href="#">
-                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png"  class="icon-size " /> Se déconnecter</li>
+                            <li class="header-liste-p"><img src="icons/chevron-right-solid-24.png" class="icon-size " /> Se déconnecter</li>
                         </a>
                     </ul>
                 </div>
@@ -74,73 +69,55 @@
         </div>
     </header>
 
-
-
-
-
-    <!------------------------------------------------------------------------------------------------->
+    <!-- _____________________________________________________________________________________________________ -->
 
     <!-- CONTAINER  -->
- 
 
 
-        <!-- <h3 class="pt-3 mb-5 text-white text-center">DASHBOARD</h3> -->
+    <!-- user_info -->
+    <section>
+        <div class="container py-5">
 
-        <!-- user_info -->
-        <section>
-            <div class="container py-5">
-
-                <div id="user_info">
-                    <!-- photo_de_profile -->
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <img id="img_avatar" src="images/avatar-3.jpg " alt=""
-                                class="img-fluid">
-                        </div>
+            <div id="user_info">
+                <!-- photo_de_profile -->
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <img id="img_avatar" src="images/avatar-3.jpg " alt="" class="img-fluid">
                     </div>
+                </div>
 
-                    <!-- Score Rang Statut -->
-                    <div class="d-flex justify-content-around fw-bolder mb-1">
-                        <p>SCORE</p>
-                        <p>RANG</p>
-                        <p>STATUT</p>
-                    </div>
+                <!-- Score Rang Statut -->
+                <div class="d-flex justify-content-around fw-bolder mb-1">
+                    <p>SCORE</p>
+                    <p>RANG</p>
+                    <p>STATUT</p>
+                </div>
 
-                    <!---Nombre de succe...)-->
-                    <!--
-                    <div class="row d-flex justify-content-center ">
-                        <div class="col-8 d-flex flex-column text-center bg-warning" style="height:100px" >
-                        </div>
-                    </div>
-                    -->
+                <div class=" badge d-flex flex-wrap justify-content-center mb-5">
+                    <div class="bd-highlight"><img src="images/badge-active.png" alt="Badge"></div>
+                    <div class="bd-highlight"><img src="images/badge-active.png" alt="Badge"></div>
+                    <div class="bd-highlight"><img src="images/badge-active.png" alt="Badge"></div>
+                    <div class="bd-highlight"><img src="images/badge-inactive.png" alt="Badge"></div>
+                    <div class="bd-highlight"><img src="images/badge-inactive.png" alt="Badge"></div>
+                    <div class="bd-highlight"><img src="images/badge-inactive.png" alt="Badge"></div>
+                </div>
 
-                    <div class=" badge d-flex flex-wrap justify-content-center mb-5">
-                        <div class="bd-highlight"><img src="images/badge-active.png" alt="Badge"></div>
-                        <div class="bd-highlight"><img src="images/badge-active.png" alt="Badge"></div>
-                        <div class="bd-highlight"><img src="images/badge-active.png" alt="Badge"></div>
-                        <div class="bd-highlight"><img src="images/badge-inactive.png" alt="Badge"></div>
-                        <div class="bd-highlight"><img src="images/badge-inactive.png" alt="Badge"></div>
-                        <div class="bd-highlight"><img src="images/badge-inactive.png" alt="Badge"></div>
-                    </div>
-
-                    <!-- mes  succès et modifier profile -->
-                    <!--
+                <!-- mes  succès et modifier profile -->
+                <!--
                     <div class="container-fluid d-flex justify-content-around mb-3  " style="height: 40px;">
                         <a href="profile.html"><button id="btn_succes" class="btn btn-dark text-light  rounded-pill btn-sm fw-bolder" type="submit">DASHBOARD</button></a>
                         <button id="btn_editer" class="btn btn-dark text-light  rounded-pill btn-sm fw-bolder" type="submit">Editer</button>
                         <button id="btn_modif" class="btn btn-dark text-light rounded-pill btn-sm fw-bolder" type="submit">Modifer profile</button>
                     </div>
                     -->
-                    <div
-                        class="d-flex flex-column flex-md-row text-center align-items-center justify-content-md-around">
-                        <a class="btn btn-profil text-uppercase font-weight-bold mb-3 mb-md-0" href="profile.html"
-                            role="button">Dashboard</a>
-                        <a class="btn btn-profil text-uppercase font-weight-bold" href="#" role="button">Modifier
-                            info</a>
-                    </div>
+                <div class="d-flex flex-column flex-md-row text-center align-items-center justify-content-md-around">
+                    <a class="btn btn-profil text-uppercase font-weight-bold mb-3 mb-md-0" href="profile.html" role="button">Dashboard</a>
+                    <a class="btn btn-profil text-uppercase font-weight-bold" href="#" role="button">Modifier
+                        info</a>
                 </div>
+            </div>
 
-        </section>
+    </section>
 
     </main>
 

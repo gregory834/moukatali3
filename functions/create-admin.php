@@ -7,7 +7,7 @@ connectPdoBdd();
 $db = connectPdoBdd();
 // variables utilisateur Admin
 $admin_id = 0;
-$delete_id_user= 0;
+$delete_id_user = 0;
 $username = "";
 $first_name = "";
 $last_name = "";
@@ -21,7 +21,11 @@ $update = false;
 $update_topic = false;
 $success = array();
 global $db, $errors, $role, $username, $email, $first_name, $last_name, $success;
-// 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+//______________________________________________________________________________________
+
+
+
+
 // si l'utilisateur clique sur le bouton créer un administrateur
 if (isset($_POST['create-admin'])) {
     createAdmin($_POST);
@@ -45,7 +49,10 @@ if (isset($_GET['delete-user'])) {
     $delete_id_user = $_GET['delete-user'];
     deleteAdmin($delete_id_user);
 }
-// 88888888888888888888888888888888888888888888888888888
+//________________________________________________________________________________________
+
+
+
 // POUR LE TABLEAU LISTE DE TOUT LES ADMINS AUTHOR ET MODERATOR
 global $db, $roles;
 // $roles = ['Admin', 'Author', 'Moderator', 'User'];
@@ -57,15 +64,18 @@ $executeIsOk = $pdoStat->execute();
 $listes_AdminAuthorModerator = $pdoStat->fetchAll();
 // var_dump($users['pseudo']);
 global $users;
-// 88888888888888888888888888888888888888888888888888888
+//_________________________________________________________________________________________
+
+
+
 function createAdmin($request_values)
 {
     global $db, $errors, $role, $username, $email, $first_name, $last_name, $success;
     require_once('bdd-connect.php');
     connectPdoBdd();
     echo 'Connection à la base de donnée OK <br/>';
-    $username = trim($request_values['username']);
-    $first_name = htmlentities(trim(ucwords(strtolower($request_values['first-name']))));
+    $username = trim($request_values['first_name']);
+    $first_name = htmlentities(trim(ucwords(strtolower($request_values['name']))));
     $last_name = htmlentities(trim(ucwords(strtolower($request_values['last-name']))));
     $email = trim($request_values['email']);
     $password_1 = trim($request_values['password-1']);
@@ -95,14 +105,16 @@ function createAdmin($request_values)
     if ($password_1 != $password_2) {
         array_push($errors, "les deux mots de passe ne correspondent pas");
     }
-    // 888888888888888888888888888888888888888888888888888888888888888888
-    /******************************************************
-     * VERIFICATION BOUBLON EMAIL METHODE PDO *
-     *************************************************/
+    //______________________________________________________________________________________________________
+
+
+    //  * VERIFICATION DOUBLON EMAIL METHODE PDO *
+
+
     //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
     // l'e-mail et les noms d'utilisateur doivent être uniques
     // echo 'start recherche doublons <br/>';
-    $pdo =  connectPdoBdd(); //connection a la bdd
+    $pdo =  connectPdoBdd(); //connection à la bdd
     $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE  email = '$email' LIMIT 1"; //requete de selection dans table user en fonction de l email
     $reqEmail = $pdo->prepare("SELECT * FROM `users` WHERE email='$email'"); //préparation de la requete
     $reqEmail->execute([$email]);  //EXECUTION DE LA REQUETE
@@ -117,9 +129,12 @@ function createAdmin($request_values)
     } else {
         // echo 'AUCUN DOUBLON EMAIL TROUVER <br/>';
     }
+
+
     /**********************************************
      * VERIFICATION BOUBLON PSEUDONYME METHODE PDO *
      **********************************************/
+
     //  IDEM QUE POUR L EMAIL. C EST UN CHOIX DE SEPARER LES DEUX REQUETE AU LIEU D EN FAIRE UNE POUR DEUX. LE BUT ETANT DE BIEN AVANCER ETAPE PAR ETAPE
     $reqt  = "SELECT COUNT(*) AS nbr FROM  `users` WHERE pseudo = '$username' LIMIT 1";
     $reqPseudo = $pdo->prepare("SELECT * FROM `users` WHERE pseudo='$username'");
@@ -135,7 +150,8 @@ function createAdmin($request_values)
         // echo 'AUCUN DOUBLON PSEUDO TROUVER <br/>';
     }
     // echo 'Fin de recherche de doublons <br/>';
-    // 88888888888888888888888888888888888888888888888888888888888888888
+    //______________________________________________________________________________________
+
     // enregistrer l'utilisateur s'il n'y a pas d'erreurs dans le formulaire
     if (count($errors) == 0) {
         // crypter le mot de passe avant de l'enregistrer dans la base de données
@@ -152,13 +168,12 @@ function createAdmin($request_values)
         return $success;
         return $errors;
         exit(0);
-        // 888888888888888888888888888888888888888888888888888888888888888888888888888
+        //___________________________________________________________________________________
     }
     array_push($success, "Compte  créé avec succès ");
 }
-// 88888888888888888888888888888888888888888888888888888
-//*******************************************************************************************************************************//
-// 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+//___________________________________________________________________________________
 // GOOD
 // Prend l'ID d'administrateur comme paramètre
 // Récupère l'administrateur de la base de données
@@ -178,7 +193,11 @@ function editAdmin($admin_id)
     $email = $admin['email'];
     $role = $admin['role'];
 }
-// 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+
+//___________________________________________________________________________________
+
+
 function updateAdmin($request_values)
 {
     global $db, $errors, $role, $username, $update, $admin_id, $email, $first_name, $last_name;
@@ -204,14 +223,15 @@ function updateAdmin($request_values)
         $reqInsert1 = $db->prepare($query); //preparation de la requete
         $reqInsert1->execute(); //execution de la requete
 
-     
+
         $sql = "UPDATE users SET pseudo='$username', prenom = '$first_name', nom = '$last_name', email = '$email', role = '$role', password = '$password' WHERE id = $admin_id";
 
         $reqInsert1 = $db->prepare($sql); //preparation de la requete
         $reqInsert1->execute(); //execution de la requete
     }
 }
-// 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+//__________________________________________________________________________________
 //GOOD
 // supprimer l'utilisateur administrateur
 function deleteAdmin($admin_id)
@@ -222,10 +242,12 @@ function deleteAdmin($admin_id)
     $reqDeleteAdmin->execute(); //execution de la requete
     array_push($success, "Compte administrateur supprimé avec succès ");
 }
-// 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+//________________________________________________________________________________
+
+
 // POUR LA PAGE AVEC LA LISTE DE TOUT LES MOUKATEUR AU ROLE DE USER
 global $all_users;
-// 8888888888888888888888888
+
 // ok fonctionelle
 function getAllUsers()
 {
