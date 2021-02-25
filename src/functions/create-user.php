@@ -202,7 +202,6 @@ function create_user()
         /******************************************************
          * VERIFICATION BOUBLON EMAIL METHODE PDO *
          *************************************************/
-
         //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
         // l'e-mail et les noms d'utilisateur doivent être uniques
 
