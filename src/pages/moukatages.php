@@ -1,7 +1,7 @@
 <?php
 require '../../config/config.php';
 require '../../config/database.php';
-require '../functions/user-function.php';
+require '../controller/user-function.php';
 
 $user = readUserById( $_SESSION['user']['pseudo'] );
 
