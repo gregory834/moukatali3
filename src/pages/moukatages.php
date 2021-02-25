@@ -9,6 +9,7 @@ $user = readUserById( $_SESSION['user']['pseudo'] );
 
 
 include ('../layout/head.php');
+
 ?>
 
 <title>Sujets & Moukatages | Moukat A Li</title>
