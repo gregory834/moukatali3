@@ -1,4 +1,5 @@
 <?php
+session_start();
 require '../config/config.php';
 ?>
 
@@ -80,12 +81,28 @@ require '../config/config.php';
                 </div>
 
             </div>
+
+            <?php if ( empty($_SESSION['user'])): ?>
+
             <!-- BOUTONS -->
             <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
                 <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="pages/login.php"
                     role="button">se connecter</a>
                 <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="pages/moukatages.php" role="button">visiter</a>
             </div>
+
+            <?php else: ?>
+
+                <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
+                <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="pages/moukatages.php" role="button">moukatali!!!</a>
+                </div>
+
+
+            <?php endif; ?>
+
+
+
+
         </div>
     </section>
 

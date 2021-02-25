@@ -1,5 +1,10 @@
 <?php
 require '../../config/config.php';
+require '../../config/database.php';
+require '../functions/user-function.php';
+
+$user = readUserById( $_SESSION['user']['pseudo'] );
+
 
 
 
@@ -22,11 +27,13 @@ include ('../layout/head.php');
     </header>
     
     <div class="container">
+        <h6 class="text-light py-5 text-center">Bienvenue <?php echo $user['pseudo']; ?></h6>
         <h1 class=" text-center text-alert mb-4 ">&ldquo;MoukatAli !!&rdquo;</h1>
     </div>
 
     <section>
         <div class="container pt-4">
+
 
             <!-- SUJET BRUT-->
             <div class="sujet bg-light p-3 mb-3 d-flex flex-column flex-md-row align-items-md-center">

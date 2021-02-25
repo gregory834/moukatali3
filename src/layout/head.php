@@ -28,4 +28,5 @@
     <!-- MON CSS -->
     <link rel="stylesheet" href=<?= BASE_URL."/public/css/styleGreg.css" ?>>
     <link rel="stylesheet" href=<?= BASE_URL."/public/css/styleDav.css" ?>>
+    <link rel="stylesheet" href=<?= BASE_URL."/public/css/btn-sup-modal.css" ?>>
     <link rel="stylesheet" href=<?= BASE_URL."/public/css/mon-style.css" ?>>

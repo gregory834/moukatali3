@@ -13,14 +13,14 @@ require_once '../../config/config.php';
         <span class="position"></span>
         <span class="position mb-0"></span>
         <ul class="menu">
-        <a href="#">
+        <a href=<?php echo BASE_URL . "/src/index.php" ?>>
             <li class="text-uppercase">Accueil</li>
         </a>
-        <a href="#">
-            <li class="text-uppercase">Accueil</li>
+        <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
+            <li class="text-uppercase">moukatali</li>
         </a>
-        <a href="#">
-            <li class="text-uppercase">Accueil</li>
+        <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
+            <li class="text-uppercase">profil</li>
         </a>
         <a href="#">
             <li class="text-uppercase">Accueil</li>

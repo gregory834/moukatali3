@@ -1,5 +1,7 @@
 <?php
 require '../../config/config.php';
+require '../../config/database.php';
+require '../functions/user-function.php';
 
 
 include ('../layout/head.php');
@@ -47,14 +49,14 @@ include ('../layout/head.php');
                         <div class="mb-3 ">
                             <label class="mb-0 text-dark" for="mot de passe1">Mot de passe* </label>
 
-                            <input type="password" class="form-control" id="password-connect" name="password-connect" required pattern="?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Saisir un mot de passe" minlength="1" maxlength="20" size="20" value="">
+                            <input type="password" class="form-control" id="password-connect" name="password_connect" required pattern="?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" title="Saisir un mot de passe" minlength="1" maxlength="20" size="20" value="">
                             </input>
 
                         </div>
 
 
                         <div class="mt-3 d-flex justify-content-center">
-                            <button type="submit" name="connection" class="btn btn-dark">CONNEXION</button>
+                            <button type="submit" name="connexion" class="btn btn-dark">CONNEXION</button>
                         </div>
 
                         <div class="mt-1 d-flex justify-content-center text-dark"> <i>(* Champs obligatoires)</i></div>
