@@ -1,6 +1,4 @@
 <?php
-require '../class/Log.class.php';
-$log = new Log('../logs');
 
 function getTopicById($topics_id) {
 

@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/config.php';
+//require_once '../../config/config.php';
 ?>
 
 <!-- NAVBAR -->
@@ -19,15 +19,21 @@ require_once '../../config/config.php';
         <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
             <li class="text-uppercase">moukatali</li>
         </a>
+        <?php if ( $user['role'] == "user" ): ?>
         <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
             <li class="text-uppercase">profil</li>
         </a>
-        <a href="#">
-            <li class="text-uppercase">Accueil</li>
+        <?php endif; ?>
+        <?php if ( $user['role'] == "admin" ): ?>
+        <a href=<?php echo BASE_URL . "/src/pages/admin/dashboard.php" ?>>
+            <li class="text-uppercase">Dashboard</li>
         </a>
+        <?php endif; ?>
+        <?php if ( isset($SESSION['user']) ): ?>
         <a href="#">
-            <li class="text-uppercase">Accueil</li>
+            <li class="text-uppercase">se déconnecter</li>
         </a>
+        <?php endif; ?>
         </ul>
     </div>
 </nav>

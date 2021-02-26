@@ -1,7 +1,5 @@
 <?php
 
-require '../class/Log.class.php';
-$log = new Log('../logs');
 
 // INITIALISATION DES VARIBLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D INSERTION EN BASE DE DONNEE 
 $pseudo = ""; //initialisation
@@ -150,7 +148,7 @@ function registerUser() {
             $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
             $reqInsert->execute(); //execution de la requete
 
-            $log->log('inscription', 'validation_inscription', "Fonction registerUser() : l'inscription a réussi", Log::FOLDER_MONTH);
+            $log->log('inscription', 'validation_inscription', "Fonction registerUser() : l'inscription a réussi", Log::FOLDER_MONTH); 
 
             header('location: ./login.php');
 
