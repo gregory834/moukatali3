@@ -1,89 +1,33 @@
 <div class="text-light">
   <?php
+  require '../../../config/config.php';
+  require '../../../config/database.php';
+  require '../../controller/user-function.php';
+  // require '../../controller/user-function.php';
 
-  session_start();
-  include('../../functions/bdd-connect.php');
-  include('../../functions/create-admin.php');
-  // récupére tous les administrateurs de la BDD ayant un rôle
-  // $delete_id_user = 0;
+  // $user_info = readUserById($_SESSION['user']['pseudo']);
+
   global $all_users, $delete_id_user;
 
 
   $all_users = getAllUsers();
-  var_dump($all_users);
+  
+  include('../../layout/head.php');
+  var_dump($user_info);
 
-  if (isset($_GET['logout'])) {
-    session_destroy();
-    unset($_SESSION['user']);
-    header('location: ../index.php');
-  }
   ?>
-  <!doctype html>
-  <html lang="fr">
 
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="../css/styles-admin.css"> -->
-    <link rel="stylesheet" href="../../css/styleGreg.css">
-    <link rel="stylesheet" href="../../css/mon-style.css">
-    <link rel="stylesheet" href="../../css/styleDav.css">
-
-    <title>Espace Administrateur - Moukat A Li</title>
-  </head>
+  <title>Gestion User | Moukat A Li</title>
 
   <body>
-
-    <!-- HEADER -->
-    <header class="header-liste" id="id-navbar">
-      <div class="container ">
-        <!-- NAVBAR -->
-        <nav class="navbar navbar-expand-lg navbar-light ">
-          <a class="navbar-brand " href="index.php">
-            <img src="../../images/logo_moukatali_noir.png" class="img-fluid" style="height:5vh;" alt="logo_moukatali_noir.png"></img>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav ">
-              <li class="nav-item ">
-                <a class="nav-link text-center  font-weight-bold text-nav-head" href="admin.php">CREER PROFIL</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-center  font-weight-bold text-nav-head" href="form-subject-editer.php">EDITER TOPICS</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-center  font-weight-bold text-nav-head" href="form-offre-create.php">CREER OFFRE</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-center  font-weight-bold text-nav-head" href="form-subject-modifier.php">MODIFIER PROFIL-OFFRE </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-center  font-weight-bold text-nav-head" href="topics.php">LISTE TOPICS</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-center  font-weight-bold text-nav-head" href="topics.php">LISTE OFFRES</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-center  font-weight-bold text-nav-head" href="moukateurs.php">LISTE MOUKATEURS</a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link text-center  font-weight-bold text-nav-head disabled" href="profile.php">SIGNALER</a>
-              </li>
-              <li class="nav-item ">
-                <a id="logout-link" class="nav-link text-center  font-weight-bold text-nav-head  <?= $btn_logout ?> " href="../index.php?logout='1'" role="button">LOGOUT</a>
-              </li>
-
-            </ul>
-          </div>
-        </nav>
-      </div>
+    <!-- NABVAR ADMIN -->
+    <header class="header-main ">
+      <div class="container"> <?php include(BASE_URL . '/src/layout/nav-admin.php'); ?></div>
     </header>
+
+
 
 
     <!-- SECTION -->

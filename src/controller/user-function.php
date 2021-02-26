@@ -355,3 +355,21 @@ function readUserById($pseudo)
 
     return $user;
 }
+
+
+
+
+
+
+// 888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
+
+function getAllUsers()
+{
+    global $all_users;
+    global $db_connect;
+    // $admin = "role";
+    $requet = "SELECT * FROM users WHERE role= 'user'";
+    $stmt = $db_connect->query($requet);
+    $all_users = $stmt->fetchAll();
+    return $all_users;
+}
