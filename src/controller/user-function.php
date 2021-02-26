@@ -199,7 +199,15 @@ function connexionUser()
                 // $_SESSION = array();
                 // mettre les info utiles de l'utilisateur connecté dans le tableau de session
                 $_SESSION['user']['pseudo'] = $user['pseudo'];
-                header('location: ./moukatages.php');
+                $_SESSION['user']['role'] = $user['role'];
+
+
+                if ($_SESSION['user']['role']  === 'user') {
+                    header('location: ./moukatages.php');
+                }
+                else{
+                    header('location: ./admin/dashboard.php');
+                }
             } else {
 
                 array_push($errors, " Mot de passe erroné ! <br/> Vérifier vos informations ");
