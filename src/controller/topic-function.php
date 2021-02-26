@@ -98,12 +98,12 @@ function createTopic($request_values)
 
     if (isset($_POST["create-topic"])) {
 
-        
+
         $image = strtolower(time() . '-' . $_FILES['image']['name']);
         $title = htmlentities(trim($_POST['title']));
         $published = 0; //par defaut le sujet n est pas actif
         global $db_connect, $errors, $success;
-        
+
 
         $user_id = $user['id'];
 
@@ -116,7 +116,7 @@ function createTopic($request_values)
             return $errors;
             die;
         }
- 
+
         if (empty($image)) {
             array_push($errors, "Entrer une photo de profil");
             return $errors;
@@ -175,13 +175,12 @@ function editTopic($topic_id)
     // $topic = mysqli_fetch_assoc($result);
     // définir les valeurs du formulaire sur le formulaire à mettre à jour
     $title = $topic['title'];
-
 }
 // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 function updateTopic($request_values)
 {
     $published = 0; //par defaut le sujet n est pas actif
-  
+
     // var_dump($user_id);
     global $db_connect, $errors, $title, $image, $topic_id, $success;
     $image = strtolower(time() . '-' . $_FILES['image']['name']);
@@ -277,7 +276,7 @@ if (isset($_GET)) {
         $pdoStat1 = $db_connect->prepare($query);
         $execut1 = $pdoStat1->execute();
         // CHANGE L ETAT DES AUTRE PUBLICATION 5CAR LIMITER A 2 sur 3 par admin
-        $sql = "UPDATE topics SET published = 1 WHERE id != $topic_id";
+        $sql = "UPDATE topics SET published = 0 WHERE id = $topic_id";
         $pdoStat2 = $db_connect->prepare($sql);
         $execut2 = $pdoStat2->execute();
     } else {
@@ -287,7 +286,7 @@ if (isset($_GET)) {
             $pdoStat1 = $db_connect->prepare($query);
             $execut1 = $pdoStat1->execute();
             // CHANGE L ETAT DES AUTRE PUBLICATION 5CAR LIMITER A 2 sur 3 par admin
-            $sql = "UPDATE topics SET published = 0 WHERE id != $topic_id";
+            $sql = "UPDATE topics SET published = 1 WHERE id = $topic_id";
             $pdoStat2 = $db_connect->prepare($sql);
             $execut2 = $pdoStat2->execute();
         }
@@ -297,41 +296,31 @@ if (isset($_GET)) {
 
 
 // FONCTION POUR RECUPERER LES INFO UTILISATEUR
-function readUserById($pseudo)
+
+
+// récupérer tout les topics de la table topics (publié ou non)
+function readAllTopics()
 {
-  
-    /******************************************
-     * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
-     ******************************************/
-    global $db_connect;
+    global $db_connect ,$topics;
+    $sql = "SELECT * FROM topics ORDER BY created_at DESC ";
+    $pdoStat = $db_connect->prepare($sql);
+    $executeIsOk = $pdoStat->execute();
+    // $listes_AllTpics = $pdoStat->fetchAll();
+    $topics = $pdoStat->fetchAll();
 
 
-    $requete = "SELECT * from `users` where pseudo = '$pseudo' ";
-    $stmt = $db_connect->query($requete);
-    $user = $stmt->fetch();
-
-    $user_id = $user['id'];
-
-    return $user;
-    return $user_id;
+    return $topics;
+    //    var_dump($topics);
 
 }
 
-
-function readAllTopics(){
-   global $db_connect, $topics;
-   $sql = "SELECT * FROM topics ORDER BY created_at DESC ";
-   $pdoStat = $db_connect->prepare($sql);
-   $executeIsOk = $pdoStat->execute();
-   // $listes_AllTpics = $pdoStat->fetchAll();
-   $topics = $pdoStat->fetchAll();
-   return $topics;
-
-//    var_dump($topics);
-// 88888888888888888888888888888888888888888888888888888888888888888888
+//récupère tout les topics activé et dans un ordre (plus récent au plus ancien)
+function activeTopicByOrder()
+{
+    global $db_connect, $published_topics;
+    $sql = "SELECT * FROM topics WHERE published = 1   ORDER BY created_at DESC ";
+    $pdoStat = $db_connect->prepare($sql);
+    $executeIsOk = $pdoStat->execute();
+    $published_topics = $pdoStat->fetchAll(); 
+    return $published_topics;
 }
-
-
-
-   
-

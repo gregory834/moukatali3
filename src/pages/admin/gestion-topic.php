@@ -3,7 +3,7 @@
   require '../../../config/config.php';
   require '../../../config/database.php';
   require '../../controller/topic-function.php';
-  // require '../../controller/user-function.php';
+  require '../../controller/user-function.php';
 
   $user_info = readUserById($_SESSION['user']['pseudo']);
   readAllTopics();

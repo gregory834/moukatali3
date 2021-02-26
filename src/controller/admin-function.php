@@ -147,14 +147,15 @@ function createAdmin($request_values)
 
 function editAdmin($admin_id)
 {
-    global $db_connect, $username, $role, $update, $admin_id, $email, $first_name, $last_name;
+    global $db_connect, $pseudo, $role, $update, $admin_id, $email, $first_name, $last_name;
     $sql = "SELECT * FROM `users` WHERE id = $admin_id LIMIT 1";
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     $admin = $pdoStat->fetch();
 
     // définir les valeurs du formulaire ($ username et $ email) sur le formulaire à mettre à jour
-    $username = $admin['pseudo'];
+    // $username = $admin['pseudo'];
+    $pseudo = $admin['pseudo'];
     $first_name = $admin['first_name'];
     $last_name = $admin['last_name'];
     $email = $admin['email'];
