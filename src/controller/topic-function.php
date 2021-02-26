@@ -1,6 +1,6 @@
 <?php
 $title = "";
-$topic_description = "";
+
 $image = "";
 
 $user_id = "";
@@ -101,7 +101,6 @@ function createTopic($request_values)
         
         $image = strtolower(time() . '-' . $_FILES['image']['name']);
         $title = htmlentities(trim($_POST['title']));
-        $topic_description = htmlentities(trim($_POST['topic-description']));
         $published = 0; //par defaut le sujet n est pas actif
         global $db_connect, $errors, $success;
         
@@ -117,11 +116,7 @@ function createTopic($request_values)
             return $errors;
             die;
         }
-        if (empty($topic_description)) {
-            array_push($errors, "Entrer une description");
-            return $errors;
-            die;
-        }
+ 
         if (empty($image)) {
             array_push($errors, "Entrer une photo de profil");
             return $errors;
@@ -155,7 +150,7 @@ function createTopic($request_values)
         // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         // GOOD
         array_push($success, "Edition du sujet réussie !<br/>  ");
-        $sql = "INSERT INTO topics (  title, image, topic_description, quota_vote, published, created_at) VALUES(  '$title', '$image', '$topic_description', 0, '$published', now())";
+        $sql = "INSERT INTO topics (  title, image, topic_description, quota_vote, published, created_at) VALUES(  '$title', '$image', 0, '$published', now())";
         $reqInsert = $db_connect->prepare($sql); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
         return $errors;
@@ -170,7 +165,7 @@ function createTopic($request_values)
 * * * * * * * * * * * * * * * * * * * * * */
 function editTopic($topic_id)
 {
-    global $db_connect, $title, $topic_description, $update_topic, $topic_id;
+    global $db_connect, $title, $update_topic, $topic_id;
     $sql = "SELECT * FROM topics WHERE id = $topic_id LIMIT 1";
 
     $pdoStat = $db_connect->prepare($sql);
@@ -180,7 +175,7 @@ function editTopic($topic_id)
     // $topic = mysqli_fetch_assoc($result);
     // définir les valeurs du formulaire sur le formulaire à mettre à jour
     $title = $topic['title'];
-    $topic_description = $topic['topic_description'];
+
 }
 // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 function updateTopic($request_values)
@@ -188,22 +183,17 @@ function updateTopic($request_values)
     $published = 0; //par defaut le sujet n est pas actif
   
     // var_dump($user_id);
-    global $db_connect, $errors, $title, $image, $topic_id, $topic_description, $success;
+    global $db_connect, $errors, $title, $image, $topic_id, $success;
     $image = strtolower(time() . '-' . $_FILES['image']['name']);
     $topic_id = $_POST['topic-id'];
     $title = trim($request_values['title']);
-    $topic_description = htmlentities(trim($request_values['topic-description']));
     // validation formulaire
     if (empty($title)) {
         array_push($errors, "Entrer un titre");
         return $errors;
         die;
     }
-    if (empty($topic_description)) {
-        array_push($errors, "Entrer une description");
-        return $errors;
-        die;
-    }
+
 
     // VERIFICATION DE LA TAILLE DE L IMAGE
     if ($_FILES["image"]["size"] > 600000) {
@@ -228,7 +218,7 @@ function updateTopic($request_values)
     // enregistrer le sujet s'il n'y a pas d'erreurs dans le formulaire
     if (count($errors) == 0) {
         array_push($success, "Modification du topics réussie ! ");
-        $query = "UPDATE topics SET title = '$title',image='$image', topic_description = '$topic_description'  WHERE id = $topic_id";
+        $query = "UPDATE topics SET title = '$title',image='$image'  WHERE id = $topic_id";
         $reqInsert = $db_connect->prepare($query); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
         return $errors;

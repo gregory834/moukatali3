@@ -12,7 +12,7 @@ $errors = array(); // VAR TABLEAUX QUI RECOIT LES MESSAGES D ERREUR POUR LE FORM
 $success = array ();
 
 
-$roles = ['Admin', 'Author', 'Moderator', 'User']; //pour l'attribution des roles dans l'input des roles
+$roles = ['admin', 'author', 'moderator', 'user']; //pour l'attribution des roles dans l'input des roles
 // $role = ['Admin'];
 
 // si l'utilisateur clique sur le bouton créer un administrateur

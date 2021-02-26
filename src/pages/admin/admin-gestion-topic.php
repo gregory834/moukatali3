@@ -9,6 +9,7 @@
 
   ?>
 
+</head>
 
   <title>Gestion Topics | Moukat A Li</title>
 
@@ -118,11 +119,13 @@
                   <th scope="col">Image</th>
 
                   <!-- Seul l'administrateur peut publier / annuler la publication du message -->
-                  <?php if ($user['role'] == "admin") : ?>
+                  <?php if ($user['role'] == "Admin") : ?>
                     <th scope="col">publier</th>
                   <?php endif; ?>
+                
                   <th scope="col">mettre à jour</th>
                   <th scope="col">supprimer</th>
+             
                 </tr>
               </thead>
               <tbody>
@@ -178,6 +181,7 @@
               </tbody>
             </table>
           </div>
+
         <?php endif; ?>
       </div>
     </section>

@@ -96,7 +96,7 @@
             <!-- BOUTONS -->
             <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
                 <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="src/formUser/connection.php" role="button">CONNECTION</a>
-                <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="src/formUser/inscription.php" role="button">INSCRIPTION</a>
+                <!-- <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="src/formUser/inscription.php" role="button">INSCRIPTION</a> -->
 
             </div>
 
@@ -109,7 +109,7 @@
 
             <h4 class="ml-2">Vous êtes connecté en tant que : <?php echo ($_SESSION['user']['pseudo']); ?>
                 &nbsp;
-                <?php echo ($_SESSION['user']['prenom']); ?> </h'>
+                <?php echo ($_SESSION['user']['prenom']); ?> </h4>
                 <div class="d-flex justify-content-center mt-5">
                     <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="src/pages/liste-sujet.php" role="submit" name="moukatali">MOUKATALI !!</a>
                 </div>
@@ -123,7 +123,7 @@
             // verification du role de l utilisateur si il est un administrateur ou non et on affiche son btn en fonction du relustat de la fonction pregmatch
 
             $pattern = '/^admin/';
-            $subject = $_SESSION['user']['role'];
+            $subject = $user['role'];
             if (preg_match($pattern, $subject)) {
 
             ?>
