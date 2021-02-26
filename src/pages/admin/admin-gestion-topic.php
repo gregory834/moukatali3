@@ -3,9 +3,12 @@
   require '../../../config/config.php';
   require '../../../config/database.php';
   require '../../controller/topic-function.php';
-  $user = readUserById($_SESSION['user']);
+  // require '../../controller/user-function.php';
+
+  $user_info = readUserById($_SESSION['user']['pseudo']);
   readAllTopics();
   include('../../layout/head.php');
+  var_dump($user_info);
 
   ?>
 
@@ -49,11 +52,7 @@
             <input type="text" class="form-control" placeholder="Title" name="title" value="<?= $title ?>">
             <label for="title">Titre</label>
           </div>
-          <!-- Description -->
-          <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="topic-description"><?= $topic_description ?></textarea>
-            <label for="floatingTextarea2">Description</label>
-          </div>
+    
           <!-- BOUTON -->
           <div class="d-grid gap-2">
 <!-- 
@@ -115,11 +114,10 @@
                   <th scope="col">Intitulé</th>
                   <th scope="col">Quota de vote</th>
                   <th scope="col">Date de création</th>
-                  <th scope="col-3">Contenu</th>
                   <th scope="col">Image</th>
 
                   <!-- Seul l'administrateur peut publier / annuler la publication du message -->
-                  <?php if ($user['role'] == "Admin") : ?>
+                  <?php if ($user_info['role'] === "admin") : ?>
                     <th scope="col">publier</th>
                   <?php endif; ?>
                 
@@ -137,11 +135,10 @@
                       <td class="align-middle"><?php echo $topic['title']; ?></td>
                       <td class="align-middle"><?php echo $topic['quota_vote']; ?></td>
                       <td class="align-middle"><?php echo $topic['created_at']; ?></td>
-                      <td class="align-middle"><?php echo $topic['topic_description']; ?></td>
                       <td class="align-middle"><?php echo $topic['image']; ?></td>
 
                       <!-- Seul l'administrateur peut publier / annuler la publication du message -->
-                      <?php if ($user['role'] == "admin") : ?>
+                      <?php if ($user_info['role'] === "admin") : ?>
                         <td class="align-middle">
                           <?php if ($topic['published'] == 0) : ?>
                             <a href="admin-gestion-topic.php?unpublish=<?= $topic['id'] ?>" role="button">

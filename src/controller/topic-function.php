@@ -150,7 +150,7 @@ function createTopic($request_values)
         // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         // GOOD
         array_push($success, "Edition du sujet réussie !<br/>  ");
-        $sql = "INSERT INTO topics (  title, image, topic_description, quota_vote, published, created_at) VALUES(  '$title', '$image', 0, '$published', now())";
+        $sql = "INSERT INTO topics (  title, image, quota_vote, published, created_at) VALUES(  '$title', '$image', 0, '$published', now())";
         $reqInsert = $db_connect->prepare($sql); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
         return $errors;
@@ -259,7 +259,6 @@ if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
 function togglePublishTopic($topic_id, $message)
 {
     global $db_connect;
-    $db_connect = connectPdoBdd();
     $sql = "UPDATE topics SET published = !published WHERE id = $topic_id";
     $pdoStat = $db_connect->prepare($sql);
     $result = $pdoStat->execute();
@@ -301,9 +300,9 @@ if (isset($_GET)) {
 // 8888888888888888888888888888888888888888888888888888888888
 
 // FONCTION POUR RECUPERER LES INFO UTILISATEUR
-function readUserById()
+function readUserById($pseudo)
 {
-    global $pseudo;
+  
     /******************************************
      * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
      ******************************************/
