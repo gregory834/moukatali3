@@ -2,8 +2,10 @@
 require '../../config/config.php';
 require '../../config/database.php';
 require '../controller/user-function.php';
+require '../controller/topic-function.php';
 
 $user = readUserById( $_SESSION['user']['pseudo'] );
+//$topic = getTopicById();
 
 
 
@@ -46,9 +48,9 @@ include ('../layout/head.php');
             <!-- PUBLIER -->
             <form class="bg-light p-4" id="form-publier">
                 <div class="form-group mb-0">
-                    <textarea class="form-control mb-2 border-0" id="exampleFormControlTextarea1" rows="3" placeholder="Publier un moukatage"></textarea>
+                    <textarea class="form-control mb-2 border-0" id="exampleFormControlTextarea1" rows="3" placeholder="Publier un moukatage" name="text"></textarea>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn black text-uppercase font-weight-bold text-light letter-spacing">publier</button>
+                        <button type="submit" name="publier" class="btn black text-uppercase font-weight-bold text-light letter-spacing">publier</button>
                     </div>
                 </div>
             </form>
