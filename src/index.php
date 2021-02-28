@@ -1,41 +1,15 @@
 <?php
-session_start();
 require '../config/config.php';
+require '../config/database.php';
+
+require '../src/controller/user-function.php';
+
+
+include (ROOT_PATH . '/src/layout/head.php');
 ?>
 
-<!doctype html>
-<html lang="fr">
+<title>Accueil | Moukat A Li</title>
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-
-    <!-- GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Slackey&display=swap"
-        rel="stylesheet">
-
-    <!-- OWL CAROUSEL -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
-        integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
-        crossorigin="anonymous" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
-        integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
-        crossorigin="anonymous" />
-
-    <!-- MON CSS -->
-    <link rel="stylesheet" href=<?= BASE_URL."/public/css/styleGreg.css" ?>>
-    <link rel="stylesheet" href=<?= BASE_URL."/public/css/styleDav.css" ?>>
-    <link rel="stylesheet" href=<?= BASE_URL."/public/css/mon-style.css" ?>>
-
-    <title>Accueil | Moukat A Li</title>
 </head>
 
 <body>
@@ -43,7 +17,7 @@ require '../config/config.php';
         <div class="container d-flex justify-content-center">
             <!-- LOGO -->
             <div class="logo">
-                <img src=<?= BASE_URL."/public/images/logo-jaune.png" ?> alt="Logo Moukat A Li">
+                <img src=<?= BASE_URL . "/public/images/logo-jaune.png" ?> alt="Logo Moukat A Li">
             </div>
         </div>
     </header>
@@ -82,26 +56,31 @@ require '../config/config.php';
 
             </div>
 
-            <?php if ( empty($_SESSION['user'])): ?>
-
-            <!-- BOUTONS -->
-            <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
-                <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="pages/login.php"
-                    role="button">se connecter</a>
-                <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="pages/moukatages.php" role="button">visiter</a>
-            </div>
-
-            <?php else: ?>
-
+            <?php if ( empty($_SESSION['user']) ): ?>
+                <!-- BOUTONS CONNECTION ET VISITER -->
                 <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
-                <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="pages/moukatages.php" role="button">moukatali!!!</a>
+                    <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="pages/login.php" role="button">se connecter</a>
+                    <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="pages/moukatages.php" role="button">visiter</a>
                 </div>
-
-
             <?php endif; ?>
 
 
+                
+            <?php if ( $_SESSION['user']['role'] == 'user' ): ?>
+                <!-- BOUTON MOUKATALI -->
+                <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
+                    <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="pages/moukatages.php" role="button">moukatali!!!</a>
+                </div>
+            <?php endif; ?>
 
+            <?php if ( $_SESSION['user']['role'] == 'admin' ): ?>
+                <!-- BOUTON ADMINISTRATEUR -->
+                <div class="d-flex justify-content-center mt-5">
+                    <a class="btn text-uppercase font-weight-bold text-light" href="pages/admin/dashboard.php" role="button">administrateur</a>
+                </div>
+            <?php endif; ?>
+
+   
 
         </div>
     </section>
@@ -110,18 +89,12 @@ require '../config/config.php';
 
 
     <!-- jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <!-- OWL CAROUSEL -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous"></script>
     <!-- MON SCRIPT -->
-    <script src=<?= BASE_URL."/public/js/carousel.js" ?>></script>
+    <script src=<?= BASE_URL . "/public/js/carousel.js" ?>></script>
 
 
 </body>
