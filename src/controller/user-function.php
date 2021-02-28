@@ -381,3 +381,7 @@ function getAllUsers()
     $all_users = $stmt->fetchAll();
     return $all_users;
 }
+
+
+
+

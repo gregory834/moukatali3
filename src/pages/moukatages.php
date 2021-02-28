@@ -4,20 +4,15 @@ require '../../config/database.php';
 require '../controller/user-function.php';
 require '../controller/topic-function.php';
 
-
 $user = readUserById($_SESSION['user']['pseudo']);
 $topics = readAllTopics();
 $publish_topics = activeTopicByOrder();
 
-
-
 // var_dump($topic['created_at']);
-
-
-echo '<pre>';
 // var_dump($published_topics[0][1]);
-var_dump($published_topics);
-echo '<pre>';
+// echo '<pre>';
+// var_dump($published_topics);
+// echo '<pre>';
 // var_dump($published_topics[0]['title']);
 // var_dump($published_topics[1]);
 // var_dump($published_topics[2]);
@@ -31,7 +26,6 @@ include('../layout/head.php');
 </head>
 
 <body>
-
     <!-- HEADER -->
     <header class="header-main ">
         <div class="container">
@@ -49,31 +43,17 @@ include('../layout/head.php');
     <section>
         <div class="container pt-4">
 
-<?php 
-
-foreach ($published_topics as $key => $published_topic ) :
-
-
-?>
-            <!-- SUJET BRUT-->
-            <div class="sujet bg-light p-3 mb-3 d-flex flex-column flex-md-row align-items-md-center">
-                <div class="image mb-2 mb-md-0 mr-md-2 d-lg-none"><img src=<?= BASE_URL . "/public/images/image-mobile.jpg" ?> alt="Image du sujet"></div>
-
-
-                <div class="image mr-lg-2 d-none d-lg-block"><img src=<?= BASE_URL . "/public/images/uploads/" . $published_topics[0][2] ?> alt="Image du sujet"></div>
-
-
-             
-
-       
-
-
-                <p class="text-dark">
-                <?php  echo $published_topics[0][1];  ?>
-                </p>
-            </div>
-
-<?php endforeach;  ?>
+            <?php if (isset($published_topics)) {
+            ?>
+                <!-- SUJET BRUT-->
+                <div class="sujet bg-light p-3 mb-3 d-flex flex-column flex-md-row align-items-md-center">
+                    <div class="image mb-2 mb-md-0 mr-md-2 d-lg-none"><img src=<?= BASE_URL . "/public/images/image-mobile.jpg" ?> alt="Image du sujet"></div>
+                    <div class="image mr-lg-2 d-none d-lg-block"><img src=<?= BASE_URL . "/public/images/uploads/" . $published_topics[0][2] ?> alt="Image du sujet"></div>
+                    <p class="text-dark">
+                        <?php echo $published_topics[0][1];  ?>
+                    </p>
+                </div>
+            <?php  } ?>
 
             <!-- PUBLIER -->
             <form class="bg-light p-4" id="form-publier">
@@ -140,17 +120,18 @@ foreach ($published_topics as $key => $published_topic ) :
     <!-- SECTION -->
     <section class="mb-5">
         <div class="container d-md-flex">
-
-            <!-- AUTRE SUJET -->
-            <div class="autre bg-light p-4 text-dark d-flex align-items-center mb-3 mb-md-0 mr-md-3">
-                <img src=<?= BASE_URL . "/public/images/autre-sujet.jpg" ?> class="mr-2" alt="Image sujet">
-                <p class="mb-0">'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac.'</p>
-            </div>
-            <!-- AUTRE SUJET -->
-            <div class="autre bg-light p-4 text-dark d-flex align-items-center">
-                <img src=<?= BASE_URL . "/public/images/autre-sujet.jpg" ?> class="mr-2" alt="Image sujet">
-                <p class="mb-0">'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac.'</p>
-            </div>
+            <?php if (isset($published_topics)) {   ?>
+                <!-- AUTRE SUJET -->
+                <div class="autre bg-light p-4 text-dark d-flex align-items-center mb-3 mb-md-0 mr-md-3">
+                    <img src=<?= BASE_URL . "/public/images/uploads/" .$published_topics[1]["image"] ?> class="mr-2" alt="Image sujet">
+                    <p class="mb-0"> <?php echo $published_topics[1][1];  ?></p>
+                </div>
+                <!-- AUTRE SUJET -->
+                <div class="autre bg-light p-4 text-dark d-flex align-items-center">
+                <img src=<?= BASE_URL . "/public/images/uploads/" .$published_topics[2]["image"] ?> class="mr-2" alt="Image sujet">
+                    <p class="mb-0"><?php echo $published_topics[2][1];  ?></p>
+                </div>
+            <?php } ?>
 
         </div>
     </section>

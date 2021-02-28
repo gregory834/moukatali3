@@ -363,3 +363,30 @@ if (isset($_GET)) {
     return $topic_id;
 }
 // 8888888888888888888888888888888888888888888888888888888888
+
+// récupérer tout les topics de la table topics (publié ou non)
+function readAllTopics()
+{
+    global $db_connect ,$topics;
+    $sql = "SELECT * FROM topics ORDER BY created_at DESC ";
+    $pdoStat = $db_connect->prepare($sql);
+    $executeIsOk = $pdoStat->execute();
+    // $listes_AllTpics = $pdoStat->fetchAll();
+    $topics = $pdoStat->fetchAll();
+
+
+    return $topics;
+    //    var_dump($topics);
+
+}
+
+//récupère tout les topics activé et dans un ordre (plus récent au plus ancien)
+function activeTopicByOrder()
+{
+    global $db_connect, $published_topics;
+    $sql = "SELECT * FROM topics WHERE published = 1   ORDER BY created_at DESC ";
+    $pdoStat = $db_connect->prepare($sql);
+    $executeIsOk = $pdoStat->execute();
+    $published_topics = $pdoStat->fetchAll(); 
+    return $published_topics;
+}

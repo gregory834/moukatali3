@@ -74,7 +74,7 @@ include ('../layout/head.php');
 
                     </div>
 
-                    <!-- ATTENTION nom et prénom sur la meme ligne ! -->
+                    <!-- ATTENTION nom et prénom -->
 
                     <div class="mb-3 d-flex flex-column flex-md-row justify-content-between">
                         <!-- NOM DATA TYPE VARCHAR-->
