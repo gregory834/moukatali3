@@ -1,11 +1,14 @@
 <?php
 
 
-// INITIALISATION DES VARIBLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D INSERTION EN BASE DE DONNEE 
+// INITIALISATION DES VARIBLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D INSERTION EN BASE DE DONNEE et pour eviter les erreurs de variable indéfini
 $pseudo = ""; //initialisation
 $email = "";
 $last_name = "";
 $first_name = "";
+$role = "TEST";
+$auth = FALSE;
+$user = "";
 
 $errors = array(); // VAR TABLEAUX QUI RECOIT LES MESSAGES D ERREUR POUR LE FORMULAIRE INSCRIPTION
 
@@ -24,7 +27,7 @@ if ( isset($_POST['modifier']) ) {
     updateUser();
 }
 
-// si je clique sur supprimer
+// si je clique sur le bouton supprimer
 if ( isset($_POST['supprimer']) ) {
     deleteUser();
 }
@@ -32,6 +35,11 @@ if ( isset($_POST['supprimer']) ) {
 // si je clique sur le bouton publier
 if ( isset($_POST['publier']) ) {
     publier();
+}
+
+// si je clique sur le bouton se déconnecter
+if ( isset($_POST['deconnexion']) ) {
+    deconnexion();
 }
 
 
@@ -125,15 +133,21 @@ function registerUser() {
          *************************************************/
         //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
         // l'e-mail et les noms d'utilisateur doivent être uniques
-        
-        $reqt  = "SELECT * FROM  `users` WHERE  email = '$email' OR pseudo = '$pseudo' LIMIT 1"; //requete de selection dans table user en fonction de l email
-        $reqEmail = $db_connect->prepare($reqt); //préparation de la requete
-        $reqEmail->execute([$email]);  //EXECUTION DE LA REQUETE
-        $doublonEmail = $reqEmail->fetch();  //RECUPERATION RESULTAT DE LA REQUETE AUTREMENT DIT SI UN DOUBLON EST TROUVER EN FONCTION DE L EMAIL FOURNI
-        // SI DOUBLON EXISTANT
-        if ( $doublonEmail ) {
-            array_push($errors, "Pseudo ou Email déjà existant");
+
+        $reqt = "SELECT * FROM moukatali.users WHERE pseudo = '$pseudo' OR email = '$email'";
+        $valeur = array( 'pseudo' => $pseudo, 'email' => $email);
+        $reqTab = $db_connect->prepare($reqt);
+        $reqTab->execute( $valeur );
+        $row = $reqTab->fetch( PDO::FETCH_ASSOC );
+        if ( is_array($row) ) {
+            if ( $row['pseudo'] == $pseudo) {
+                array_push( $errors, "Pseudo déjà existant");
+            }
+            if ( $row['email'] == $email) {
+                array_push( $errors, "Email déjà existant");
+            }
         }
+
 
         if ( count($errors) == 0 ) { // Si le tableau erreurs est vide
 
@@ -143,7 +157,7 @@ function registerUser() {
             // REQUETE D INSERTION (CREATION) UTILISATEUR EN BASSE DE DONEE. 13 INFORMATIONS AU TOTAL INSERTION DANS L ODRE DE LA TABLE EN BASSE DE DONNEE
             //  ID EST AUTO INCREMENTER EN BDD
 
-            $reqt = "INSERT INTO `users` ( pseudo, first_name, last_name, avatar, email, password, role, created_at ) VALUES ( '$pseudo','$first_name','$last_name', '$avatar', '$email', '$password_hash', '$role', now() )";
+            $reqt = "INSERT INTO moukatali.users ( pseudo, first_name, last_name, avatar, email, password, role, created_at ) VALUES ( '$pseudo','$first_name','$last_name', '$avatar', '$email', '$password_hash', '$role', now() )";
 
             $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
             $reqInsert->execute(); //execution de la requete
@@ -151,7 +165,7 @@ function registerUser() {
             $log->log('inscription', 'validation_inscription', "Fonction registerUser() : l'inscription a réussi", Log::FOLDER_MONTH); 
 
             header('location: ./login.php');
-
+            exit;
 
         } else {
             $log->log('inscription', 'err_inscription', "Fonction registerUser() : l'inscription a échoué", Log::FOLDER_MONTH);
@@ -162,10 +176,10 @@ function registerUser() {
 // FONCTION CONNEXION UTILISATEUR
 function connexionUser() {
 
-    global $db_connect, $errors;
+    global $db_connect, $errors, $log;
 
     $email = trim($_POST['email']);
-    $password_connect = trim($_POST['password_connect']);
+    $password = trim($_POST['password']);
 
     //TRAITEMENT DES CHAMPS VIDES
     // echo 'Traitement des champs vides <br/>';
@@ -173,66 +187,44 @@ function connexionUser() {
         array_push($errors, "Saisir une adresse email !");
     }
     // evitre l evoie du caractere ESPACE car le considere toujours comme un champs vide
-    if (empty($password_connect)) {
+    if (empty($password)) {
         array_push($errors, "Mot de passe requis");
-        }
+    }
 
     /******************************************
      * REQUETE RECUPERATION POUR COMPARAISON *
      ******************************************/
-    // echo ' vérification des conditions <br/>';
-    if (empty($errors)) {
-        
-        
-        $reqt  = "SELECT * FROM  `users` WHERE  email = '$email' LIMIT 1";
-        $reqEmail = $db_connect->prepare($reqt);
-        $reqEmail->execute([$email]);
-        $user = $reqEmail->fetch();
+    $reqt  = "SELECT * FROM  moukatali.users WHERE email = '$email' LIMIT 1";
+    $valeur = array( 'email' => $email );
+    $reqEmail = $db_connect->prepare($reqt);
+    $reqEmail->execute($valeur);
+    $user = $reqEmail->fetch( PDO::FETCH_ASSOC );
 
-        // test
-        // $user =  $reqEmail->fetch();
-
-        // echo 'Vérification du mot de passe et de l\' email. <br/>';
-        if ($user && $user['delete_account'] == 0 ) { // email existant
-            // VERIFICATION DES CHAMPS SAISIE AVEC LES MATCH EN BDD
-            // VERIFICATION DES CORRESPONDANCE DES MOTS DE PASSE (saisie à l'input et présente en bdd)
-            // utilisation de la fonction password_verify qui compart le hasf password en bdd avec le mot de passe saisie à l'input lors de la connection
-            // password_verify entre $password_connect et $doublonEmail['PASSWORD et non pas PASSWORD-CONNECT]. PASSWORD car cela correspond a commebnt il est nommé en bdd sur les ligne.
-
-
-            $passmatch = password_verify($password_connect, $user['password']);
-            
-            if ($passmatch = false) {
-                array_push($errors, "Mot de passe incorrect <br/>!");
-            }
-
-            if ( $user['email'] === $email && password_verify($password_connect, $user['password']) ) {
-                
-                // A CE STADE SI LE COMPTE EST TROUVER ALORS ON RECUPERE LES INFORMATIONS POUR LES STOCER EN SESSION. SERVIRA NOTAMENT POUR LE FORMULAIRE DE MODIFICATION DU COMPTE ET AUSSI POUR DEMARRER UNE SESSION UNE FOIS L UTILISATEUR CONNECTER
-
-
-                /***************************************************************************************
-                 * STOCKAGE DES INFORMATIONS BDD EN SESSION OU EN UTILISANT CEUX DU RESULTAT DE REQUETE *
-                 *****************************************************************************************/
-
-                // $_SESSION = array();
-                // mettre les info utiles de l'utilisateur connecté dans le tableau de session
-                $_SESSION['user']['pseudo'] = $user['pseudo'];
+    if ( is_array($user) ) {
+        if ( $user['email'] == $email && $user['delete_account'] == 0 ) {
+            if ( password_verify($password, $user['password']) ) {
+                $_SESSION['user']['id'] = $user['id'];
+                $_SESSION['user']['role'] = $user['role'];
                 $log->log('connexion', 'conn_utilisateurs', "Fonction connexionUser() : l'authentification a réussi", Log::FOLDER_MONTH);
-                header('location: ./moukatages.php');
-
+                switch ( $user['role'] ) {
+                    case "user":
+                        header('location: ./moukatages.php');
+                        break;
+                    case "admin":
+                        header('location: ./admin/dashboard.php');
+                        break;
+                    default:
+                        header('location: ./admin/gestion-topics.php');
+                }
             } else {
-
                 array_push($errors, " Identifiants erroné ! <br/> Vérifier vos informations ");
                 $log->log('connexion', 'err_connexion', "Fonction connexionUser() : la connexion a echoué", Log::FOLDER_MONTH);
-
             }
-
         } else {
-
             array_push($errors, " Compte inexistant... <br/> Veuillez creer un compte.");
-
-        }
+        }      
+    } else {
+        array_push($errors, " Compte inexistant... <br/> Veuillez creer un compte.");
     }
 
 }
@@ -241,7 +233,7 @@ function connexionUser() {
 // FONCTION MODIFIER UTILISATEUR
 function updateUser() {
 
-    global $db_connect, $errors;
+    global $db_connect, $errors, $log;
 
     /************************************************************************************
      * TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE INSCRIPTION APRES LE CLIQUE *
@@ -317,15 +309,12 @@ function updateUser() {
 
         $password_hash = password_hash($password_2, PASSWORD_DEFAULT); //NOUVELLE VARIABLE QUI ACCUILLE LE HASH DU MOT DE PASSE SAISIE QUI A ETE TRAITER EN AMONT
         
-        $user_pseudo = $_SESSION['user']['pseudo'];
+        $user_id = $_POST['user-id'];
 
-        $reqt = "UPDATE  `users` SET pseudo = '$pseudo' ,first_name = '$first_name' , last_name = '$first_name' , avatar = '$avatar', email = '$email' , password = '$password_hash' WHERE pseudo = '$user_pseudo' ";
-
+        $reqt = "UPDATE moukatali.users SET pseudo = '$pseudo', first_name = '$first_name', last_name = '$first_name', avatar = '$avatar', email = '$email', password = '$password_hash' WHERE id = '$user_id' ";
+        
         $reqUpdate = $db_connect->prepare($reqt); //preparation de la requete
-
         $reqUpdate->execute(); //execution de la requete
-
-        $_SESSION['user']['pseudo'] = $pseudo; // on réaffecte avec le nouveau pseudo
 
         $log->log('utilisateurs', 'edit_utilisateurs', "Fonction updateUser() : Mise à jour utilisateur réussi", Log::FOLDER_MONTH);
 
@@ -338,14 +327,14 @@ function updateUser() {
 
 function deleteUser() {
 
-    global  $db_connect;
+    global  $db_connect, $log;
 
     // si le bouton supprimer est cliqué alors :
    
         // requete de suppression methode PDO
-        $user_pseudo = $_SESSION['user']['pseudo'];
+        $user_id = $_SESSION['user']['id'];
         $delete_account = 1;
-        $reqt = "UPDATE `users` SET delete_account = '$delete_account' WHERE pseudo = '$user_pseudo' "; //supprime la ligne du compte en repérant l id en bdd en fontion de l id de session . L id de session est stocker dans la varaible $delete_id_user.
+        $reqt = "UPDATE moukatali.users SET delete_account = '$delete_account' WHERE id = '$user_id' "; //supprime la ligne du compte en repérant l id en bdd en fontion de l id de session . L id de session est stocker dans la varaible $delete_id_user.
         $reqUpdate = $db_connect->prepare($reqt); //preparation de la requete
         $reqUpdate->execute(); //execution de la requete
         $log->log('utilisateurs', 'del_utilisateurs', "Fonction deleteUser() : suppression utilisateur", Log::FOLDER_MONTH);
@@ -354,11 +343,21 @@ function deleteUser() {
         //si le compte disparait et que la session est tjs active ainsi on détruit aussi la session
         session_destroy();
         unset($_SESSION['user']);
-
-        header('location: ../../index.php');
+        $redirect = BASE_URL . '/src/index.php';
+        header('location: '.$redirect);
 
 }
 
+// FONCTION SE DECONNECTER
+function deconnexion() {
+    session_destroy();
+    unset( $_SESSION['user'] );
+    $redirect = BASE_URL . '/src/index.php';
+    header('location: '.$redirect);
+}
+
+
+// FONCTION PUBLIER
 function publier() {
 
     global $db_connect, $errors, $log;
@@ -391,7 +390,7 @@ function publier() {
 
 
 // FONCTION POUR RECUPERER LES INFO UTILISATEUR
-function readUserById( $pseudo ) {
+function readUserById( $id ) {
 
     /******************************************
      * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
@@ -400,9 +399,9 @@ function readUserById( $pseudo ) {
     global $db_connect;
 
    
-    $requete = "SELECT * from `users` where pseudo = '$pseudo' ";
+    $requete = "SELECT * from moukatali.users WHERE id = '$id' ";
     $stmt = $db_connect->query($requete);
-    $user = $stmt->fetch();
+    $user = $stmt->fetch( PDO::FETCH_ASSOC );
 
     return $user;
 }

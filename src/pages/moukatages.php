@@ -1,14 +1,17 @@
 <?php
 require '../../config/config.php';
-require '../../config/database.php';
-require '../controller/user-function.php';
-require '../controller/topic-function.php';
+require ROOT_PATH . '/config/database.php';
 
-$user = readUserById( $_SESSION['user']['pseudo'] );
+require ROOT_PATH . '/src/controller/user-function.php';
+//require '../controller/topic-function.php';
+if ( isset($_SESSION['user']) ) {
+    $user = readUserById( $_SESSION['user']['id'] );
+    $pseudo = $user['pseudo'];
+    $role = $user['role'];
+    $auth = TRUE;
+}
+
 //$topic = getTopicById();
-
-
-
 
 include ('../layout/head.php');
 
@@ -24,13 +27,68 @@ include ('../layout/head.php');
     <header class="header-main ">
         <div class="container">
 
-        <?php include (BASE_URL . '/src/layout/nav.php'); ?>
+        <?php //include (BASE_URL . '/src/layout/nav.php'); ?>
+        <!-- NAVBAR -->
+        <nav class="navigation d-flex align-items-center justify-content-between">
+            <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
+                <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
+            </a>
+            <div class="menu-toggle">
+                <input class="position" type="checkbox" />
+                <span class="position"></span>
+                <span class="position"></span>
+                <span class="position mb-0"></span>
+                <ul class="menu">
+
+                    <a href=<?php echo BASE_URL . "/src/index.php" ?>>
+                        <li class="text-uppercase">Accueil</li>
+                    </a>
+
+                    <?php if ( $role == 'user' ): ?>
+                    <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
+                        <li class="text-uppercase">profil</li>
+                    </a>
+                    <?php endif; ?>
+
+                    <?php if ( $role == 'admin' ): ?>
+                    <a href=<?php echo BASE_URL . "/src/pages/admin/dashboard.php" ?>>
+                        <li class="text-uppercase">Dashboard</li>
+                    </a>
+                    <?php endif; ?>
+
+                    <?php if ( $auth == FALSE ): ?>
+                    <a href=<?php echo BASE_URL . "/src/pages/login.php" ?>>
+                        <li class="text-uppercase">se connecter</li>
+                    </a>
+                    <?php endif; ?>
+
+                    <a href="#">
+                        <li class="text-uppercase">Contact</li>
+                    </a>
+
+                    <?php if ( isset($_SESSION['user']) ): ?>
+                    <a href="#">
+                        <form method="post">
+                            <button class="btn text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
+                        </form>
+                    </a>
+                    <?php endif; ?>
+
+                </ul>
+            </div>
+        </nav>
 
         </div>
     </header>
     
     <div class="container">
-        <h6 class="text-light py-5 text-center">Bienvenue <?php echo $user['pseudo']; ?></h6>
+        <?php if ( $auth == TRUE ): ?>
+            <h6 class="text-light py-5 text-center">Bienvenue <?php echo $pseudo; ?></h6>
+            <?php else: ?>
+            
+            <h6 class="text-light py-5 text-center">Bienvenue Visiteur</h6>
+        <?php endif; ?>
+        
         <h1 class=" text-center text-alert mb-4 ">&ldquo;MoukatAli !!&rdquo;</h1>
     </div>
 
@@ -125,17 +183,6 @@ include ('../layout/head.php');
 
         </div>
     </section>
-
-
-
-    <!-- FOOTER -->
-    <footer class="text-center py-5 d-flex flex-column">
-        <a href="#" class="mb-1">Contact</a>
-        <a href="#" class="mb-1">C.G.V.</a>
-        <a href="#" class="mb-1">C.G.U.</a>
-        <a href="#">Mentions légales</a>
-    </footer>
-
 
     </div>
 

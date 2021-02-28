@@ -1,23 +1,31 @@
 <?php
 
-session_start();
+// Nom d'hôte du serveur MySQL
+$db_host = 'localhost';
+// Nom d'utilisateur du compte MySQL
+$db_user = 'root';
+// Mot de passe du compte MySQL
+$db_pwd = 'root';
+// La base de données que tu souhaites utiliser
+$database = 'moukatali';
+// L'objet PDO
+$db_connect = NULL;
+// Chaîne de connexion
+$conn = 'mysql:host = ' . $db_host . ';dbname = ' . $database;
 
-$servername = 'localhost';
-$database = "moukatali";
-$login = 'root';
-$pwd = '';
-
-//On essaie de se connecter
-try{
-    $db_connect = new PDO("mysql:host=$servername; dbname=$database", $login, $pwd);
-    //On définit le mode d'erreur de PDO sur Exception
+// Connexion à l'intérieur d'un bloc try / catch
+try {
+    // Création d'objets PDO
+    $db_connect = new PDO($conn, $db_user, $db_pwd);
+    // Activer les exceptions sur les erreurs
     $db_connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo '<div class="text-light">Connexion réussie</div>';
-}
-
-/*On capture les exceptions si une exception est lancée et on affiche les informations relatives à celle-ci*/
-catch(PDOException $e){
+    //echo 'Connecter à la base de données.<br/>';
+} catch (PDOException $e) {
+    //  S'il y a une erreur, une exception est levée
+    echo 'La connexion à la base de données a échoué.<br/>';
     echo "Erreur : " . $e->getMessage();
+    $log->log('base_de_donnees', 'connexion_bdd', "Erreur : " . $e->getMessage(), Log::FOLDER_MONTH);
+    die();
 }
 
 ?>

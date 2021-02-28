@@ -1,6 +1,7 @@
 <?php
 
-echo '<div class="text-light">CHEMIN CLASS OK</div>';
+//echo '<div class="text-light">CHEMIN CLASS OK</div>';
+date_default_timezone_set('Indian/Reunion');
 
 class Log {
 
@@ -23,7 +24,7 @@ class Log {
         
         # Si le dépôt n'éxiste pas
         if( !is_dir($path) ){
-            trigger_error( $path . "n'existe pas", E_USER_WARNING );
+            trigger_error( $path . " n'existe pas", E_USER_WARNING );
             return false;
         }
         
