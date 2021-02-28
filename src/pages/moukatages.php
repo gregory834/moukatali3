@@ -120,12 +120,15 @@ include('../layout/head.php');
     <!-- SECTION -->
     <section class="mb-5">
         <div class="container d-md-flex">
-            <?php if (isset($published_topics)) {   ?>
+            <?php if (isset($published_topics[1])) {   ?>
                 <!-- AUTRE SUJET -->
                 <div class="autre bg-light p-4 text-dark d-flex align-items-center mb-3 mb-md-0 mr-md-3">
                     <img src=<?= BASE_URL . "/public/images/uploads/" .$published_topics[1]["image"] ?> class="mr-2" alt="Image sujet">
                     <p class="mb-0"> <?php echo $published_topics[1][1];  ?></p>
                 </div>
+                <?php } ?>
+
+                <?php if (isset($published_topics[2])) {   ?>
                 <!-- AUTRE SUJET -->
                 <div class="autre bg-light p-4 text-dark d-flex align-items-center">
                 <img src=<?= BASE_URL . "/public/images/uploads/" .$published_topics[2]["image"] ?> class="mr-2" alt="Image sujet">
