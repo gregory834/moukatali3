@@ -5,7 +5,7 @@ session_start();
 $servername = 'localhost';
 $database = "moukatali";
 $login = 'root';
-$pwd = 'root';
+$pwd = '';
 
 //On essaie de se connecter
 try{
