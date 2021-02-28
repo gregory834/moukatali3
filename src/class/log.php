@@ -10,7 +10,7 @@ if( isset($_POST['connection']) ){
 	$log->log('statistiques', 'clic_bouton_connexion', "connexion utilisateur", Log::FOLDER_MONTH);
 	$log->log('', 'sans_type', "Ce log est simplement enregistré à la racine du dépôt", Log::FOLDER_ROOT);*/
 
-	// Enregistrement d'un événement dans le fichier test_advanced.log :
+	// Enregistrement d'un événement dans un fichier .log :
 	$log->log('connexion', 'conn_utilisateurs', "Fonction connexion() : l'authentification a réussi", Log::FOLDER_MONTH);
 	
 	// Un log qui enregistre des informations sur le visiteur :

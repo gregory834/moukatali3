@@ -1,5 +1,6 @@
 <?php
 
+
 // INITIALISATION DES VARIBLES DONT CEUX PAR DEFAUT AFIN DE LES TRAITER AVANT REQUETE D INSERTION EN BASE DE DONNEE 
 $pseudo = ""; //initialisation
 $email = "";
@@ -28,13 +29,18 @@ if ( isset($_POST['supprimer']) ) {
     deleteUser();
 }
 
+// si je clique sur le bouton publier
+if ( isset($_POST['publier']) ) {
+    publier();
+}
+
 
 
 
 // FONCTION INSCRIPTION
 function registerUser() {
 
-        global $db_connect, $errors;
+        global $db_connect, $errors, $log;
 
         /************************************************************************************
          * TRAITEMENT DES VARIABLES POST RECUPERER DEPUIS PAGE INSCRIPTION APRES LE CLIQUE *
@@ -66,26 +72,32 @@ function registerUser() {
         // Pour tester le echo test d un champs vide il faut au prealable enlever la securité sur le champs a tester. Son required , son pattern et son min ou max
         if (empty($pseudo)) {
             array_push($errors, "Entrer un pseudonyme");
+            
         }
 
         if (empty($last_name)) {
             array_push($errors, "Entrer votre nom");
+            
         }
 
         if (empty($first_name)) {
             array_push($errors, "Entrer votre prenom");
+            
         }
 
         if (empty($email)) {
             array_push($errors, "Entrer une adresse mail");
+            
         }
 
         if (empty($password_1)) {
             array_push($errors, "Vous avez oublié le mot de passe");
+            
         }
         // ON VERIFIE SI LES DEUX MOTS DE PASSE SAISIE SONT IDENTIQUES
         if ($password_1 != $password_2) {
             array_push($errors, "les deux mots de passe ne correspondent pas");
+            
         }
 
         // VERIFICATION DE LA TAILLE DE L IMAGE
@@ -136,9 +148,13 @@ function registerUser() {
             $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
             $reqInsert->execute(); //execution de la requete
 
+            $log->log('inscription', 'validation_inscription', "Fonction registerUser() : l'inscription a réussi", Log::FOLDER_MONTH); 
+
             header('location: ./login.php');
 
 
+        } else {
+            $log->log('inscription', 'err_inscription', "Fonction registerUser() : l'inscription a échoué", Log::FOLDER_MONTH);
         }
 
 }
@@ -202,11 +218,13 @@ function connexionUser() {
                 // $_SESSION = array();
                 // mettre les info utiles de l'utilisateur connecté dans le tableau de session
                 $_SESSION['user']['pseudo'] = $user['pseudo'];
+                $log->log('connexion', 'conn_utilisateurs', "Fonction connexionUser() : l'authentification a réussi", Log::FOLDER_MONTH);
                 header('location: ./moukatages.php');
 
             } else {
 
-                array_push($errors, " Mot de passe erroné ! <br/> Vérifier vos informations ");
+                array_push($errors, " Identifiants erroné ! <br/> Vérifier vos informations ");
+                $log->log('connexion', 'err_connexion', "Fonction connexionUser() : la connexion a echoué", Log::FOLDER_MONTH);
 
             }
 
@@ -309,7 +327,11 @@ function updateUser() {
 
         $_SESSION['user']['pseudo'] = $pseudo; // on réaffecte avec le nouveau pseudo
 
+        $log->log('utilisateurs', 'edit_utilisateurs', "Fonction updateUser() : Mise à jour utilisateur réussi", Log::FOLDER_MONTH);
+
         header('location: ./profile.php');
+    } else {
+        $log->log('utilisateurs', 'edit_utilisateurs', "Fonction updateUser() : Echec mise à jour utilisateur", Log::FOLDER_MONTH);
     }
 
 }
@@ -326,6 +348,7 @@ function deleteUser() {
         $reqt = "UPDATE `users` SET delete_account = '$delete_account' WHERE pseudo = '$user_pseudo' "; //supprime la ligne du compte en repérant l id en bdd en fontion de l id de session . L id de session est stocker dans la varaible $delete_id_user.
         $reqUpdate = $db_connect->prepare($reqt); //preparation de la requete
         $reqUpdate->execute(); //execution de la requete
+        $log->log('utilisateurs', 'del_utilisateurs', "Fonction deleteUser() : suppression utilisateur", Log::FOLDER_MONTH);
 
         // On efface également les donnée en session pour evité des bug d affichage
         //si le compte disparait et que la session est tjs active ainsi on détruit aussi la session
@@ -333,6 +356,36 @@ function deleteUser() {
         unset($_SESSION['user']);
 
         header('location: ../../index.php');
+
+}
+
+function publier() {
+
+    global $db_connect, $errors, $log;
+
+    $text = htmlentities(trim($_POST['text']));
+    $topics_id = $topic['id'];
+    $user_id = $user['id'];
+        
+    if (empty($description)) {
+        array_push($errors, "Entrer un moukatage");
+        
+    }
+
+    if ( count($errors) == 0 ) { // Si le tableau erreurs est vide
+
+        $reqt = "INSERT INTO `moukatages` ( topics_id, user_id, text, created_at ) VALUES ( '$topics_id','$user_id','$text', now() )";
+
+        $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
+        $reqInsert->execute(); //execution de la requete
+
+        $log->log('moukatages', 'publier_commentaire', "Fonction publier() : " . $text, Log::FOLDER_MONTH);
+
+        header('location: ./login.php');
+
+
+    }
+
 
 }
 

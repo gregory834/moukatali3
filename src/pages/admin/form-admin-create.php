@@ -63,7 +63,8 @@
   </header>
 
 
-  <!-- SECTION -->
+  
+    <!-- SECTION -->
     <section id="form-admin">
       <div class="container">
 
@@ -93,15 +94,15 @@
           <!-- 888888888888888888888888888888888888888888888 -->
           <!-- ROLE OK FONCTIONNE MEME SI SA AFFCHIGE DANS L INOUT SANS LA MAJUSCULE-->
           <div class="mb-3">
-            <select class="form-control" name="role">
-              <option value="" selected disabled>Assigner un rôle</option>
-              <option value="Admin">
-              <option value="Author">
-              <option value="Moderator">
-              <option value="User">
-              </option>
-            </select>
-          </div>
+          <select class="form-control" name="role">
+            <option value="" selected disabled>Assigner un rôle</option>
+            <option value="Admin">
+            <option value="Author">
+            <option value="Moderator">
+            <option value="User">
+            </option>
+          </select>
+        </div>
           <!-- 888888888888888888888888888888888888888888888 -->
           <!-- MOT DE PASSE -->
           <div class="mb-3">
@@ -113,7 +114,7 @@
           <!-- BOUTONS -->
           <!-- si on modifie l'utilisateur , on affiche le bouton de mise à jour au lieu du bouton de création -->
           <!-- 8888888888888888888888888888888888888888888888888888888 -->
-         
+          
             <button type="submit" id="btn-update" class="btn fw-bold text-uppercase" name="update-admin">mettre à jour</button>
           
             <button type="submit" id="btn-create" class="btn btn-dark fw-bold text-uppercase" name="create-admin">créer un administrateur</button>
@@ -126,6 +127,14 @@
           <!-- 8888888888888888888888888888888888888888888888888888888 -->
         </form>
         
+
+        
+      </div>
+    </section>
+
+
+
+
     <!-- 8888888888888888888888888888888888888888888888888888888 -->
     <section id="list-admin" class="py-5">
       <div class="container">
@@ -141,6 +150,8 @@
         ?>
 
         
+          <h6>AUCUN ADMIN</h6>
+        
           <table class="table table table-bordered bg-secondary  text-center text-light">
 
             <thead>
@@ -153,13 +164,13 @@
               </tr>
             </thead>
             <tbody>
-              
+             
                 <div class="user">
                   <tr>
                     <th scope="row">#</th>
                     <td class="align-middle"><a style="color:black;font-size:2vh;" href="#">1</a></td>
                     <td class="align-middle" style="color:black;font-size:2vh;">2</td>
-                    <td class="align-middle" style="color:black;font-size:2vh;">3</td>
+                    <td class="align-middle" style="color:black;font-size:2vh;">3 </td>
                     <td class="align-middle">
                       <a class="text-dark" href="form-admin-create.php?edit-admin=<?php echo $ligne_AdminAuthorModerator['id']; ?>" role="button">
                         <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -178,10 +189,10 @@
                     </td>
                   </tr>
                 </div>
-              
+            
             </tbody>
           </table>
-        
+       
       </div>
     </section>
 
