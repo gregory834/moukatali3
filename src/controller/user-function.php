@@ -122,6 +122,21 @@ function registerUser()
         array_push($errors, "Pseudo ou Email déjà existant");
     }
 
+    // VERIFICATION PATTERN 888888888888888888888888888888888888888888888888888888888888888888888888
+    $Syntaxenom = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#i'; //definit les symboles à bannir dans le nom
+    $Syntaxemail = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#i'; //definit les symboles à bannir dans l'adresse mail du visiteur
+    // si certains champs n'ont pas le bon format          
+    if ((!preg_match($Syntaxenom, $pseudo))
+        or (!preg_match($Syntaxenom, $last_name))
+        or (!preg_match($Syntaxenom, $first_name))
+        or (!preg_match($Syntaxemail, $email))
+    ) {
+        array_push($errors, "Format de saisie interdite (error_regex)");
+    }
+    // VERIFICATION PATTERN 888888888888888888888888888888888888888888888888888888888888888888888888
+
+
+
     if (count($errors) == 0) { // Si le tableau erreurs est vide
 
         //ON CRYPTE LE MOT DE PASSE AVANT L ENREGISTREMENT DANS LA BASE DE DONNEES
@@ -204,8 +219,7 @@ function connexionUser()
 
                 if ($_SESSION['user']['role']  === 'user') {
                     header('location: ./moukatages.php');
-                }
-                else{
+                } else {
                     header('location: ./admin/dashboard.php');
                 }
             } else {
@@ -381,7 +395,3 @@ function getAllUsers()
     $all_users = $stmt->fetchAll();
     return $all_users;
 }
-
-
-
-
