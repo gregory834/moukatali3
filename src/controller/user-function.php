@@ -362,26 +362,23 @@ function publier() {
 
     global $db_connect, $errors, $log;
 
-    $text = htmlentities(trim($_POST['text']));
-    $topics_id = $topic['id'];
-    $user_id = $user['id'];
+    $post = htmlentities(trim($_POST['text']));
+    $topic_id = 1;
+    $user_id = 2;
         
-    if (empty($description)) {
+    if (empty($post)) {
         array_push($errors, "Entrer un moukatage");
         
     }
 
     if ( count($errors) == 0 ) { // Si le tableau erreurs est vide
 
-        $reqt = "INSERT INTO `moukatages` ( topics_id, user_id, text, created_at ) VALUES ( '$topics_id','$user_id','$text', now() )";
+        $reqt = "INSERT INTO moukatali.moukatages ( topic_id, user_id, post, created_at ) VALUES ( '$topic_id','$user_id','$post', now() )";
 
         $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
 
-        $log->log('moukatages', 'publier_commentaire', "Fonction publier() : " . $text, Log::FOLDER_MONTH);
-
-        header('location: ./login.php');
-
+        $log->log('moukatages', 'publier_commentaire', "Fonction publier() : " . $post, Log::FOLDER_MONTH);
 
     }
 
@@ -406,6 +403,16 @@ function readUserById( $id ) {
     return $user;
 }
 
+function postTopicById($topic_id) {
+    global $db_connect;
+
+    $requete = "SELECT * from moukatali.moukatages WHERE topic_id = '$topic_id' ORDER BY created_at DESC";
+    $query = $db_connect->query($requete);
+    $moukatages = $query->fetchAll();
+    return $moukatages;
+
+}
+
 
 
 
@@ -413,12 +420,11 @@ function readUserById( $id ) {
 
 function getAllUsers()
 {
-    global $all_users;
     global $db_connect;
     // $admin = "role";
-    $requet = "SELECT * FROM users WHERE role= 'user'";
-    $stmt = $db_connect->query($requet);
-    $all_users = $stmt->fetchAll();
+    $requet = "SELECT * FROM moukatali.users";
+    $query = $db_connect->query($requet);
+    $all_users = $query->fetchAll();
     return $all_users;
 }
 
