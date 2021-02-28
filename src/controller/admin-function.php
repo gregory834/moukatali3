@@ -293,7 +293,6 @@ function readAllAdmin() {
     $author = "author";
     $reqt = "SELECT * FROM moukatali.users WHERE role = '$admin' OR role = '$author' ";
     $query = $db_connect->query($reqt);
-    //$execute = $prepare->execute();
     $admins = $query->fetchAll();
     return $admins;
 
