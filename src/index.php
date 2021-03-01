@@ -2,7 +2,7 @@
 require '../config/config.php';
 require '../config/database.php';
 
-require '../src/controller/user-function.php';
+require ROOT_PATH . '/src/controller/user-function.php';
 
 
 include (ROOT_PATH . '/src/layout/head.php');

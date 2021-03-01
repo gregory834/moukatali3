@@ -1,13 +1,11 @@
 <?php
 
-session_start();
-
 // Nom d'hôte du serveur MySQL
 $db_host = 'localhost';
 // Nom d'utilisateur du compte MySQL
 $db_user = 'root';
 // Mot de passe du compte MySQL
-$db_pwd = '';
+$db_pwd = 'root';
 // La base de données que tu souhaites utiliser
 $database = 'moukatali';
 // L'objet PDO
@@ -29,4 +27,5 @@ try {
     $log->log('base_de_donnees', 'connexion_bdd', "Erreur : " . $e->getMessage(), Log::FOLDER_MONTH);
     die();
 }
+
 ?>
