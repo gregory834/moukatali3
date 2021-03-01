@@ -55,13 +55,11 @@ include('../../layout/head.php');
             </a>
 
             <?php if ( isset($_SESSION['user']) ): ?>
-            <a href="#">
                 <form method="post">
-                  <div class="text-center mt-3 mb-3">
-                    <button class="btn btn-info text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
-                  </div>
+                    <div class="text-center">
+                        <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
+                    </div>
                 </form>
-            </a>
             <?php endif; ?>
 
         </ul>
