@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require '../config/config.php';
 
 require '../config/database.php';
@@ -7,7 +7,7 @@ require '../config/database.php';
 require '../src/controller/user-function.php';
 
 $verif_admin = readUserById($_SESSION['user']['pseudo']);
-// var_dump($verif_admin['role']);
+
 
 
 ?>
