@@ -17,11 +17,11 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: 'index.php',
+            url: 'moukatages.php',
             type: 'post',
             data: {
                 'action': action,
-                'post_id': post_id
+                'moukatage_id': moukatage_id
             },
             success: function (data) {
                 res = JSON.parse(data);

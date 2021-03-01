@@ -5,7 +5,7 @@ $db_host = 'localhost';
 // Nom d'utilisateur du compte MySQL
 $db_user = 'root';
 // Mot de passe du compte MySQL
-$db_pwd = 'root';
+$db_pwd = '';
 // La base de données que tu souhaites utiliser
 $database = 'moukatali';
 // L'objet PDO
