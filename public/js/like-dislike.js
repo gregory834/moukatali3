@@ -3,14 +3,14 @@ $(document).ready(function () {
     // si l'utilisateur clique sur le bouton J'aime ...
     $('.like-btn').on('click', function () {
 
-        var post_id = $(this).data('id');
+        var moukatage_id = $(this).data('id');
         $clicked_btn = $(this);
 
-        if ($clicked_btn.hasClass('fa-thumbs-o-up')) {
+        if ($clicked_btn.getAttribute("src", "../../public/images/icones/like.png")) {
 
             action = 'like';
 
-        } else if ($clicked_btn.hasClass('fa-thumbs-up')) {
+        } else if ($clicked_btn.getAttribute("src", "../../public/images/icones/unlike.png")) {
 
             action = 'unlike';
 
@@ -27,11 +27,9 @@ $(document).ready(function () {
                 res = JSON.parse(data);
                 console.log(res.likes);
                 if (action == "like") {
-                    $clicked_btn.removeClass('fa-thumbs-o-up');
-                    $clicked_btn.addClass('fa-thumbs-up');
+                    $clicked_btn.attr("src", "../../public/images/icones/like.png");
                 } else if (action == "unlike") {
-                    $clicked_btn.removeClass('fa-thumbs-up');
-                    $clicked_btn.addClass('fa-thumbs-o-up');
+                    $clicked_btn.attr("src", "../../public/images/icones/unlike.png");
                 }
                 // afficher le nombre de j'aime et n'aime pas
                 $clicked_btn.siblings('span.likes').text(res.likes);
