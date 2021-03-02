@@ -6,7 +6,7 @@ $db_host = 'localhost';
 $db_user = 'root';
 // Mot de passe du compte MySQL
 $db_pwd = '';
-// La base de données que tu souhaites utiliser
+// La base de données utilisé
 $database = 'moukatali';
 // L'objet PDO
 $db_connect = NULL;
@@ -15,7 +15,7 @@ $conn = 'mysql:host = ' . $db_host . ';dbname = ' . $database;
 
 // Connexion à l'intérieur d'un bloc try / catch
 try {
-    // Création d'objets PDO
+    // Création de l'objet PDO
     $db_connect = new PDO($conn, $db_user, $db_pwd);
     // Activer les exceptions sur les erreurs
     $db_connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
