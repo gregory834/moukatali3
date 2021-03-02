@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../css/mon-style.css">
   <link rel="stylesheet" href="../../css/styleDav.css">
 
-  <title>Espace Administrateur - Moukat A Li</title>
+  <title>Espace Administrateur | Moukat A Li</title>
 </head>
 
 <body>
@@ -69,11 +69,10 @@
       <div class="container">
 
         <h1 class="text-uppercase text-center py-3 mt-5">DASHBOARD administrateur</h1>
-        <?php global $errors, $success; ?>
+        
 
         <form method="POST" action="form-admin-create.php" class="m-auto">
           <!-- MESSAGE D'ERREUR-->
-
 
           <!-- Ici les values avec echo servirons à afficher les champs pré-remplies que si on est Administrateur, Autheur ou autre etc -->
           <!-- PSEUDO -->

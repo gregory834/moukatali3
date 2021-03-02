@@ -1,10 +1,12 @@
 <?php
 require '../../../config/config.php';
-require '../../../config/database.php';
-require '../../controller/user-function.php';
+require ROOT_PATH . '/config/database.php';
 
-$user = readUserById( $_SESSION['user']['pseudo'] );
+require ROOT_PATH . '/src/controller/user-function.php';
 
+$user = readUserById( $_SESSION['user']['id'] );
+$role = $user['role'];
+$auth = TRUE;
 
 
 
@@ -26,7 +28,53 @@ include ('../../layout/head.php');
     <header class="header-main ">
         <div class="container">
 
-        <?php include (BASE_URL . '/src/layout/nav.php'); ?>
+        <!-- NAVBAR -->
+        <nav class="navigation d-flex align-items-center justify-content-between">
+                <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
+                    <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
+                </a>
+                <div class="menu-toggle">
+                    <input class="position" type="checkbox" />
+                    <span class="position"></span>
+                    <span class="position"></span>
+                    <span class="position mb-0"></span>
+                    <ul class="menu">
+
+                        <a href=<?php echo BASE_URL . "/src/index.php" ?>>
+                            <li class="text-uppercase">Accueil</li>
+                        </a>
+
+                        <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
+                            <li class="text-uppercase">moukatali</li>
+                        </a>
+
+                        <?php if ( $role == 'admin' ): ?>
+                        <a href=<?php echo BASE_URL . "/src/pages/admin/dashboard.php" ?>>
+                            <li class="text-uppercase">Dashboard</li>
+                        </a>
+                        <?php endif; ?>
+
+                        <?php if ( $role == 'user' ): ?>
+                        <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
+                            <li class="text-uppercase">profil</li>
+                        </a>
+                        <?php endif; ?>
+
+                        <a href="#">
+                            <li class="text-uppercase">Contact</li>
+                        </a>
+
+                        <?php if ( isset($_SESSION['user']) ): ?>
+                            <form method="post">
+                                <div class="text-center">
+                                    <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
+                                </div>
+                            </form>
+                        <?php endif; ?>
+
+                    </ul>
+                </div>
+            </nav>
 
         </div>
     </header>
@@ -71,15 +119,8 @@ include ('../../layout/head.php');
 
                     <!-- PSEUDONYME DATA TYPE VARCHAR-->
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label text-dark mb-0">Pseudonyme*</label>
-                        <input type="text" class="form-control" id="pseudo" name="pseudo"  title="Choisir un pseudo ou un nom d'utilisateur" value = "<?php echo $user['pseudo']; ?>" >
-                        <!-- NE PAS AFFACER SERVIRA POUR EXPLIQUER LA SECURIT2 FORMULAIRE DU COT2 DE PHP (double securisation) -->
-                        <!-- required
-                        pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" 
-                        minlength="4"
-                        maxlength="30" 
-                        size="30" 
-                        value="" -->
+                        <label for="pseudo" class="form-label text-dark mb-0">Pseudonyme*</label>
+                        <input type="text" class="form-control" name="pseudo" value = "<?php echo $user['pseudo']; ?>" />
                     </div>
 
                     <!-- PHOTO DE PROFIL DATA TYPE VARCHAR CAR ON ENREGISTRE UN LIEN D IMAGE -->
@@ -143,6 +184,7 @@ include ('../../layout/head.php');
                     <!-- BOUTON INSCRIPTION -->
                     <div class="d-flex justify-content-center">
                         <button type="submit" name="modifier" class="btn btn-dark">METTRE A JOUR</button>
+                        <input type="hidden" name="user-id" value=<?php echo $user['id']; ?> />
                     </div>
                     <div class="mt-3 d-flex justify-content-center"> <i>(* Champs obligatoires)</i></div>
                     </div>

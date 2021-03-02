@@ -296,26 +296,7 @@ if (isset($_GET)) {
 }
 
 
-// FONCTION POUR RECUPERER LES INFO UTILISATEUR
-function readUserById($pseudo)
-{
-  
-    /******************************************
-     * CONNECTION A LA BDD (attention : on a l include qui apel la fonction de connection depuis connect-bdd.php) *
-     ******************************************/
-    global $db_connect;
 
-
-    $requete = "SELECT * from `users` where pseudo = '$pseudo' ";
-    $stmt = $db_connect->query($requete);
-    $user = $stmt->fetch();
-
-    $user_id = $user['id'];
-
-    return $user;
-    return $user_id;
-
-}
 
 
 function readAllTopics(){

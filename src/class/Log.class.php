@@ -1,6 +1,7 @@
 <?php
 
-echo '<div class="text-light">CHEMIN CLASS OK</div>';
+//echo '<div class="text-light">CHEMIN CLASS OK</div>';
+date_default_timezone_set('Indian/Reunion');
 
 class Log {
 
