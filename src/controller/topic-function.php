@@ -58,7 +58,7 @@ function getTopicAuthorById($user_id)
 {
     global $db_connect;
 
-    $sql = "SELECT nom FROM users WHERE id = $user_id";
+    $sql = "SELECT nom FROM moukatali.users WHERE id = $user_id";
     $result = $db_connect->query($sql);
     if ($result) {
         // retourner le nom d'utilisateur
@@ -89,7 +89,7 @@ if (isset($_GET['delete-topic'])) {
 global $db_connect, $errors, $user_id;
 // 88888888888888888888888888888888888888
 // $user_id est définit a ce stade
-var_dump($user_id);
+// var_dump($user_id);
 
 function createTopic($request_values)
 {
@@ -150,7 +150,7 @@ function createTopic($request_values)
         // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         // GOOD
         array_push($success, "Edition du sujet réussie !<br/>  ");
-        $sql = "INSERT INTO topics (  title, image, quota_vote, published, created_at) VALUES(  '$title', '$image', 0, '$published', now())";
+        $sql = "INSERT INTO moukatali.topics (  title, image, published, created_at) VALUES(  '$title', '$image',  '$published', now())";
         $reqInsert = $db_connect->prepare($sql); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
         return $errors;
@@ -166,7 +166,7 @@ function createTopic($request_values)
 function editTopic($topic_id)
 {
     global $db_connect, $title, $update_topic, $topic_id;
-    $sql = "SELECT * FROM topics WHERE id = $topic_id LIMIT 1";
+    $sql = "SELECT * FROM moukatali.topics WHERE id = $topic_id LIMIT 1";
 
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
@@ -217,7 +217,7 @@ function updateTopic($request_values)
     // enregistrer le sujet s'il n'y a pas d'erreurs dans le formulaire
     if (count($errors) == 0) {
         array_push($success, "Modification du topics réussie ! ");
-        $query = "UPDATE topics SET title = '$title',image='$image'  WHERE id = $topic_id";
+        $query = "UPDATE moukatali.topics SET title = '$title',image='$image'  WHERE id = $topic_id";
         $reqInsert = $db_connect->prepare($query); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
         return $errors;
@@ -232,7 +232,7 @@ function updateTopic($request_values)
 function deleteTopic($topic_id)
 {
     global $db_connect, $success;
-    $sql1 = "DELETE FROM topics WHERE id = $topic_id";
+    $sql1 = "DELETE FROM moukatali.topics WHERE id = $topic_id";
     $reqDeleteAdmin = $db_connect->prepare($sql1); //preparation de la requete
     $reqDeleteAdmin->execute(); //execution de la requete
     array_push($success, "Topic supprimé avec succès");
@@ -258,7 +258,7 @@ if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
 function togglePublishTopic($topic_id, $message)
 {
     global $db_connect;
-    $sql = "UPDATE topics SET published = !published WHERE id = $topic_id";
+    $sql = "UPDATE moukatali.topics SET published = !published WHERE id = $topic_id";
     $pdoStat = $db_connect->prepare($sql);
     $result = $pdoStat->execute();
     $topics = $db_connect->query($sql);
@@ -272,21 +272,21 @@ if (isset($_GET)) {
     global $topic_id;
     if (isset($_GET['publish'])) {
         $topic_id = $_GET['publish'];
-        $query = "UPDATE topics SET published = 0 WHERE published = 1 AND id = $topic_id LIMIT 1";
+        $query = "UPDATE moukatali.topics SET published = 0 WHERE published = 1 AND id = $topic_id LIMIT 1";
         $pdoStat1 = $db_connect->prepare($query);
         $execut1 = $pdoStat1->execute();
         // CHANGE L ETAT DES AUTRE PUBLICATION 5CAR LIMITER A 2 sur 3 par admin
-        $sql = "UPDATE topics SET published = 0 WHERE id = $topic_id";
+        $sql = "UPDATE moukatali.topics SET published = 0 WHERE id = $topic_id";
         $pdoStat2 = $db_connect->prepare($sql);
         $execut2 = $pdoStat2->execute();
     } else {
         if (isset($_GET['unpublish'])) {
             $topic_id = $_GET['unpublish'];
-            $query = "UPDATE topics SET published = 1 WHERE published = 0 AND id = $topic_id LIMIT 1";
+            $query = "UPDATE moukatali.topics SET published = 1 WHERE published = 0 AND id = $topic_id LIMIT 1";
             $pdoStat1 = $db_connect->prepare($query);
             $execut1 = $pdoStat1->execute();
             // CHANGE L ETAT DES AUTRE PUBLICATION 5CAR LIMITER A 2 sur 3 par admin
-            $sql = "UPDATE topics SET published = 1 WHERE id = $topic_id";
+            $sql = "UPDATE moukatali.topics SET published = 1 WHERE id = $topic_id";
             $pdoStat2 = $db_connect->prepare($sql);
             $execut2 = $pdoStat2->execute();
         }
@@ -295,7 +295,6 @@ if (isset($_GET)) {
 }
 
 
-<<<<<<< HEAD
 // FONCTION POUR RECUPERER LES INFO UTILISATEUR
 
 
@@ -303,14 +302,12 @@ if (isset($_GET)) {
 function readAllTopics()
 {
     global $db_connect ,$topics;
-    $sql = "SELECT * FROM topics ORDER BY created_at DESC ";
+    $sql = "SELECT * FROM moukatali.topics ORDER BY created_at DESC ";
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     // $listes_AllTpics = $pdoStat->fetchAll();
     $topics = $pdoStat->fetchAll();
-=======
 
->>>>>>> main
 
 
     return $topics;
@@ -318,11 +315,12 @@ function readAllTopics()
 
 }
 
+
 //récupère tout les topics activé et dans un ordre (plus récent au plus ancien)
 function activeTopicByOrder()
 {
     global $db_connect, $published_topics;
-    $sql = "SELECT * FROM topics WHERE published = 1   ORDER BY created_at DESC ";
+    $sql = "SELECT * FROM moukatali.topics WHERE published = 1   ORDER BY created_at DESC ";
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     $published_topics = $pdoStat->fetchAll(); 

@@ -151,27 +151,8 @@ function registerUser() {
 
         if ( count($errors) == 0 ) { // Si le tableau erreurs est vide
 
-<<<<<<< HEAD
-    // VERIFICATION PATTERN 888888888888888888888888888888888888888888888888888888888888888888888888
-    $Syntaxenom = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#i'; //definit les symboles à bannir dans le nom
-    $Syntaxemail = '#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#i'; //definit les symboles à bannir dans l'adresse mail du visiteur
-    // si certains champs n'ont pas le bon format          
-    if ((!preg_match($Syntaxenom, $pseudo))
-        or (!preg_match($Syntaxenom, $last_name))
-        or (!preg_match($Syntaxenom, $first_name))
-        or (!preg_match($Syntaxemail, $email))
-    ) {
-        array_push($errors, "Format de saisie interdite (error_regex)");
-    }
-    // VERIFICATION PATTERN 888888888888888888888888888888888888888888888888888888888888888888888888
-
-
-
-    if (count($errors) == 0) { // Si le tableau erreurs est vide
-=======
             //ON CRYPTE LE MOT DE PASSE AVANT L ENREGISTREMENT DANS LA BASE DE DONNEES
             $password_hash = password_hash($password_2, PASSWORD_DEFAULT); //NOUVELLE VARIABLE QUI ACCUILLE LE HASH DU MOT DE PASSE SAISIE QUI A ETE TRAITER EN AMONT
->>>>>>> main
 
             // REQUETE D INSERTION (CREATION) UTILISATEUR EN BASSE DE DONEE. 13 INFORMATIONS AU TOTAL INSERTION DANS L ODRE DE LA TABLE EN BASSE DE DONNEE
             //  ID EST AUTO INCREMENTER EN BDD
@@ -224,14 +205,6 @@ function connexionUser() {
             if ( password_verify($password, $user['password']) ) {
                 $_SESSION['user']['id'] = $user['id'];
                 $_SESSION['user']['role'] = $user['role'];
-<<<<<<< HEAD
-
-
-                if ($_SESSION['user']['role']  === 'user') {
-                    header('location: ./moukatages.php');
-                } else {
-                    header('location: ./admin/dashboard.php');
-=======
                 $log->log('connexion', 'conn_utilisateurs', "Fonction connexionUser() : l'authentification a réussi", Log::FOLDER_MONTH);
                 switch ( $user['role'] ) {
                     case "user":
@@ -242,7 +215,6 @@ function connexionUser() {
                         break;
                     default:
                         header('location: ./admin/gestion-topics.php');
->>>>>>> main
                 }
             } else {
                 array_push($errors, " Identifiants erroné ! <br/> Vérifier vos informations ");

@@ -151,13 +151,8 @@ function createAdmin($request_values)
 
 function editAdmin($admin_id)
 {
-<<<<<<< HEAD
-    global $db_connect, $pseudo, $role, $update, $admin_id, $email, $first_name, $last_name;
-    $sql = "SELECT * FROM `users` WHERE id = $admin_id LIMIT 1";
-=======
     global $db_connect, $username, $role, $update, $admin_id, $email, $first_name, $last_name;
     $sql = "SELECT * FROM moukatali.users WHERE id = $admin_id LIMIT 1";
->>>>>>> main
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     $admin = $pdoStat->fetch();

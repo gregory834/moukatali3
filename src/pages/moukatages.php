@@ -1,25 +1,5 @@
 <?php
 require '../../config/config.php';
-<<<<<<< HEAD
-require '../../config/database.php';
-require '../controller/user-function.php';
-require '../controller/topic-function.php';
-
-$user = readUserById($_SESSION['user']['pseudo']);
-$topics = readAllTopics();
-$publish_topics = activeTopicByOrder();
-
-// var_dump($topic['created_at']);
-// var_dump($published_topics[0][1]);
-// echo '<pre>';
-// var_dump($published_topics);
-// echo '<pre>';
-// var_dump($published_topics[0]['title']);
-// var_dump($published_topics[1]);
-// var_dump($published_topics[2]);
-
-include('../layout/head.php');
-=======
 require ROOT_PATH . '/config/database.php';
 
 require ROOT_PATH . '/src/controller/user-function.php';
@@ -38,7 +18,6 @@ $moukatages = postTopicById(1);
 $all_users = getAllUsers();
 
 include ('../layout/head.php');
->>>>>>> main
 
 ?>
 
@@ -47,13 +26,11 @@ include ('../layout/head.php');
 </head>
 
 <body>
+    
     <!-- HEADER -->
     <header class="header-main ">
         <div class="container">
 
-<<<<<<< HEAD
-            <?php include(BASE_URL . '/src/layout/nav.php'); ?>
-=======
         
         <!-- NAVBAR -->
         <nav class="navigation d-flex align-items-center justify-content-between">
@@ -104,11 +81,10 @@ include ('../layout/head.php');
                 </ul>
             </div>
         </nav>
->>>>>>> main
 
         </div>
     </header>
-
+    
     <div class="container">
         <?php if ( $auth == TRUE ): ?>
             <h6 class="text-light py-5 text-center">Bienvenue <?php echo $pseudo; ?></h6>
@@ -123,17 +99,14 @@ include ('../layout/head.php');
     <section>
         <div class="container pt-4">
 
-            <?php if (isset($published_topics)) {
-            ?>
-                <!-- SUJET BRUT-->
-                <div class="sujet bg-light p-3 mb-3 d-flex flex-column flex-md-row align-items-md-center">
-                    <div class="image mb-2 mb-md-0 mr-md-2 d-lg-none"><img src=<?= BASE_URL . "/public/images/image-mobile.jpg" ?> alt="Image du sujet"></div>
-                    <div class="image mr-lg-2 d-none d-lg-block"><img src=<?= BASE_URL . "/public/images/uploads/" . $published_topics[0][2] ?> alt="Image du sujet"></div>
-                    <p class="text-dark">
-                        <?php echo $published_topics[0][1];  ?>
-                    </p>
-                </div>
-            <?php  } ?>
+
+            <!-- SUJET BRUT-->
+            <div class="sujet bg-light p-3 mb-3 d-flex flex-column flex-md-row align-items-md-center">
+                <div class="image mb-2 mb-md-0 mr-md-2 d-lg-none"><img src=<?= BASE_URL . "/public/images/image-mobile.jpg" ?> alt="Image du sujet"></div>
+                <div class="image mr-lg-2 d-none d-lg-block"><img src=<?= BASE_URL . "/public/images/image.jpg" ?> alt="Image du sujet"></div>
+                <p class="text-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl.
+                    Vestibulum mauris metus, luctus quis volutpat vitae, laoreet.</p>
+            </div>
 
             <!-- PUBLIER -->
             <form method="post" class="bg-light p-4" id="form-publier">
@@ -146,59 +119,21 @@ include ('../layout/head.php');
             </form>
         </div>
     </section>
-<<<<<<< HEAD
-    <!-- SECTION -->
-    <section>
-        <div class="container py-4">
-            <!-- TRIER-->
-            <div class="trier d-flex justify-content-between mb-3">
-                <div class="btn-group">
-                    <button class="btn btn-light btn-sm dropdown-toggle text-uppercase letter-spacing" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        trier
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">par pertinence</a>
-                        <a class="dropdown-item" href="#">par date</a>
-                    </div>
-                </div>
-            </div>
-=======
 <!-- SECTION -->
 <section>
     <div class="container py-4">
->>>>>>> main
 
-            <!-- MOUKATAGE -->
-            <div class="moukatage p-3 bg-light text-dark mb-3">
-                <!-- PROFIL -->
-                <div class="profil d-flex order-md-0 mb-4">
-                    <div class=" mr-2">
-                        <img src=<?= BASE_URL . "/public/images/avatar-1.jpg" ?> style="height:4.3em; width:4.3em; border-radius:5em; " />
-                    </div>
-                    <div class="info-profil">
-                        <p class="mb-0 mt-3 ml-3 text-uppercase font-weight-bolder">pseudo</p>
-                        <p class="mb-0">1 janvier 2021 à 00h00</p>
-                    </div>
+        <!-- MOUKATAGE -->
+        <div class="moukatage p-3 bg-light text-dark mb-3">
+            <!-- PROFIL -->
+            <div class="profil d-flex order-md-0 mb-4">
+                <div class=" mr-2">
+                    <img  src=<?= BASE_URL . "/public/images/avatar-1.jpg" ?> style="height:4.3em; width:4.3em; border-radius:5em; "/>
                 </div>
-<<<<<<< HEAD
-                <!-- TEXTE -->
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl. Vestibulum mauris
-                    metus, luctus quis volutpat vitae, laoreet. Lorem ipsum dolor sit amet.</p>
-                <div class="d-flex justify-content-end">
-                    <div class="d-flex justify-content-md-between">
-                        <!-- LIKE DISLIKE -->
-                        <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
-                            <div class="d-flex align-items-center mr-3">
-                                <div class="mr-1"><img src="../../icons/like.png" alt="Like"></div>
-                                <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
-                                    1233</div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <div class="mr-1"><img src="../../icons/dislike.png" alt="Dislike"></div>
-                                <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
-                                    1233</div>
-                            </div>
-=======
+                <div class="info-profil">
+                    <p class="mb-0 mt-3 ml-3 text-uppercase font-weight-bolder">pseudo</p>
+                    <p class="mb-0">1 janvier 2021 à 00h00</p>
+                </div>
             </div>
             <!-- TEXTE -->
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc in lobortis nisl. Vestibulum mauris
@@ -218,17 +153,11 @@ include ('../layout/head.php');
                                 <img src=<?= BASE_URL . "/public/images/icones/undislike.png" ?> alt="Dislike">
                             </div>
                             <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">0</div>
->>>>>>> main
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-    </section>
-    <!-- SECTION -->
-    <section class="mb-5">
-=======
         <!-- MOUKATAGE -->
         <?php if ( empty($moukatages) ): ?>
         <div class="text-light text-center text-uppercase py-3">
@@ -284,23 +213,18 @@ include ('../layout/head.php');
 </section>
 <!-- SECTION -->
 <section class="mb-5">
->>>>>>> main
         <div class="container d-md-flex">
-            <?php if (isset($published_topics[1])) {   ?>
-                <!-- AUTRE SUJET -->
-                <div class="autre bg-light p-4 text-dark d-flex align-items-center mb-3 mb-md-0 mr-md-3">
-                    <img src=<?= BASE_URL . "/public/images/uploads/" .$published_topics[1]["image"] ?> class="mr-2" alt="Image sujet">
-                    <p class="mb-0"> <?php echo $published_topics[1][1];  ?></p>
-                </div>
-                <?php } ?>
 
-                <?php if (isset($published_topics[2])) {   ?>
-                <!-- AUTRE SUJET -->
-                <div class="autre bg-light p-4 text-dark d-flex align-items-center">
-                <img src=<?= BASE_URL . "/public/images/uploads/" .$published_topics[2]["image"] ?> class="mr-2" alt="Image sujet">
-                    <p class="mb-0"><?php echo $published_topics[2][1];  ?></p>
-                </div>
-            <?php } ?>
+            <!-- AUTRE SUJET -->
+            <div class="autre bg-light p-4 text-dark d-flex align-items-center mb-3 mb-md-0 mr-md-3">
+                <img src=<?= BASE_URL . "/public/images/autre-sujet.jpg" ?> class="mr-2" alt="Image sujet">
+                <p class="mb-0">'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac.'</p>
+            </div>
+            <!-- AUTRE SUJET -->
+            <div class="autre bg-light p-4 text-dark d-flex align-items-center">
+                <img src=<?= BASE_URL . "/public/images/autre-sujet.jpg" ?> class="mr-2" alt="Image sujet">
+                <p class="mb-0">'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac.'</p>
+            </div>
 
         </div>
     </section>
@@ -316,6 +240,6 @@ include ('../layout/head.php');
     <script src=<?php BASE_URL . "/public/js/script.js" ?>></script>
 
 
-</body>
+    </body>
 
-</html>
+    </html>

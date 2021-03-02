@@ -1,30 +1,18 @@
-<<<<<<< HEAD
-<div class="text-light">
-  <?php
-  require '../../../config/config.php';
-  require '../../../config/database.php';
-  require '../../controller/topic-function.php';
-  require '../../controller/user-function.php';
-
-  $user_info = readUserById($_SESSION['user']['pseudo']);
-  readAllTopics();
-  include('../../layout/head.php');
-  var_dump($user_info);
-
-  ?>
-=======
 <?php
 require '../../../config/config.php';
 require ROOT_PATH . '/config/database.php';
 
 require ROOT_PATH . '/src/controller/admin-function.php';
-/*
-$user_info = readUserById($_SESSION['user']['pseudo']);
+require ROOT_PATH . '/src/controller/topic-function.php';
 readAllTopics();
-*/
+// $user_info = $_SESSION['user']['role'];
+$user_info = readUserById($_SESSION['user']['id']);
+
+var_dump($user_info['role']);
+
+
 include('../../layout/head.php');
 ?>
->>>>>>> main
 
 </head>
 
@@ -174,7 +162,7 @@ include('../../layout/head.php');
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Intitulé</th>
-                  <th scope="col">Quota de vote</th>
+                  <!-- <th scope="col">Quota de vote</th> -->
                   <th scope="col">Date de création</th>
                   <th scope="col">Image</th>
 
@@ -184,7 +172,7 @@ include('../../layout/head.php');
                   <?php endif; ?>
                 
                   <th scope="col">mettre à jour</th>
-                  <th scope="col">supprimer</th>
+                  <th scope="col">supprimer</th>  
              
                 </tr>
               </thead>
@@ -195,7 +183,7 @@ include('../../layout/head.php');
                     <tr>
                       <th scope="row" class="align-middle"><?php echo $key + 1; ?></th>
                       <td class="align-middle"><?php echo $topic['title']; ?></td>
-                      <td class="align-middle"><?php echo $topic['quota_vote']; ?></td>
+                      <!-- <td class="align-middle"><?php //echo $topic['quota_vote']; ?></td> -->
                       <td class="align-middle"><?php echo $topic['created_at']; ?></td>
                       <td class="align-middle"><?php echo $topic['image']; ?></td>
 
