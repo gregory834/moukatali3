@@ -123,19 +123,6 @@ include ('../layout/head.php');
 <section>
     <div class="container py-4">
 
-        <!-- TRIER
-        <div class="trier d-flex justify-content-between mb-3">
-            <div class="btn-group">
-                <button class="btn btn-light btn-sm dropdown-toggle text-uppercase letter-spacing" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    trier
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">par pertinence</a>
-                    <a class="dropdown-item" href="#">par date</a>
-                </div>
-            </div>
-        </div>-->
-
         <!-- MOUKATAGE -->
         <div class="moukatage p-3 bg-light text-dark mb-3">
             <!-- PROFIL -->
@@ -201,7 +188,7 @@ include ('../layout/head.php');
                     <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
                         <div class="d-flex align-items-center mr-3">
                             <div class="mr-1">
-                                <img class="like-btn" <?php if (userLiked($moukatage['id'])): ?> src=<?= BASE_URL . "/public/images/icones/like.png" ?> <?php else: ?> src=<?= BASE_URL . "/public/images/icons/unlike.png" ?>  <?php endif; ?> alt="Like" data-id="<?php echo $moukatage['id'] ?>">
+                                <img class="like-btn" <?php if (userLiked($moukatage['id'])): ?> src="../../public/images/icones/like.png" <?php else: ?> src=<?= BASE_URL . "/public/images/icons/unlike.png" ?>  <?php endif; ?> alt="Like" data-id="<?php echo $moukatage['id'] ?>">
                             </div>
                             <span class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
                                 <?php echo getLikes($moukatage['id']); ?>

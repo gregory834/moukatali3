@@ -152,7 +152,7 @@ function createAdmin($request_values)
 function editAdmin($admin_id)
 {
     global $db_connect, $username, $role, $update, $admin_id, $email, $first_name, $last_name;
-    $sql = "SELECT * FROM `users` WHERE id = $admin_id LIMIT 1";
+    $sql = "SELECT * FROM moukatali.users WHERE id = $admin_id LIMIT 1";
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     $admin = $pdoStat->fetch();
@@ -222,13 +222,13 @@ function updateAdmin($request_values)
     if (count($errors) == 0) {
         // crypter le mot de passe avant de l'enregistrer dans la base de données
         $password = password_hash($password_1, PASSWORD_DEFAULT);
-        $query = "UPDATE users SET pseudo = '$pseudo', password = '$password' WHERE id = $admin_id";
+        $query = "UPDATE moukatali.users SET pseudo = '$pseudo', password = '$password' WHERE id = $admin_id";
 
         $reqInsert1 = $db_connect->prepare($query); //preparation de la requete
         $reqInsert1->execute(); //execution de la requete
 
 
-        $sql = "UPDATE users SET pseudo='$pseudo', first_name = '$first_name', last_name = '$last_name', email = '$email', role = '$role', password = '$password' WHERE id = $admin_id";
+        $sql = "UPDATE moukatali.users SET pseudo='$pseudo', first_name = '$first_name', last_name = '$last_name', email = '$email', role = '$role', password = '$password' WHERE id = $admin_id";
 
         $reqInsert1 = $db_connect->prepare($sql); //preparation de la requete
         $reqInsert1->execute(); //execution de la requete
@@ -243,7 +243,7 @@ function updateAdmin($request_values)
 function deleteAdmin($admin_id)
 {
     global $db_connect, $success;
-    $sql1 = "DELETE FROM users WHERE id = $admin_id";
+    $sql1 = "DELETE FROM moukatali.users WHERE id = $admin_id";
     $reqDeleteAdmin = $db_connect->prepare($sql1); //preparation de la requete
     $reqDeleteAdmin->execute(); //execution de la requete
     array_push($success, "Compte administrateur supprimé avec succès ");
@@ -258,7 +258,7 @@ function getAllUsers()
     global $db_connect, $roles;
     $admin = "role";
     $db = connectPdoBdd();
-    $requet = "SELECT * FROM users WHERE role= 'user'";
+    $requet = "SELECT * FROM moukatali.users WHERE role= 'user'";
     $stmt = $db_connect->query($requet);
     $all_users = $stmt->fetchAll();
     return $all_users;
@@ -285,7 +285,7 @@ function deconnexion() {
 }
 
 
-// ON RECU¨PERE TOUT CE QUI SE TROUVE DANS LA TABLE USERS
+// ON RECU¨PERE TOUT CE QUI SE TROUVE DANS LA TABLE moukatali.users
 function readAllAdmin() {
 
     global $db_connect;
