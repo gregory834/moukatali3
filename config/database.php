@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 // Nom d'hôte du serveur MySQL
 $db_host = 'localhost';
 // Nom d'utilisateur du compte MySQL
@@ -29,4 +27,5 @@ try {
     $log->log('base_de_donnees', 'connexion_bdd', "Erreur : " . $e->getMessage(), Log::FOLDER_MONTH);
     die();
 }
+
 ?>

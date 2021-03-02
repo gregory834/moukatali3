@@ -10,5 +10,4 @@ define('BASE_URL', 'http://localhost:8888/moukatali');
 require (ROOT_PATH . '/src/class/Log.class.php');
 $log = new Log(ROOT_PATH . '/logs');
 
-
 ?>

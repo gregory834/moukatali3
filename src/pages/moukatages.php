@@ -163,31 +163,16 @@ include ('../layout/head.php');
                     <!-- LIKE DISLIKE -->
                     <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
                         <div class="d-flex align-items-center mr-3">
-                            <div class="mr-1"><img src="../../icons/like.png" alt="Like"></div>
-                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
-                                1233</div>
+                            <div class="mr-1">
+                                <img src="<?= BASE_URL . "/public/images/icones/unlike.png" ?>" alt="Like">
+                            </div>
+                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">0</div>
                         </div>
                         <div class="d-flex align-items-center">
-                            <div class="mr-1"><img src="../../icons/dislike.png" alt="Dislike"></div>
-                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
-                                1233</div>
-                        </div>
-                    </div>
-                    <!-- LIKE DISLIKE -->
-                    <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
-                        <!-- LIKE -->
-                        <div class="d-flex align-items-center mr-3">
                             <div class="mr-1">
-                            <img class="like-btn" <?php if (userLiked($post['id'])): ?> src="../../icons/like.png" <?php else: ?> src="../../icons/like.png" <?php endif ?> alt="Like" data-id="<?php echo $post['id'] ?>">
+                                <img src=<?= BASE_URL . "/public/images/icones/undislike.png" ?> alt="Dislike">
                             </div>
-                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold likes"><?php echo getLikes($post['id']); ?></div>
-                        </div>
-                        <!-- DISLIKE -->
-                        <div class="d-flex align-items-center">
-                            <div class="mr-1">
-                            <img class="dislike-btn" <?php if (userDisliked($post['id'])): ?> src="../../icons/dislike.png" <?php else: ?> src="../../icons/dislike.png" <?php endif ?> alt="Dislike" data-id="<?php echo $post['id'] ?>">
-                            </div>
-                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold dislikes"><?php echo getDislikes($post['id']); ?></div>
+                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">0</div>
                         </div>
                     </div>
                 </div>
@@ -222,12 +207,20 @@ include ('../layout/head.php');
                     <!-- LIKE DISLIKE -->
                     <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
                         <div class="d-flex align-items-center mr-3">
-                            <div class="mr-1"><img src="../../public/images/icones/like.png" alt="Like"></div>
-                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold"><?php echo $moukatage['likes']; ?></div>
+                            <div class="mr-1">
+                                <img class="like-btn" <?php if (userLiked($moukatage['id'])): ?> src=<?= BASE_URL . "/public/images/icones/like.png" ?> <?php else: ?> src=<?= BASE_URL . "/public/images/icons/unlike.png" ?>  <?php endif; ?> alt="Like" data-id="<?php echo $moukatage['id'] ?>">
+                            </div>
+                            <span class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
+                                <?php echo getLikes($moukatage['id']); ?>
+                            </span>
                         </div>
                         <div class="d-flex align-items-center">
-                            <div class="mr-1"><img src="../../public/images/icones/dislike.png" alt="Dislike"></div>
-                            <div class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold"><?php echo $moukatage['dislikes']; ?></div>
+                            <div class="mr-1">
+                                <img class="dislike-btn" <?php if (userDisliked($moukatage['id'])): ?> src=<?= BASE_URL . "/public/images/icones/undislike.png" ?> <?php else: ?> src=<?= BASE_URL . "/public/images/icones/dislike.png" ?> <?php endif ?> alt="Dislike" data-id="<?php echo $moukatage['id'] ?>">
+                            </div>
+                            <span class="nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold">
+                                <?php echo getDislikes($moukatage['id']); ?>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -264,7 +257,7 @@ include ('../layout/head.php');
     <!-- VUE JS -->
     <script src=<?php echo BASE_URL . '/public/js/like-dislike.js' ?>></script>
     <!-- MON SCRIPT -->
-    <script src="../../script/script.js"></script>
+    <script src=<?php BASE_URL . "/public/js/script.js" ?>></script>
 
 
     </body>
