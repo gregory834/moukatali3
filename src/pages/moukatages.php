@@ -5,6 +5,7 @@ require ROOT_PATH . '/config/database.php';
 require ROOT_PATH . '/src/controller/user-function.php';
 require ROOT_PATH . '/src/controller/like-dislike.php';
 //require '../controller/topic-function.php';
+
 if ( isset($_SESSION['user']) ) {
     $user = readUserById( $_SESSION['user']['id'] );
     $pseudo = $user['pseudo'];
@@ -15,15 +16,7 @@ if ( isset($_SESSION['user']) ) {
 //$topic = getTopicById();
 $moukatages = postTopicById(1);
 $all_users = getAllUsers();
-/*
-echo '<pre>';
-print_r($all_users);
-echo '</pre>';
 
-echo '<pre>';
-print_r($moukatages);
-echo '</pre>';
-*/
 include ('../layout/head.php');
 
 ?>
