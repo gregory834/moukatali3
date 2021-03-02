@@ -1,9 +1,12 @@
 <?php
 require '../../../config/config.php';
-require '../../../config/database.php';
-require '../../controller/user-function.php';
+require ROOT_PATH . '/config/database.php';
 
-$user = readUserById( $_SESSION['user']['pseudo'] );
+require ROOT_PATH . '/src/controller/user-function.php';
+
+
+$user = readUserById( $_SESSION['user']['id'] );
+$auth = TRUE;
 
 
 include ('../../layout/head.php');
@@ -18,17 +21,62 @@ include ('../../layout/head.php');
         <!-- HEADER -->
         <header class="header-main ">
             <div class="container">
-            <?php include (BASE_URL . '/src/layout/nav.php'); ?>
+
+            <!-- NAVBAR -->
+            <nav class="navigation d-flex align-items-center justify-content-between">
+                <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
+                    <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
+                </a>
+                <div class="menu-toggle">
+                    <input class="position" type="checkbox" />
+                    <span class="position"></span>
+                    <span class="position"></span>
+                    <span class="position mb-0"></span>
+                    <ul class="menu">
+
+                        <a href=<?php echo BASE_URL . "/src/index.php" ?>>
+                            <li class="text-uppercase">Accueil</li>
+                        </a>
+
+                        <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
+                            <li class="text-uppercase">moukatali</li>
+                        </a>
+
+                        <?php if ( $role == 'admin' ): ?>
+                        <a href=<?php echo BASE_URL . "/src/pages/admin/dashboard.php" ?>>
+                            <li class="text-uppercase">Dashboard</li>
+                        </a>
+                        <?php endif; ?>
+
+                        <?php if ( $auth == FALSE ): ?>
+                        <a href=<?php echo BASE_URL . "/src/pages/login.php" ?>>
+                            <li class="text-uppercase">se connecter</li>
+                        </a>
+                        <?php endif; ?>
+
+                        <a href="#">
+                            <li class="text-uppercase">Contact</li>
+                        </a>
+
+                        <?php if ( isset($_SESSION['user']) ): ?>
+                            <form method="post">
+                                <div class="text-center">
+                                    <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
+                                </div>
+                            </form>
+                        <?php endif; ?>
+
+                    </ul>
+                </div>
+            </nav>
+
             </div>
         </header>
 
-        <!-- CONTAINER  -->
-        <!-- <h3 class="pt-3 mb-5 text-white text-center">DASHBOARD</h3> -->
-        <!-- user_info -->
+        <!-- SECTION  -->
         <section>
-
-            <div class="container">
-                <h5 class="text-light py-5 text-center">Bienvenue <?php echo $user['pseudo']; ?></h5>
+            <div class="container py-5 text-center">
+                <h5 class="text-light">Bienvenue <?php echo $user['pseudo']; ?></h5>
             </div>
 
             <div class="container col-lg-8 col-md-8 d-flex justify-content-center">

@@ -295,6 +295,7 @@ if (isset($_GET)) {
 }
 
 
+<<<<<<< HEAD
 // FONCTION POUR RECUPERER LES INFO UTILISATEUR
 
 
@@ -307,6 +308,9 @@ function readAllTopics()
     $executeIsOk = $pdoStat->execute();
     // $listes_AllTpics = $pdoStat->fetchAll();
     $topics = $pdoStat->fetchAll();
+=======
+
+>>>>>>> main
 
 
     return $topics;

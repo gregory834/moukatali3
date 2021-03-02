@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="text-light">
   <?php
   require '../../../config/config.php';
@@ -11,23 +12,84 @@
   var_dump($user_info);
 
   ?>
+=======
+<?php
+require '../../../config/config.php';
+require ROOT_PATH . '/config/database.php';
+
+require ROOT_PATH . '/src/controller/admin-function.php';
+/*
+$user_info = readUserById($_SESSION['user']['pseudo']);
+readAllTopics();
+*/
+include('../../layout/head.php');
+?>
+>>>>>>> main
 
 </head>
 
-  <title>Gestion Topics | Moukat A Li</title>
+<title>Gestion Topics | Moukat A Li</title>
 
   <body>
     <!-- NABVAR ADMIN -->
     <header class="header-main ">
-      <div class="container"> <?php include(BASE_URL . '/src/layout/nav-admin.php'); ?></div>
+      <div class="container">
+
+      <nav class="navigation d-flex align-items-center justify-content-between">
+      <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
+          <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
+      </a>
+      <div class="menu-toggle">
+        <input class="position" type="checkbox" />
+        <span class="position"></span>
+        <span class="position"></span>
+        <span class="position mb-0"></span>
+        <ul class="menu">
+
+            <a href=<?php echo BASE_URL . "/src/index.php" ?>>
+                <li class="text-uppercase">Accueil</li>
+            </a>
+
+            <a href=<?php echo BASE_URL . "/src/pages/admin/gestion-topic.php" ?>>
+                <li class="text-uppercase">Topics</li>
+            </a>
+            
+            <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
+                <li class="text-uppercase">Gestion profil</li>
+            </a>
+
+            <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
+                <li class="text-uppercase">Gestion topics</li>
+            </a>
+
+            <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
+                <li class="text-uppercase">moukatali</li>
+            </a>
+
+            <a href="#">
+                <li class="text-uppercase">Contact</li>
+            </a>
+
+            <?php if ( isset($_SESSION['user']) ): ?>
+                <form method="post">
+                    <div class="text-center">
+                        <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
+                    </div>
+                </form>
+            <?php endif; ?>
+
+        </ul>
+      </div>
+    </nav>
+
+      </div>
     </header>
 
     <!-- SECTION -->
     <section id="form-subject">
       <div class="container text-center">
 
-      <h1 class="text-uppercase display-1 text-center py-3 mt-5">administrateur</h1>
-        <h6 class="text-uppercase display-4 text-center py-3 mt-5">Gestion des Topics</h6>
+      <h1 class="text-uppercase display-4 text-center py-3 mt-5">Gestion des Topics</h1>
 
         <form method="post" enctype="multipart/form-data">
           <!-- erreurs de validation du formulaire -->
@@ -185,9 +247,7 @@
 
   
 
-</div>
 
-<?php   include ('../../layout/footer.php'); ?>
 
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
