@@ -152,7 +152,7 @@ function createAdmin($request_values)
 function editAdmin($admin_id)
 {
     global $db_connect, $username, $role, $update, $admin_id, $email, $first_name, $last_name;
-    $sql = "SELECT * FROM moukatali.users  WHERE id = $admin_id LIMIT 1";
+    $sql = "SELECT * FROM moukatali.users WHERE id = $admin_id LIMIT 1";
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     $admin = $pdoStat->fetch();
@@ -285,7 +285,7 @@ function deconnexion() {
 }
 
 
-// ON RECU¨PERE TOUT CE QUI SE TROUVE DANS LA TABLE USERS
+// ON RECU¨PERE TOUT CE QUI SE TROUVE DANS LA TABLE moukatali.users
 function readAllAdmin() {
 
     global $db_connect;
