@@ -1,15 +1,12 @@
-// OWL CAROUSEL
-$(document).ready(function(){
-    $(".owl-carousel").owlCarousel({
-        center: true,
-        items:1,
-        loop:true,
-        margin:10,
-        autoplay:true,
-        autoplayTimeout:4000,
-        autoplayHoverPause:true
-    });
-  });
-
-
-
+function triggerClick(e) {
+    document.querySelector('#picture').click();
+  }
+  function displayImage(e) {
+    if (e.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e){
+        document.querySelector('#profileDisplay').setAttribute('src', e.target.result);
+      }
+      reader.readAsDataURL(e.files[0]);
+    }
+  }

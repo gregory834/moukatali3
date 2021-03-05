@@ -134,7 +134,7 @@ function registerUser() {
         //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
         // l'e-mail et les noms d'utilisateur doivent être uniques
 
-        $reqt = "SELECT * FROM moukatali.users WHERE pseudo = '$pseudo' OR email = '$email'";
+        $reqt = "SELECT * FROM users WHERE pseudo = '$pseudo' OR email = '$email'";
         $valeur = array( 'pseudo' => $pseudo, 'email' => $email);
         $reqTab = $db_connect->prepare($reqt);
         $reqTab->execute( $valeur );
@@ -157,7 +157,7 @@ function registerUser() {
             // REQUETE D INSERTION (CREATION) UTILISATEUR EN BASSE DE DONEE. 13 INFORMATIONS AU TOTAL INSERTION DANS L ODRE DE LA TABLE EN BASSE DE DONNEE
             //  ID EST AUTO INCREMENTER EN BDD
 
-            $reqt = "INSERT INTO moukatali.users ( pseudo, first_name, last_name, avatar, email, password, role, created_at ) VALUES ( '$pseudo','$first_name','$last_name', '$avatar', '$email', '$password_hash', '$role', now() )";
+            $reqt = "INSERT INTO users ( pseudo, first_name, last_name, avatar, email, password, role, created_at ) VALUES ( '$pseudo','$first_name','$last_name', '$avatar', '$email', '$password_hash', '$role', now() )";
 
             $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
             $reqInsert->execute(); //execution de la requete
@@ -194,7 +194,7 @@ function connexionUser() {
     /******************************************
      * REQUETE RECUPERATION POUR COMPARAISON *
      ******************************************/
-    $reqt  = "SELECT * FROM  moukatali.users WHERE email = '$email' LIMIT 1";
+    $reqt  = "SELECT * FROM  users WHERE email = '$email' LIMIT 1";
     $valeur = array( 'email' => $email );
     $reqEmail = $db_connect->prepare($reqt);
     $reqEmail->execute($valeur);
@@ -311,7 +311,7 @@ function updateUser() {
         
         $user_id = $_POST['user-id'];
 
-        $reqt = "UPDATE moukatali.users SET pseudo = '$pseudo', first_name = '$first_name', last_name = '$first_name', avatar = '$avatar', email = '$email', password = '$password_hash' WHERE id = '$user_id' ";
+        $reqt = "UPDATE users SET pseudo = '$pseudo', first_name = '$first_name', last_name = '$first_name', avatar = '$avatar', email = '$email', password = '$password_hash' WHERE id = '$user_id' ";
         
         $reqUpdate = $db_connect->prepare($reqt); //preparation de la requete
         $reqUpdate->execute(); //execution de la requete
@@ -334,7 +334,7 @@ function deleteUser() {
         // requete de suppression methode PDO
         $user_id = $_SESSION['user']['id'];
         $delete_account = 1;
-        $reqt = "UPDATE moukatali.users SET delete_account = '$delete_account' WHERE id = '$user_id' "; //supprime la ligne du compte en repérant l id en bdd en fontion de l id de session . L id de session est stocker dans la varaible $delete_id_user.
+        $reqt = "UPDATE users SET delete_account = '$delete_account' WHERE id = '$user_id' "; //supprime la ligne du compte en repérant l id en bdd en fontion de l id de session . L id de session est stocker dans la varaible $delete_id_user.
         $reqUpdate = $db_connect->prepare($reqt); //preparation de la requete
         $reqUpdate->execute(); //execution de la requete
         $log->log('utilisateurs', 'del_utilisateurs', "Fonction deleteUser() : suppression utilisateur", Log::FOLDER_MONTH);
@@ -373,7 +373,7 @@ function publier() {
 
     if ( count($errors) == 0 ) { // Si le tableau erreurs est vide
 
-        $reqt = "INSERT INTO moukatali.moukatages ( topic_id, user_id, post, created_at ) VALUES ( '$topic_id','$user_id','$post', now() )";
+        $reqt = "INSERT INTO moukatages ( topic_id, user_id, post, created_at ) VALUES ( '$topic_id','$user_id','$post', now() )";
 
         $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
@@ -403,15 +403,6 @@ function readUserById( $id ) {
     return $user;
 }
 
-function postTopicById($topic_id) {
-    global $db_connect;
-
-    $requete = "SELECT * from moukatali.moukatages WHERE topic_id = '$topic_id' ORDER BY created_at DESC";
-    $query = $db_connect->query($requete);
-    $moukatages = $query->fetchAll();
-    return $moukatages;
-
-}
 
 
 

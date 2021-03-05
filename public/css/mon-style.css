@@ -272,16 +272,19 @@ footer a {
 
 .menu-toggle input:checked ~ span {
     background-color: #C33608;
+    transform-origin: 0 0;
     transform: rotate(45deg) translate(5px, -4px);
     /*opacity: 1;*/
 }
 
 .menu-toggle input:checked ~ span:nth-last-child(3) {
+    transform-origin: 0 0;
     transform: rotate(0deg);
     opacity: 0;
 }
 
 .menu-toggle input:checked ~ span:nth-last-child(2) {
+    transform-origin: 0 0;
     transform: rotate(-45deg) translate(1px, 3px);
     }
 
@@ -296,6 +299,7 @@ footer a {
     padding-left: 20px;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
+    transform-origin: 0 0;
     transform: translate(-272px, -1px);
     transition: opacity 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
 }

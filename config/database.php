@@ -2,11 +2,13 @@
 
 // Nom d'hôte du serveur MySQL
 $db_host = 'localhost';
+// Port
+$db_port = 8888;
 // Nom d'utilisateur du compte MySQL
 $db_user = 'root';
 // Mot de passe du compte MySQL
-$db_pwd = '';
-// La base de données que tu souhaites utiliser
+$db_pwd = 'root';
+// La base de données utilisé
 $database = 'moukatali';
 // L'objet PDO
 $db_connect = NULL;

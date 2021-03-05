@@ -1,4 +1,5 @@
 <?php
+
 $title = "";
 
 $image = "";
@@ -8,65 +9,10 @@ $topic_id = 0;
 $published = 0;
 $update_topic = false;
 $success = array();
-$errors = array();
+//$errors = array();
 
 
 
-
-
-
-
-
-
-
-
-
-
-// récupére tous les topics de la BDD
-// L'administrateur peut afficher tous les topics
-// L'auteur ne peut voir que ses topics
-
-// function getAllTopics()
-// {
-//     global $db_connect, $final_topics;
-
-//     if ($_SESSION['user']['role'] == "admin") {
-//         $sql = "SELECT * FROM topics";
-//     } elseif ($_SESSION['user']['role'] == "author" || $_SESSION['user']['role'] == "moderator") {
-//         $user_id = $_SESSION['user']['id'];
-//         return $user_id;
-//         var_dump($user_id);
-
-//         //Selectionne quel id de topic et lié a celui de l id de l utilisateur en fonction de son role
-//         $sql = "SELECT * FROM topics WHERE id = $user_id";
-//     }
-
-//     $pdoStat = $db_connect->prepare($sql);
-//     $result = $pdoStat->execute();
-//     $topics = $db_connect->query($sql);
-//     $final_topics = array();
-
-//     foreach ($topics as $topic) {
-//         $topic['author'] = getTopicAuthorById($topic['id']);
-//         array_push($final_topics, $topic);
-//     }
-//     return $final_topics;
-// }
-
-// récupére l'auteur d'un topic
-function getTopicAuthorById($user_id)
-{
-    global $db_connect;
-
-    $sql = "SELECT nom FROM users WHERE id = $user_id";
-    $result = $db_connect->query($sql);
-    if ($result) {
-        // retourner le nom d'utilisateur
-        return ($result);
-    } else {
-        return null;
-    }
-}
 // si l'utilisateur clique sur le bouton créer une publication
 if (isset($_POST['create-topic'])) {
     createTopic($_POST);
@@ -86,10 +32,7 @@ if (isset($_GET['delete-topic'])) {
     $topic_id = $_GET['delete-topic'];
     deleteTopic($topic_id);
 }
-global $db_connect, $errors, $user_id;
-// 88888888888888888888888888888888888888
-// $user_id est définit a ce stade
-var_dump($user_id);
+
 
 function createTopic($request_values)
 {
@@ -254,6 +197,28 @@ if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
     togglePublishTopic($topic_id, $message);
 }
 
+// si l'utilisateur clique sur le bouton de publication de l'article
+if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
+    
+    if (isset($_GET['publish'])) {
+        array_push($success, "Topic retiré ! ");
+        $topic_id = $_GET['publish'];
+    } else if (isset($_GET['unpublish'])) {
+        array_push($success, "Topic publié ");
+        $sql = "SELECT * FROM topics WHERE published = 1 ORDER BY created_at ASC";
+        $res = $db_connect->query($sql);
+        $topics_order = $res->fetch_all(MYSQLI_ASSOC);
+        $rows = $res->num_rows;
+        if ( $rows > 2 ) {
+            $topic_id = $topics_order[0]['id'];
+        } else {
+            $topic_id = $_GET['unpublish'];
+        }
+        
+    }
+    togglePublishTopic($topic_id);
+}
+
 
 // activer - desactiver un topics
 function togglePublishTopic($topic_id, $message)
@@ -312,7 +277,23 @@ function readAllTopics(){
 // 88888888888888888888888888888888888888888888888888888888888888888888
 }
 
+function publishTopic() {
+    global $db_connect;
+    $sql = "SELECT * FROM topics WHERE published = 1 ORDER BY created_at DESC";
+    $res = $db_connect->query($sql);
+    $publish_topics = $res->fetch_all(MYSQLI_ASSOC);
+    return $publish_topics;
+}
 
+function allPostByTopic($main_topic) {
+    global $db_connect;
+
+    $sql = "SELECT * FROM moukatages WHERE topic_id = '$main_topic' ORDER BY created_at DESC";
+    $query = $db_connect->query($sql);
+    $moukatages = $query->fetch_all(MYSQLI_ASSOC);
+    return $moukatages;
+
+}
 
    
 

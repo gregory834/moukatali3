@@ -3,10 +3,10 @@ require '../../../config/config.php';
 require ROOT_PATH . '/config/database.php';
 
 require ROOT_PATH . '/src/controller/admin-function.php';
-/*
-$user_info = readUserById($_SESSION['user']['pseudo']);
-readAllTopics();
-*/
+require ROOT_PATH . '/src/controller/topic-function.php';
+
+$topics = readAllTopics();
+
 include('../../layout/head.php');
 ?>
 
@@ -75,15 +75,29 @@ include('../../layout/head.php');
 
       <h1 class="text-uppercase display-4 text-center py-3 mt-5">Gestion des Topics</h1>
 
-        <form method="post" enctype="multipart/form-data">
-          <!-- erreurs de validation du formulaire -->
-          <?php //'/includes/errors.php' 
-          ?>
+        <form method="post" action="gestion-topic.php" enctype="multipart/form-data">
+
+        <?php if ( count($success) > 0 ) : ?>
+            <div class="alert alert-success" role="alert">
+              <?php foreach ($success as $successs) : ?>
+                <p class="mb-0"><?php echo ($successs); ?></p>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+
+          <?php if ( count($errors) > 0 ) : ?>
+            <div class="alert alert-danger" role="alert">
+              <?php foreach ($errors as $error) : ?>
+                <p class="mb-0"><?php echo ($error); ?></p>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
 
           <!-- si vous modifiez un message, l'identifiant est requis pour identifier ce message -->
           <?php if ($update_topic === true) : ?>
             <input type="hidden" name="topic-id" value="<?php echo $topic_id; ?>">
           <?php endif ?>
+
           <!-- Image -->
           <div class="form-group" id="preview">
             <!--<span class="img-div">-->
@@ -93,6 +107,7 @@ include('../../layout/head.php');
             <label for="preview" class="form-label text-center"></label>
             <input type="file" onChange="displayImage(this)" id="image" class="form-control form-control-lg" name="image" placeholder="Uploader une image">
           </div>
+
           <!-- Titre -->
           <div class="form-floating">
             <input type="text" class="form-control" placeholder="Title" name="title" value="<?= $title ?>">
@@ -101,48 +116,18 @@ include('../../layout/head.php');
     
           <!-- BOUTON -->
           <div class="d-grid gap-2">
-<!-- 
-            <button type="submit" class="btn btn-dark fw-bold text-uppercase mt-4 mb-5" name="create-topic">créer</button> -->
-
-            <?php if ($update_topic === true) : ?>
+          <?php if ($update_topic === true) : ?>
             <button type="submit" id="btn-update" class="btn btn-dark fw-bold text-uppercase mt-4 mb-5" name="update-topic">mettre à jour</button>
           <?php else : ?>
             <button type="submit" class="btn btn-dark fw-bold text-uppercase mt-4 mb-5" name="create-topic">créer</button>
           <?php endif; ?>
-            <!-- <button type="submit" class="btn btn-secondary fw-bold text-uppercase mt-4 mb-5" name="update-topic">mettre à jour</button> -->
 
           </div>
 
         </form>
-        <?php
-        // a modifier car déclaration temporaire
-        // $success = array();
-        global $errors, $success; ?>
-
-        <?php global $errors, $success; ?>
-
-        <div class="">
-
-          <?php if (count($success > 0)) : ?>
-            <div class="alert alert-success" role="alert">
-              <?php foreach ($success as $successs) : ?>
-                <p><?php echo ($successs); ?></p>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-
-          <?php if (count($errors > 0)) : ?>
-            <div class="alert alert-danger" role="alert">
-              <?php foreach ($errors as $error) : ?>
-                <p><?php echo ($error); ?></p>
-              <?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-
-        </div>
     </section>
 
-    <!-- liste topics en bdd -->
+    <!-- SECTION -->
     <section>
       <div class="container-fluid col-11  justify-content-center mt-5 mb-5">
         <h1 class="text-uppercase text-center py-3 mt-5 mb-5 pt-5">Listes topics</h1>
@@ -150,7 +135,7 @@ include('../../layout/head.php');
         <!-- include( '/includes/messages.php'); -->
 
         <?php if (empty($topics)) : ?>
-          <h1 style="text-align: center; margin-top: 20px;">Aucun sujet dans la base.</h1>
+          <h1 style="text-align: center; margin-top: 20px;">Aucun topic créé.</h1>
         <?php else : ?>
           <div class=" d-flex justify-content-center">
             <table class="col-11 table table-bordered bg-secondary  text-center text-light">
@@ -158,14 +143,13 @@ include('../../layout/head.php');
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Intitulé</th>
-                  <th scope="col">Quota de vote</th>
                   <th scope="col">Date de création</th>
                   <th scope="col">Image</th>
 
                   <!-- Seul l'administrateur peut publier / annuler la publication du message -->
-                  <?php if ($user_info['role'] === "admin") : ?>
+                  <?php //if ( $_SESSION['user']['role'] === "admin" || $_SESSION['user']['role'] === "author" ) : ?>
                     <th scope="col">publier</th>
-                  <?php endif; ?>
+                  <?php //endif; ?>
                 
                   <th scope="col">mettre à jour</th>
                   <th scope="col">supprimer</th>
@@ -179,12 +163,11 @@ include('../../layout/head.php');
                     <tr>
                       <th scope="row" class="align-middle"><?php echo $key + 1; ?></th>
                       <td class="align-middle"><?php echo $topic['title']; ?></td>
-                      <td class="align-middle"><?php echo $topic['quota_vote']; ?></td>
                       <td class="align-middle"><?php echo $topic['created_at']; ?></td>
                       <td class="align-middle"><?php echo $topic['image']; ?></td>
 
                       <!-- Seul l'administrateur peut publier / annuler la publication du message -->
-                      <?php if ($user_info['role'] === "admin") : ?>
+                      <?php //if ( $_SESSION['user']['role'] === "admin" || $_SESSION['user']['role'] === "author" ) : ?>
                         <td class="align-middle">
                           <?php if ($topic['published'] == 0) : ?>
                             <a href="gestion-topic.php?unpublish=<?= $topic['id'] ?>" role="button">
@@ -200,7 +183,7 @@ include('../../layout/head.php');
                             </a>
                           <?php endif; ?>
                         </td>
-                      <?php endif; ?>
+                      <?php //endif; ?>
                       <td class="align-middle">
                         <a class="text-dark" href="gestion-topic.php?edit-topic=<?= $topic['id'] ?>" role="button">
                           <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -236,7 +219,7 @@ include('../../layout/head.php');
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-<script src="../public/js/script.js"></script>
+<script src=<?= BASE_URL . "/public/js/script.js" ?>></script>
 
 </body>
 

@@ -101,7 +101,7 @@ function createAdmin($request_values)
     //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
     // l'e-mail et les noms d'utilisateur doivent être uniques
 
-    $reqt  = "SELECT * FROM moukatali.users WHERE email = '$email' OR pseudo = '$pseudo' LIMIT 1"; //requete de selection dans table user en fonction de l email
+    $reqt  = "SELECT * FROM users WHERE email = '$email' OR pseudo = '$pseudo' LIMIT 1"; //requete de selection dans table user en fonction de l email
     $reqEmail = $db_connect->prepare($reqt); //préparation de la requete
     $reqEmail->execute([$email]);  //EXECUTION DE LA REQUETE
     $doublonEmail = $reqEmail->fetch();  //RECUPERATION RESULTAT DE LA REQUETE AUTREMENT DIT SI UN DOUBLON EST TROUVER EN FONCTION DE L EMAIL FOURNI
@@ -152,7 +152,7 @@ function createAdmin($request_values)
 function editAdmin($admin_id)
 {
     global $db_connect, $username, $role, $update, $admin_id, $email, $first_name, $last_name;
-    $sql = "SELECT * FROM moukatali.users WHERE id = $admin_id LIMIT 1";
+    $sql = "SELECT * FROM users WHERE id = $admin_id LIMIT 1";
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     $admin = $pdoStat->fetch();
@@ -222,13 +222,9 @@ function updateAdmin($request_values)
     if (count($errors) == 0) {
         // crypter le mot de passe avant de l'enregistrer dans la base de données
         $password = password_hash($password_1, PASSWORD_DEFAULT);
-        $query = "UPDATE moukatali.users SET pseudo = '$pseudo', password = '$password' WHERE id = $admin_id";
-
-        $reqInsert1 = $db_connect->prepare($query); //preparation de la requete
-        $reqInsert1->execute(); //execution de la requete
 
 
-        $sql = "UPDATE moukatali.users SET pseudo='$pseudo', first_name = '$first_name', last_name = '$last_name', email = '$email', role = '$role', password = '$password' WHERE id = $admin_id";
+        $sql = "UPDATE users SET pseudo='$pseudo', first_name = '$first_name', last_name = '$last_name', email = '$email', role = '$role', password = '$password' WHERE id = $admin_id";
 
         $reqInsert1 = $db_connect->prepare($sql); //preparation de la requete
         $reqInsert1->execute(); //execution de la requete
@@ -243,27 +239,11 @@ function updateAdmin($request_values)
 function deleteAdmin($admin_id)
 {
     global $db_connect, $success;
-    $sql1 = "DELETE FROM moukatali.users WHERE id = $admin_id";
+    $sql1 = "DELETE FROM users WHERE id = $admin_id";
     $reqDeleteAdmin = $db_connect->prepare($sql1); //preparation de la requete
     $reqDeleteAdmin->execute(); //execution de la requete
     array_push($success, "Compte administrateur supprimé avec succès ");
 }
-
-
-// POUR LA PAGE AVEC LA LISTE DE TOUT LES MOUKATEUR AU ROLE DE USER
-// ok fonctionelle
-function getAllUsers()
-{
-    global $all_users;
-    global $db_connect, $roles;
-    $admin = "role";
-    $db = connectPdoBdd();
-    $requet = "SELECT * FROM moukatali.users WHERE role= 'user'";
-    $stmt = $db_connect->query($requet);
-    $all_users = $stmt->fetchAll();
-    return $all_users;
-}
-
 
 //GOOD
 // supprimer l'utilisateur administrateur
@@ -276,6 +256,7 @@ function deleteUser($delete_id_user)
     $reqDeleteAdmin->execute(); //execution de la requete
 }
 
+
 // FONCTION SE DECONNECTER
 function deconnexion() {
     session_destroy();
@@ -283,7 +264,6 @@ function deconnexion() {
     $redirect = BASE_URL . '/src/index.php';
     header('location: '.$redirect);
 }
-
 
 // ON RECU¨PERE TOUT CE QUI SE TROUVE DANS LA TABLE moukatali.users
 function readAllAdmin() {
@@ -295,9 +275,6 @@ function readAllAdmin() {
     $query = $db_connect->query($reqt);
     $admins = $query->fetchAll();
     return $admins;
-
-} 
-
 
 
 
@@ -315,3 +292,30 @@ function readUserById($id)
 
     return $users;
 }
+} 
+
+
+// POUR LA PAGE AVEC LA LISTE DE TOUT LES MOUKATEUR AU ROLE DE USER
+// ok fonctionelle
+function getAllUsers()
+{
+    global $all_users;
+    global $db_connect, $roles;
+    $admin = "role";
+    $db = connectPdoBdd();
+    $requet = "SELECT * FROM moukatali.users WHERE role= 'user'";
+    $stmt = $db_connect->query($requet);
+    $all_users = $stmt->fetchAll();
+    return $all_users;
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -146,14 +146,6 @@ include ('../../layout/head.php');
             </div>
         </section>
 
-        <!-- FOOTER -->
-        <footer class="text-center py-5 d-flex flex-column">
-            <a href="#" class="mb-1">Contact</a>
-            <a href="#" class="mb-1">C.G.V.</a>
-            <a href="#" class="mb-1">C.G.U.</a>
-            <a href="#">Mentions légales</a>
-        </footer>
-
         <!-- jQuery and Bootstrap Bundle (includes Popper) -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
