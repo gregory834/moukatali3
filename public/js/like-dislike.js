@@ -6,14 +6,10 @@ $(document).ready(function () {
         var moukatage_id = $(this).data('id');
         $clicked_btn = $(this);
 
-        if ($clicked_btn.getAttribute("src", "../../public/images/icones/like.png")) {
-
+        if ($clicked_btn.hasClass('far')) {
             action = 'like';
-
-        } else if ($clicked_btn.getAttribute("src", "../../public/images/icones/unlike.png")) {
-
+        } else if ($clicked_btn.hasClass('fas')) {
             action = 'unlike';
-
         }
 
         $.ajax({
@@ -23,20 +19,23 @@ $(document).ready(function () {
                 'action': action,
                 'moukatage_id': moukatage_id
             },
-            success: function (data) {
-                res = JSON.parse(data);
+            success: function (rating) {
+                //console.log(rating);
+                res = JSON.parse(rating);
                 console.log(res.likes);
                 if (action == "like") {
-                    $clicked_btn.attr("src", "../../public/images/icones/like.png");
+                    $clicked_btn.removeClass('far');
+                    $clicked_btn.addClass('fas');
                 } else if (action == "unlike") {
-                    $clicked_btn.attr("src", "../../public/images/icones/unlike.png");
+                    $clicked_btn.removeClass('fas');
+                    $clicked_btn.addClass('far');
                 }
                 // afficher le nombre de j'aime et n'aime pas
-                $clicked_btn.siblings('span.likes').text(res.likes);
-                $clicked_btn.siblings('span.dislikes').text(res.dislikes);
+                $clicked_btn.siblings('div.likes').text(res.likes);
+                $clicked_btn.siblings('div.dislikes').text(res.dislikes);
 
                 // modifier le style du bouton de l'autre bouton si l'utilisateur réagit la deuxième fois pour publier
-                $clicked_btn.siblings('i.fa-thumbs-down').removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+                $clicked_btn.siblings('i.fas').removeClass('fas').addClass('far');
             }
         });
 
@@ -44,35 +43,36 @@ $(document).ready(function () {
 
     // si l'utilisateur clique sur le bouton Je n'aime pas ...
     $('.dislike-btn').on('click', function () {
-        var post_id = $(this).data('id');
+        var moukatage_id = $(this).data('id');
         $clicked_btn = $(this);
-        if ($clicked_btn.hasClass('fa-thumbs-o-down')) {
+        if ($clicked_btn.hasClass('far')) {
             action = 'dislike';
-        } else if ($clicked_btn.hasClass('fa-thumbs-down')) {
+        } else if ($clicked_btn.hasClass('fas')) {
             action = 'undislike';
         }
         $.ajax({
-            url: 'index.php',
+            url: 'moukatages.php',
             type: 'post',
             data: {
                 action: action,
-                post_id: post_id
+                moukatage_id: moukatage_id
             },
-            success: function (data) {
-                res = JSON.parse(data);
+            success: function (rating) {
+                res = JSON.parse(rating);
+                console.log(res.dislikes);
                 if (action == "dislike") {
-                    $clicked_btn.removeClass('fa-thumbs-o-down');
-                    $clicked_btn.addClass('fa-thumbs-down');
+                    $clicked_btn.removeClass('far');
+                    $clicked_btn.addClass('fas');
                 } else if (action == "undislike") {
-                    $clicked_btn.removeClass('fa-thumbs-down');
-                    $clicked_btn.addClass('fa-thumbs-o-down');
+                    $clicked_btn.removeClass('fas');
+                    $clicked_btn.addClass('far');
                 }
                 // afficher le nombre de j'aime et n'aime pas
-                $clicked_btn.siblings('span.likes').text(res.likes);
-                $clicked_btn.siblings('span.dislikes').text(res.dislikes);
+                $clicked_btn.siblings('div.likes').text(res.likes);
+                $clicked_btn.siblings('div.dislikes').text(res.dislikes);
 
                 // modifier le style du bouton de l'autre bouton si l'utilisateur réagit la deuxième fois pour publier
-                $clicked_btn.siblings('i.fa-thumbs-up').removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+                $clicked_btn.siblings('i.fas').removeClass('fas').addClass('far');
             }
         });
 

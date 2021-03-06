@@ -151,14 +151,14 @@ function createAdmin($request_values)
 
 function editAdmin($admin_id)
 {
-    global $db_connect, $username, $role, $update, $admin_id, $email, $first_name, $last_name;
+    global $db_connect, $pseudo, $role, $update, $admin_id, $email, $first_name, $last_name;
     $sql = "SELECT * FROM moukatali.users WHERE id = $admin_id LIMIT 1";
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     $admin = $pdoStat->fetch();
 
     // définir les valeurs du formulaire ($ username et $ email) sur le formulaire à mettre à jour
-    $username = $admin['pseudo'];
+    $pseudo = $admin['pseudo'];
     $first_name = $admin['first_name'];
     $last_name = $admin['last_name'];
     $email = $admin['email'];
@@ -222,10 +222,6 @@ function updateAdmin($request_values)
     if (count($errors) == 0) {
         // crypter le mot de passe avant de l'enregistrer dans la base de données
         $password = password_hash($password_1, PASSWORD_DEFAULT);
-        $query = "UPDATE moukatali.users SET pseudo = '$pseudo', password = '$password' WHERE id = $admin_id";
-
-        $reqInsert1 = $db_connect->prepare($query); //preparation de la requete
-        $reqInsert1->execute(); //execution de la requete
 
 
         $sql = "UPDATE moukatali.users SET pseudo='$pseudo', first_name = '$first_name', last_name = '$last_name', email = '$email', role = '$role', password = '$password' WHERE id = $admin_id";
@@ -249,32 +245,17 @@ function deleteAdmin($admin_id)
     array_push($success, "Compte administrateur supprimé avec succès ");
 }
 
-
-// POUR LA PAGE AVEC LA LISTE DE TOUT LES MOUKATEUR AU ROLE DE USER
-// ok fonctionelle
-function getAllUsers()
-{
-    global $all_users;
-    global $db_connect, $roles;
-    $admin = "role";
-    $db = connectPdoBdd();
-    $requet = "SELECT * FROM moukatali.users WHERE role= 'user'";
-    $stmt = $db_connect->query($requet);
-    $all_users = $stmt->fetchAll();
-    return $all_users;
-}
-
-
 //GOOD
 // supprimer l'utilisateur administrateur
 function deleteUser($delete_id_user)
 {
     global $db_connect,  $delete_id_user;
     $delete_id_user = $_GET['delete-user'];
-    $sql1 = "DELETE FROM users WHERE id = $delete_id_user LIMIT 1";
+    $sql1 = "DELETE FROM moukatali.users WHERE id = $delete_id_user LIMIT 1";
     $reqDeleteAdmin = $db_connect->prepare($sql1); //preparation de la requete
     $reqDeleteAdmin->execute(); //execution de la requete
 }
+
 
 // FONCTION SE DECONNECTER
 function deconnexion() {
@@ -283,7 +264,6 @@ function deconnexion() {
     $redirect = BASE_URL . '/src/index.php';
     header('location: '.$redirect);
 }
-
 
 // ON RECU¨PERE TOUT CE QUI SE TROUVE DANS LA TABLE moukatali.users
 function readAllAdmin() {
@@ -295,9 +275,6 @@ function readAllAdmin() {
     $query = $db_connect->query($reqt);
     $admins = $query->fetchAll();
     return $admins;
-
-} 
-
 
 
 
@@ -315,3 +292,29 @@ function readUserById($id)
 
     return $users;
 }
+} 
+
+
+// POUR LA PAGE AVEC LA LISTE DE TOUT LES MOUKATEUR AU ROLE DE USER
+// ok fonctionelle
+function getAllUsers()
+{
+    
+    global $db_connect;
+    $requet = "SELECT * FROM moukatali.users WHERE role= 'user'";
+    $stmt = $db_connect->prepare($requet);
+    $stmt->execute();
+    $all_users = $stmt->fetchAll();
+    return $all_users;
+}
+
+
+
+
+
+
+
+
+
+
+

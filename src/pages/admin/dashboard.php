@@ -127,7 +127,7 @@ include(ROOT_PATH . '/src/layout/head.php');
         <!-- ASSIGNER UN ROLE -->
         <div class="mb-3">
           <select class="form-control" name="role">
-            <option value="" selected disabled>Assigner un rôle</option>
+            <option value="<?php echo $role; ?>" selected disabled>Assigner un rôle</option>
             <?php foreach ($roles as $role) : ?>
               <option value="<?php echo $role; ?>">
                 <?php echo $role; ?>
@@ -177,7 +177,7 @@ include(ROOT_PATH . '/src/layout/head.php');
       <?php if (empty($admins)): ?>
         <h6 class="text-light text-center">AUCUN ADMIN</h6>
       <?php else: ?>
-        <table class="table table-bordered table-dark text-light text-center">
+        <table class="table table-bordered text-light text-center">
 
           <thead class="text-uppercase">
             <tr>
@@ -192,11 +192,11 @@ include(ROOT_PATH . '/src/layout/head.php');
             <?php foreach ($admins as $key => $admin): ?>
               <div class="user">
                 <tr>
-                  <?php if ( $user['role'] = "admin" ): ?>
+                  <?php //if ( $user['role'] = "admin" ): ?>
                   <th scope="row"><?php echo $key + 1; ?></th>
-                  <td class="align-middle"><a style="color:black;font-size:2vh;" href="#"><?php echo $admin['pseudo']; ?></a></td>
-                    <td class="align-middle" style="color:black;font-size:2vh;"><?php echo $admin['email']; ?></td>
-                    <td class="align-middle" style="color:black;font-size:2vh;"><?php echo $admin['role']; ?></td>
+                  <td class="align-middle text-light"><?php echo $admin['pseudo']; ?></td>
+                  <td class="align-middle text-light" style="font-size:2vh;"><?php echo $admin['email']; ?></td>
+                  <td class="align-middle text-light" style="font-size:2vh;"><?php echo $admin['role']; ?></td>
                   <td class="align-middle">
                     <a class="text-light" href="dashboard.php?edit-admin=<?php echo $admin['id']; ?>" role="button">
                       <svg width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -213,7 +213,7 @@ include(ROOT_PATH . '/src/layout/head.php');
                       </svg>
                     </a>
                   </td>
-                  <?php endif; ?>
+                  <?php //endif; ?>
                 </tr>
               </div>
             <?php endforeach; ?>

@@ -120,7 +120,7 @@ function registerUser() {
         }
 
          // PARAMETRAGE DES VARIBLES D ACCES, EXTENSION, UPLOAD, ET DU DOSSIER DE DESTINATION DES IMAGES UPLOADER
-         $target_dir = "../../public/images/uploads/";  //chemin du sossier ou les fichiers seront uploader
+         $target_dir = "../../public/images/uploads/avatar/";  //chemin du sossier ou les fichiers seront uploader
          $target_file = $target_dir . basename($avatar); //parametrage du nom de l image
 
          // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
@@ -134,11 +134,10 @@ function registerUser() {
         //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
         // l'e-mail et les noms d'utilisateur doivent être uniques
 
-        $reqt = "SELECT * FROM moukatali.users WHERE pseudo = '$pseudo' OR email = '$email'";
-        $valeur = array( 'pseudo' => $pseudo, 'email' => $email);
-        $reqTab = $db_connect->prepare($reqt);
-        $reqTab->execute( $valeur );
-        $row = $reqTab->fetch( PDO::FETCH_ASSOC );
+        $sql = "SELECT * FROM moukatali.users WHERE pseudo = '$pseudo' OR email = '$email'";
+        $requete = $db_connect->prepare($sql);
+        $requete->execute();
+        $row = $requete->fetch( PDO::FETCH_ASSOC );
         if ( is_array($row) ) {
             if ( $row['pseudo'] == $pseudo) {
                 array_push( $errors, "Pseudo déjà existant");
@@ -207,14 +206,14 @@ function connexionUser() {
                 $_SESSION['user']['role'] = $user['role'];
                 $log->log('connexion', 'conn_utilisateurs', "Fonction connexionUser() : l'authentification a réussi", Log::FOLDER_MONTH);
                 switch ( $user['role'] ) {
-                    case "user":
-                        header('location: ./moukatages.php');
-                        break;
                     case "admin":
                         header('location: ./admin/dashboard.php');
                         break;
+                    case "author":
+                        header('location: ./admin/gestion-topic.php');
+                        break;
                     default:
-                        header('location: ./admin/gestion-topics.php');
+                        header('location: ./moukatages.php');
                 }
             } else {
                 array_push($errors, " Identifiants erroné ! <br/> Vérifier vos informations ");
@@ -363,24 +362,32 @@ function publier() {
     global $db_connect, $errors, $log;
 
     $post = htmlentities(trim($_POST['text']));
-    $topic_id = 1;
-    $user_id = 2;
+    $topic_id = $_POST['main-topic'];
+    $user_id = $_POST['user-id'];
         
     if (empty($post)) {
         array_push($errors, "Entrer un moukatage");
         
     }
 
-    if ( count($errors) == 0 ) { // Si le tableau erreurs est vide
+    $sql = "SELECT * FROM moukatali.moukatages WHERE topic_id = '$topic_id' AND user_id = '$user_id'";
+    $requete = $db_connect->prepare($sql);
+    $requete->execute();
+    $count = $requete->rowCount();
 
-        $reqt = "INSERT INTO moukatali.moukatages ( topic_id, user_id, post, created_at ) VALUES ( '$topic_id','$user_id','$post', now() )";
-
-        $reqInsert = $db_connect->prepare($reqt); //preparation de la requete
-        $reqInsert->execute(); //execution de la requete
-
-        $log->log('moukatages', 'publier_commentaire', "Fonction publier() : " . $post, Log::FOLDER_MONTH);
-
+    if ( $count > 0 ) {
+        array_push($errors, "Vous avez déjà publier sur ce topic");
+    } else {
+        if ( count($errors) == 0 ) {
+            $reqt = "INSERT INTO moukatali.moukatages ( topic_id, user_id, post, created_at ) VALUES ( '$topic_id','$user_id','$post', now() )";
+            $requete = $db_connect->prepare($reqt);
+            $requete->execute();
+            $log->log('moukatages', 'publier_commentaire', "Fonction publier() : " . $post . '-' . $topic_id . '-' . $user_id, Log::FOLDER_MONTH);
+        }
     }
+
+
+    
 
 
 }
@@ -398,20 +405,12 @@ function readUserById( $id ) {
    
     $requete = "SELECT * from moukatali.users WHERE id = '$id' ";
     $stmt = $db_connect->query($requete);
+    $stmt->execute();
     $user = $stmt->fetch( PDO::FETCH_ASSOC );
 
     return $user;
 }
 
-function postTopicById($topic_id) {
-    global $db_connect;
-
-    $requete = "SELECT * from moukatali.moukatages WHERE topic_id = '$topic_id' ORDER BY created_at DESC";
-    $query = $db_connect->query($requete);
-    $moukatages = $query->fetchAll();
-    return $moukatages;
-
-}
 
 
 
@@ -422,10 +421,14 @@ function getAllUsers()
 {
     global $db_connect;
     // $admin = "role";
-    $requet = "SELECT * FROM moukatali.users";
-    $query = $db_connect->query($requet);
-    $all_users = $query->fetchAll();
+    $sql = "SELECT * FROM moukatali.users";
+    $pdoStat = $db_connect->prepare($sql);
+    $pdoStat->execute();
+    $all_users = $pdoStat->fetchAll();
     return $all_users;
 }
 
+    
+
 ?>
+
