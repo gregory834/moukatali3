@@ -48,7 +48,7 @@ function createTopic($request_values)
         global $db_connect, $errors, $success;
         
 
-        $user_id = $user['id'];
+        
 
         // var_dump($user_id);
 
@@ -79,7 +79,7 @@ function createTopic($request_values)
         }
 
         // PARAMETRAGE DES VARIBLES D ACCES, EXTENSION, UPLOAD, ET DU DOSSIER DE DESTINATION DES IMAGES UPLOADER
-        $target_dir = "../../../public/images/uploads/";  //chemin du sossier ou les fichiers seront uploader
+        $target_dir = "../../../public/images/uploads/topics/";  //chemin du sossier ou les fichiers seront uploader
         $target_file = $target_dir . basename($image); //parametrage du nom de l image
 
         // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
@@ -92,13 +92,11 @@ function createTopic($request_values)
     if (count($errors) == 0) {
         // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         // GOOD
-        array_push($success, "Edition du sujet réussie !<br/>  ");
-        $sql = "INSERT INTO topics (  title, image, quota_vote, published, created_at) VALUES(  '$title', '$image', 0, '$published', now())";
+        
+        $sql = "INSERT INTO moukatali.topics ( title, image, created_at ) VALUES( '$title', '$image', now() )";
         $reqInsert = $db_connect->prepare($sql); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
-        return $errors;
-        return $success;
-        exit(0);
+        array_push($success, "Création du topic réussi !<br/>  ");
     }
 }
 /* * * * * * * * * * * * * * * * * * * * *
@@ -109,7 +107,7 @@ function createTopic($request_values)
 function editTopic($topic_id)
 {
     global $db_connect, $title, $update_topic, $topic_id;
-    $sql = "SELECT * FROM topics WHERE id = $topic_id LIMIT 1";
+    $sql = "SELECT * FROM moukatali.topics WHERE id = $topic_id LIMIT 1";
 
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
@@ -123,7 +121,6 @@ function editTopic($topic_id)
 // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 function updateTopic($request_values)
 {
-    $published = 0; //par defaut le sujet n est pas actif
   
     // var_dump($user_id);
     global $db_connect, $errors, $title, $image, $topic_id, $success;
@@ -133,8 +130,6 @@ function updateTopic($request_values)
     // validation formulaire
     if (empty($title)) {
         array_push($errors, "Entrer un titre");
-        return $errors;
-        die;
     }
 
 
@@ -150,7 +145,7 @@ function updateTopic($request_values)
     }
 
     // PARAMETRAGE DES VARIBLES D ACCES, EXTENSION, UPLOAD, ET DU DOSSIER DE DESTINATION DES IMAGES UPLOADER
-    $target_dir = "../../../public/images/uploads/";  //chemin du sossier ou les fichiers seront uploader
+    $target_dir = "../../../public/images/uploads/topics/";  //chemin du sossier ou les fichiers seront uploader
     $target_file = $target_dir . basename($image); //parametrage du nom de l image
 
     // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
@@ -161,12 +156,9 @@ function updateTopic($request_values)
     // enregistrer le sujet s'il n'y a pas d'erreurs dans le formulaire
     if (count($errors) == 0) {
         array_push($success, "Modification du topics réussie ! ");
-        $query = "UPDATE topics SET title = '$title',image='$image'  WHERE id = $topic_id";
+        $query = "UPDATE moukatali.topics SET title = '$title',image='$image'  WHERE id = $topic_id";
         $reqInsert = $db_connect->prepare($query); //preparation de la requete
         $reqInsert->execute(); //execution de la requete
-        return $errors;
-        return $success;
-        exit(0);
     }
 }
 
@@ -176,7 +168,7 @@ function updateTopic($request_values)
 function deleteTopic($topic_id)
 {
     global $db_connect, $success;
-    $sql1 = "DELETE FROM topics WHERE id = $topic_id";
+    $sql1 = "DELETE FROM moukatali.topics WHERE id = $topic_id";
     $reqDeleteAdmin = $db_connect->prepare($sql1); //preparation de la requete
     $reqDeleteAdmin->execute(); //execution de la requete
     array_push($success, "Topic supprimé avec succès");
@@ -201,19 +193,20 @@ if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
 if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
     
     if (isset($_GET['publish'])) {
-        array_push($success, "Topic retiré ! ");
         $topic_id = $_GET['publish'];
+        array_push($success, "Topic retiré ! ");
     } else if (isset($_GET['unpublish'])) {
-        array_push($success, "Topic publié ");
-        $sql = "SELECT * FROM topics WHERE published = 1 ORDER BY created_at ASC";
-        $res = $db_connect->query($sql);
-        $topics_order = $res->fetch_all(MYSQLI_ASSOC);
-        $rows = $res->num_rows;
+        $sql = "SELECT * FROM moukatali.topics WHERE published = 1 ORDER BY created_at ASC";
+        $res = $db_connect->prepare($sql);
+        $res->execute();
+        $topics_order = $res->fetchAll();
+        $rows = $res->rowCount();
         if ( $rows > 2 ) {
             $topic_id = $topics_order[0]['id'];
         } else {
             $topic_id = $_GET['unpublish'];
         }
+        array_push($success, "Topic publié ");
         
     }
     togglePublishTopic($topic_id);
@@ -221,40 +214,40 @@ if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
 
 
 // activer - desactiver un topics
-function togglePublishTopic($topic_id, $message)
+function togglePublishTopic($topic_id)
 {
     global $db_connect;
-    $sql = "UPDATE topics SET published = !published WHERE id = $topic_id";
+
+    $sql = "UPDATE moukatali.topics SET published = !published WHERE id = $topic_id";
     $pdoStat = $db_connect->prepare($sql);
-    $result = $pdoStat->execute();
-    $topics = $db_connect->query($sql);
-    // $final_topics = array();
+    $pdoStat->execute();
+    
 }
 
 
 // changement d etat de la publication
 
 if (isset($_GET)) {
-    global $topic_id;
+    //global $topic_id;
     if (isset($_GET['publish'])) {
         $topic_id = $_GET['publish'];
-        $query = "UPDATE topics SET published = 0 WHERE published = 1 AND id = $topic_id LIMIT 1";
+        $query = "UPDATE moukatali.topics SET published = 0 WHERE published = 1 AND id = $topic_id LIMIT 1";
         $pdoStat1 = $db_connect->prepare($query);
         $execut1 = $pdoStat1->execute();
         // CHANGE L ETAT DES AUTRE PUBLICATION 5CAR LIMITER A 2 sur 3 par admin
-        $sql = "UPDATE topics SET published = 1 WHERE id != $topic_id";
+        /*$sql = "UPDATE moukatali.topics SET published = 1 WHERE id != $topic_id";
         $pdoStat2 = $db_connect->prepare($sql);
-        $execut2 = $pdoStat2->execute();
+        $execut2 = $pdoStat2->execute();*/
     } else {
         if (isset($_GET['unpublish'])) {
             $topic_id = $_GET['unpublish'];
-            $query = "UPDATE topics SET published = 1 WHERE published = 0 AND id = $topic_id LIMIT 1";
+            $query = "UPDATE moukatali.topics SET published = 1 WHERE published = 0 AND id = $topic_id LIMIT 1";
             $pdoStat1 = $db_connect->prepare($query);
             $execut1 = $pdoStat1->execute();
             // CHANGE L ETAT DES AUTRE PUBLICATION 5CAR LIMITER A 2 sur 3 par admin
-            $sql = "UPDATE topics SET published = 0 WHERE id != $topic_id";
+            /*$sql = "UPDATE moukatali.topics SET published = 0 WHERE id != $topic_id";
             $pdoStat2 = $db_connect->prepare($sql);
-            $execut2 = $pdoStat2->execute();
+            $execut2 = $pdoStat2->execute();*/
         }
     }
     return $topic_id;
@@ -266,9 +259,9 @@ if (isset($_GET)) {
 
 function readAllTopics(){
    global $db_connect, $topics;
-   $sql = "SELECT * FROM topics ORDER BY created_at DESC ";
+   $sql = "SELECT * FROM moukatali.topics ORDER BY created_at DESC ";
    $pdoStat = $db_connect->prepare($sql);
-   $executeIsOk = $pdoStat->execute();
+    $pdoStat->execute();
    // $listes_AllTpics = $pdoStat->fetchAll();
    $topics = $pdoStat->fetchAll();
    return $topics;
@@ -279,18 +272,19 @@ function readAllTopics(){
 
 function publishTopic() {
     global $db_connect;
-    $sql = "SELECT * FROM topics WHERE published = 1 ORDER BY created_at DESC";
-    $res = $db_connect->query($sql);
-    $publish_topics = $res->fetch_all(MYSQLI_ASSOC);
+    $sql = "SELECT * FROM moukatali.topics WHERE published = 1 ORDER BY created_at DESC";
+    $pdoStat = $db_connect->prepare($sql);
+    $executeIsOk = $pdoStat->execute();
+    $publish_topics = $pdoStat->fetchAll();
     return $publish_topics;
 }
 
 function allPostByTopic($main_topic) {
     global $db_connect;
 
-    $sql = "SELECT * FROM moukatages WHERE topic_id = '$main_topic' ORDER BY created_at DESC";
+    $sql = "SELECT * FROM moukatali.moukatages WHERE topic_id = '$main_topic' ORDER BY created_at DESC";
     $query = $db_connect->query($sql);
-    $moukatages = $query->fetch_all(MYSQLI_ASSOC);
+    $moukatages = $query->fetchAll();
     return $moukatages;
 
 }

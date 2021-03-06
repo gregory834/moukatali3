@@ -3,20 +3,51 @@ require '../../config/config.php';
 require ROOT_PATH . '/config/database.php';
 
 require ROOT_PATH . '/src/controller/user-function.php';
-require ROOT_PATH . '/src/controller/like-dislike.php';
-//require '../controller/topic-function.php';
+require ROOT_PATH . '/src/controller/topic-function.php';
+require ROOT_PATH . '/src/controller/action-function.php';
 
 if ( isset($_SESSION['user']) ) {
     $user = readUserById( $_SESSION['user']['id'] );
+    $user_id = $user['id'];
     $pseudo = $user['pseudo'];
     $role = $user['role'];
-    $auth = TRUE;
 }
 
-//$topic = getTopicById();
-$moukatages = postTopicById(1);
 $all_users = getAllUsers();
 
+$publish_topics = publishTopic();
+
+if ( isset($_GET['main-topic']) ) {
+    $main_topic = $_GET['main-topic'];
+    $moukatages = allPostByTopic($_GET['topic-id']);
+} else if ( isset($_POST['main-topic']) ) {
+    $main_topic = array_search($_POST['main-topic'], $publish_topics);
+    $moukatages = allPostByTopic($_POST['main-topic']);
+} else {
+    if ( count($publish_topics) == 0 ) {
+        $moukatages = array();
+        $main_topic = "";
+    } else {
+        $main_topic = 0;
+        $moukatages = allPostByTopic($publish_topics[$main_topic]['id']);
+    }
+}
+ 
+
+switch ( $main_topic ) {
+    case 0:
+        $index1 = 1;
+        $index2 = 2;
+        break;
+    case 1:
+        $index1 = 0;
+        $index2 = 2;
+        break;
+    case 2:
+        $index1 = 0;
+        $index2 = 1;
+        break;
+}
 include ('../layout/head.php');
 
 ?>
@@ -161,7 +192,7 @@ include ('../layout/head.php');
             <?php if ( $user['id'] == $moukatage['user_id'] ): ?>
             <div class="profil d-flex order-md-0 mb-4">
                 <div class=" mr-2">
-                    <img src=<?= BASE_URL . "/public/images/uploads/" . $user['avatar'] ?> style="height:4.3em; width:4.3em; border-radius:5em; "/>
+                    <img src=<?= BASE_URL . "/public/images/uploads/avatar/" . $user['avatar'] ?> style="height:4.3em; width:4.3em; border-radius:5em; "/>
                 </div>
                 <div class="info-profil">
                     <p class="mb-0 mt-3 ml-3 text-uppercase font-weight-bolder"><?php echo $user['pseudo']; ?></p>

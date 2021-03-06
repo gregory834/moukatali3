@@ -86,14 +86,14 @@ include ('../../layout/head.php');
                     <div class="row">
                         <div class="col-12 text-center mb-4">
                             
-                            <img id="img_avatar" src=<?php echo BASE_URL . '/public/images/uploads/' . $user['avatar']; ?> alt="" class="img-fluid">
+                            <img id="img_avatar" src=<?php echo BASE_URL . '/public/images/uploads/avatar/' . $user['avatar']; ?> alt="" class="img-fluid">
                         </div>
                     </div>
                     <!---Information user (NOM, Prénom, Addresse, Tel Sexe...)-->
                     <div class="col  d-flex justify-content-around  text-dark">
                         <div class="justify-content-around">
-                            <h5><img src="../../icons/user-fill.png" class="icon-size mr-4" /><?php echo ($user['last_name']) ?>&nbsp;<?php echo ($user['first_name']) ?></h5>
-                            <h5><img src="../../icons/mail-open-fill.png" class="icon-size mr-4" /><?php echo ($user['email']) ?></h5>
+                            <h5><img src=<?= BASE_URL . "/public/images/icones/user-fill.png" ?> class="icon-size mr-4" /><?php echo ($user['last_name']) ?>&nbsp;<?php echo ($user['first_name']) ?></h5>
+                            <h5><img src=<?= BASE_URL . "/public/images/icones/mail-open-fill.png" ?> class="icon-size mr-4" /><?php echo ($user['email']) ?></h5>
                             
                         </div>
                     </div>

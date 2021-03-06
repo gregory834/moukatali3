@@ -101,7 +101,7 @@ function createAdmin($request_values)
     //UN UTILISATEUR NE DOIT PAS POUVOIR S INSCRIRE DEUX FOIS AVEC LES MEME IDENTIFIANT
     // l'e-mail et les noms d'utilisateur doivent être uniques
 
-    $reqt  = "SELECT * FROM users WHERE email = '$email' OR pseudo = '$pseudo' LIMIT 1"; //requete de selection dans table user en fonction de l email
+    $reqt  = "SELECT * FROM moukatali.users WHERE email = '$email' OR pseudo = '$pseudo' LIMIT 1"; //requete de selection dans table user en fonction de l email
     $reqEmail = $db_connect->prepare($reqt); //préparation de la requete
     $reqEmail->execute([$email]);  //EXECUTION DE LA REQUETE
     $doublonEmail = $reqEmail->fetch();  //RECUPERATION RESULTAT DE LA REQUETE AUTREMENT DIT SI UN DOUBLON EST TROUVER EN FONCTION DE L EMAIL FOURNI
@@ -151,14 +151,14 @@ function createAdmin($request_values)
 
 function editAdmin($admin_id)
 {
-    global $db_connect, $username, $role, $update, $admin_id, $email, $first_name, $last_name;
-    $sql = "SELECT * FROM users WHERE id = $admin_id LIMIT 1";
+    global $db_connect, $pseudo, $role, $update, $admin_id, $email, $first_name, $last_name;
+    $sql = "SELECT * FROM moukatali.users WHERE id = $admin_id LIMIT 1";
     $pdoStat = $db_connect->prepare($sql);
     $executeIsOk = $pdoStat->execute();
     $admin = $pdoStat->fetch();
 
     // définir les valeurs du formulaire ($ username et $ email) sur le formulaire à mettre à jour
-    $username = $admin['pseudo'];
+    $pseudo = $admin['pseudo'];
     $first_name = $admin['first_name'];
     $last_name = $admin['last_name'];
     $email = $admin['email'];
@@ -224,7 +224,7 @@ function updateAdmin($request_values)
         $password = password_hash($password_1, PASSWORD_DEFAULT);
 
 
-        $sql = "UPDATE users SET pseudo='$pseudo', first_name = '$first_name', last_name = '$last_name', email = '$email', role = '$role', password = '$password' WHERE id = $admin_id";
+        $sql = "UPDATE moukatali.users SET pseudo='$pseudo', first_name = '$first_name', last_name = '$last_name', email = '$email', role = '$role', password = '$password' WHERE id = $admin_id";
 
         $reqInsert1 = $db_connect->prepare($sql); //preparation de la requete
         $reqInsert1->execute(); //execution de la requete
@@ -239,7 +239,7 @@ function updateAdmin($request_values)
 function deleteAdmin($admin_id)
 {
     global $db_connect, $success;
-    $sql1 = "DELETE FROM users WHERE id = $admin_id";
+    $sql1 = "DELETE FROM moukatali.users WHERE id = $admin_id";
     $reqDeleteAdmin = $db_connect->prepare($sql1); //preparation de la requete
     $reqDeleteAdmin->execute(); //execution de la requete
     array_push($success, "Compte administrateur supprimé avec succès ");
@@ -251,7 +251,7 @@ function deleteUser($delete_id_user)
 {
     global $db_connect,  $delete_id_user;
     $delete_id_user = $_GET['delete-user'];
-    $sql1 = "DELETE FROM users WHERE id = $delete_id_user LIMIT 1";
+    $sql1 = "DELETE FROM moukatali.users WHERE id = $delete_id_user LIMIT 1";
     $reqDeleteAdmin = $db_connect->prepare($sql1); //preparation de la requete
     $reqDeleteAdmin->execute(); //execution de la requete
 }

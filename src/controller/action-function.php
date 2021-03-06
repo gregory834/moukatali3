@@ -8,27 +8,28 @@ if ( isset ($_SESSION['user']) ) {
         $action = $_POST['action'];
         switch ($action) {
             case 'like':
-                $sql = "INSERT INTO likes (user_id, moukatage_id, action)
+                $sql = "INSERT INTO moukatali.likes (user_id, moukatage_id, action)
                         VALUES ('$user_id', '$moukatage_id', 'like')
                         ON DUPLICATE KEY UPDATE action='like'";
                 break;
             case 'dislike':
-                $sql = "INSERT INTO likes (user_id, moukatage_id, action)
+                $sql = "INSERT INTO moukatali.likes (user_id, moukatage_id, action)
                         VALUES ('$user_id', '$moukatage_id', 'dislike')
                         ON DUPLICATE KEY UPDATE action = 'dislike'";
                 break;
             case 'unlike':
-                $sql = "DELETE FROM likes WHERE user_id = '$user_id' AND moukatage_id = '$moukatage_id'";
+                $sql = "DELETE FROM moukatali.likes WHERE user_id = '$user_id' AND moukatage_id = '$moukatage_id'";
                 break;
             case 'undislike':
-                $sql = "DELETE FROM likes WHERE user_id = '$user_id' AND moukatage_id = '$moukatage_id'";
+                $sql = "DELETE FROM moukatali.likes WHERE user_id = '$user_id' AND moukatage_id = '$moukatage_id'";
                 break;
             default:
                 break;
         }
 
         // exécuter une requête pour effectuer des modifications dans la base de données ...
-        $query = $db_connect->query($sql);
+        $requete = $db_connect->prepare($sql);
+        $requete->execute();
         echo getRatings($moukatage_id);
         exit(0);
     }
@@ -37,9 +38,10 @@ if ( isset ($_SESSION['user']) ) {
 // Obtenez le nombre total de likes pour un article en particulier
 function getLikes($moukatage_id) {
     global $db_connect;
-    $sql = "SELECT COUNT(*) FROM likes WHERE moukatage_id = $moukatage_id AND action = 'like'";
-    $query = $db_connect->query($sql);
-    $result = $query->fetch_array();
+    $sql = "SELECT COUNT(*) FROM moukatali.likes WHERE moukatage_id = $moukatage_id AND action = 'like'";
+    $stmt = $db_connect->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch();
     
     return intval($result[0]);
 }
@@ -47,9 +49,10 @@ function getLikes($moukatage_id) {
 // Obtenir le nombre total de dislikes pour un message particulier
 function getDislikes($moukatage_id) {
     global $db_connect;
-    $sql = "SELECT COUNT(*) FROM likes WHERE moukatage_id = $moukatage_id AND action = 'dislike'";
-    $query = $db_connect->query($sql);
-    $result = $query->fetch_array();
+    $sql = "SELECT COUNT(*) FROM moukatali.likes WHERE moukatage_id = $moukatage_id AND action = 'dislike'";
+    $stmt = $db_connect->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch();
 
     return intval($result[0]);
 }
@@ -60,19 +63,19 @@ function getRatings($moukatage_id) {
 
     $rating = array();
 
-    $likes_query = "SELECT COUNT(*) FROM likes WHERE moukatage_id = $moukatage_id AND action = 'like'";
-    $dislikes_query = "SELECT COUNT(*) FROM likes WHERE moukatage_id = $moukatage_id AND action = 'dislike'";
+    $likes_query = "SELECT COUNT(*) FROM moukatali.likes WHERE moukatage_id = $moukatage_id AND action = 'like'";
+    $dislikes_query = "SELECT COUNT(*) FROM moukatali.likes WHERE moukatage_id = $moukatage_id AND action = 'dislike'";
 
     $likes_rs = $db_connect->query($likes_query);
     $dislikes_rs = $db_connect->query($dislikes_query);
 
-    $likes = $likes_rs->fetch_array();
-    $dislikes = $dislikes_rs->fetch_array();
+    $likes = $likes_rs->fetch();
+    $dislikes = $dislikes_rs->fetch();
     
     $total_likes = intval($likes[0]);
     $total_dislikes = intval($dislikes[0]);
 
-    $sql = "UPDATE moukatages SET likes = '$total_likes', dislikes = '$total_dislikes' WHERE id = '$moukatage_id'";
+    $sql = "UPDATE moukatali.moukatages SET likes = '$total_likes', dislikes = '$total_dislikes' WHERE id = '$moukatage_id'";
     $query = $db_connect->query($sql);
     //printf("Message d'erreur : %s\n", $db_connect->error);
     
@@ -90,10 +93,11 @@ function userLiked($moukatage_id) {
     global $db_connect, $user_id;
 
     if ( isset($_SESSION['user']) ) {
-        $sql = "SELECT * FROM likes WHERE user_id = $user_id AND moukatage_id = $moukatage_id AND action = 'like'";
-        $result = $db_connect->query($sql);
-        $rows = $result->num_rows;
-        if ( $rows > 0) {
+        $sql = "SELECT * FROM moukatali.likes WHERE user_id = $user_id AND moukatage_id = $moukatage_id AND action = 'like'";
+        $requete = $db_connect->prepare($sql);
+        $requete->execute();
+        $count = $requete->rowCount();
+        if ( $count > 0) {
             return true;
         } else {
             return false;
@@ -108,10 +112,11 @@ function userDisliked($moukatage_id) {
     global $db_connect, $user_id;
 
     if ( isset($_SESSION['user']) ) {
-        $sql = "SELECT * FROM likes WHERE user_id = $user_id AND moukatage_id = $moukatage_id AND action = 'dislike'";
-        $result = $db_connect->query($sql);
-        $rows = $result->num_rows;
-        if ( $rows > 0) {
+        $sql = "SELECT * FROM moukatali.likes WHERE user_id = $user_id AND moukatage_id = $moukatage_id AND action = 'dislike'";
+        $requete = $db_connect->prepare($sql);
+        $requete->execute();
+        $count = $requete->rowCount();
+        if ( $count > 0) {
             return true;
         } else {
             return false;
@@ -120,13 +125,5 @@ function userDisliked($moukatage_id) {
         return false;
     }
 }
-/*
-$sql = "SELECT * FROM posts";
-$result = mysqli_query($db_connect, $sql);
-// récupérer tous les messages de la base de données
-// les renvoyer sous forme de tableau associatif appelé $posts
-$posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
-*/
-
 
 ?>
