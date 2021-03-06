@@ -6,7 +6,7 @@ $pseudo = ""; //initialisation
 $email = "";
 $last_name = "";
 $first_name = "";
-$role = "TEST";
+$role = "";
 $auth = FALSE;
 $user = "";
 

@@ -20,9 +20,8 @@ $(document).ready(function () {
                 'moukatage_id': moukatage_id
             },
             success: function (rating) {
-                //console.log(rating);
                 res = JSON.parse(rating);
-                console.log(res.likes);
+                //console.log(res.likes);
                 if (action == "like") {
                     $clicked_btn.removeClass('far');
                     $clicked_btn.addClass('fas');
@@ -34,7 +33,7 @@ $(document).ready(function () {
                 $clicked_btn.siblings('div.likes').text(res.likes);
                 $clicked_btn.siblings('div.dislikes').text(res.dislikes);
 
-                // modifier le style du bouton de l'autre bouton si l'utilisateur réagit la deuxième fois pour publier
+                // modifier le style du bouton de l'autre bouton
                 $clicked_btn.siblings('i.fas').removeClass('fas').addClass('far');
             }
         });
@@ -71,7 +70,7 @@ $(document).ready(function () {
                 $clicked_btn.siblings('div.likes').text(res.likes);
                 $clicked_btn.siblings('div.dislikes').text(res.dislikes);
 
-                // modifier le style du bouton de l'autre bouton si l'utilisateur réagit la deuxième fois pour publier
+                // modifier le style du bouton de l'autre bouton
                 $clicked_btn.siblings('i.fas').removeClass('fas').addClass('far');
             }
         });

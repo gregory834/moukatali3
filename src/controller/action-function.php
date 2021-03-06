@@ -35,7 +35,7 @@ if ( isset ($_SESSION['user']) ) {
     }
 }
 
-// Obtenez le nombre total de likes pour un article en particulier
+// Obtenir le nombre total de likes pour un article en particulier
 function getLikes($moukatage_id) {
     global $db_connect;
     $sql = "SELECT COUNT(*) FROM moukatali.likes WHERE moukatage_id = $moukatage_id AND action = 'like'";
@@ -57,7 +57,7 @@ function getDislikes($moukatage_id) {
     return intval($result[0]);
 }
 
-// Obtenez le nombre total de mentions J'aime et Je n'aime pas pour un article en particulier
+// Obtenir le nombre total de mentions J'aime et Je n'aime pas pour un moukatage en particulier
 function getRatings($moukatage_id) {
     global $db_connect, $moukatage_id;
 
@@ -77,13 +77,12 @@ function getRatings($moukatage_id) {
 
     $sql = "UPDATE moukatali.moukatages SET likes = '$total_likes', dislikes = '$total_dislikes' WHERE id = '$moukatage_id'";
     $query = $db_connect->query($sql);
-    //printf("Message d'erreur : %s\n", $db_connect->error);
     
     $rating = [
         "likes" => $total_likes,
         "dislikes" => $total_dislikes
     ];
-    //var_dump($rating);
+    
     return json_encode($rating);
 
 }
