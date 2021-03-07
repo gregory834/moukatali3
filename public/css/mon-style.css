@@ -62,6 +62,10 @@ h1 {
     background-color: #C33608;
 }
 
+.btn-connexion:hover, .btn-visiter:hover, .btn-hover:hover {
+    border-radius: 10px;
+} 
+
 /* MEDIA QUERIES */
 @media (min-width: 768px) {
     .logo {
@@ -296,7 +300,7 @@ footer a {
     margin: 22px 0 0 0;
     padding-top: 0.625em;
     padding-bottom: 0.625em;
-    padding-left: 20px;
+    padding-left: 0px;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     transform-origin: 0 0;
@@ -318,3 +322,29 @@ footer a {
     font-size: 1.375em;
     text-transform: uppercase;
 }
+
+.current-page {
+    border: 1px solid white;
+    border-radius: 17px;
+    color: white;
+    margin: 10px 20px;
+}
+
+/**** NAVBAR *******/
+.nav-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 5rem;
+}
+
+/**** UPDATE PROFIL ****/
+.btn-annuler {
+    width: 145px;
+    height: 50px;
+    line-height: 38px;
+}
+.btn-annuler:hover {
+    background-color: #343a40;
+    color: #FFFFFF;
+    border-radius: 10px;
+} 

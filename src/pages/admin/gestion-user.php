@@ -1,23 +1,38 @@
+
 <?php
 require '../../../config/config.php';
 require ROOT_PATH . '/config/database.php';
-
+date_default_timezone_set('Indian/Reunion');
+require ROOT_PATH . '/src/controller/user-function.php';
 require ROOT_PATH . '/src/controller/admin-function.php';
+$nav = "gestion-user";
 
 $all_users = getAllUsers();
+$pseudo = $user['pseudo'];
+$role = $user['role'];
+$auth = $user['auth'];
 
-include('../../layout/head.php');
 
+
+include(ROOT_PATH. '/src/layout/head.php');
 ?>
 
 </head>
 
-  <title>Gestion User | Moukat A Li</title>
+  <title>Gestion Utilisateur | Moukat A Li</title>
 
   <body>
-    <!-- NABVAR ADMIN -->
+    
     <header class="header-main ">
+<<<<<<< HEAD
       <div class="container"> <?php include(ROOT_PATH . '/src/layout/nav-admin.php'); ?></div>
+=======
+      <div class="container">
+      
+      <?php include (ROOT_PATH . '/src/layout/navbar.php'); ?>
+      
+      </div>
+>>>>>>> vincent
     </header>
 
 
@@ -31,7 +46,6 @@ include('../../layout/head.php');
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Avatar</th>
               <th scope="col">Pseudo</th>
               <th scope="col">Email</th>
               <th scope="col">Date d'inscription</th>
@@ -40,16 +54,15 @@ include('../../layout/head.php');
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($all_users as $key => $all_user) : ?>
+            <?php $i = 1; foreach ($all_users as $key => $all_user) : ?>
             <?php if ( $all_user['role'] === "user" ): ?>
               <div class="user">
                 <tr>
-                  <th scope="row"><?php echo $key + 1; ?></th>
-                  <td><?php echo $all_user['pseudo']; ?></td>
-                  <td><?php echo $all_user['id']; ?></td>
-                  <td><?php echo $all_user['email']; ?></td>
-                  <td><?php echo $all_user['created_at']; ?></td>
-                  <td><?php echo $all_user['delete_account']; ?></td>
+                  <th scope="row"><?php echo $i; ?></th>
+                  <td class="align-middle"><?php echo $all_user['pseudo']; ?></td>
+                  <td class="align-middle"><?php echo $all_user['email']; ?></td>
+                  <td class="align-middle"><?= dateToFrench($all_user['created_at'], 'd-m-Y') . '<br/>' . dateToFrench($all_user['created_at'], 'h:i') ?></td>
+                  <td class="align-middle"> <?php echo $all_user['delete_account']; ?></td>
                   <td class="align-middle">
                     <a class="text-dark" href="gestion-user.php?delete-user=<?= $all_user['id'] ?>" role="button">
                       <svg width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -59,6 +72,7 @@ include('../../layout/head.php');
                   </td>
                 </tr>
               </div>
+              <?php $i++ ; ?>
               <?php endif; ?>
             <?php endforeach; ?>
 

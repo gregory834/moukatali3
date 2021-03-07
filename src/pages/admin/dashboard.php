@@ -2,11 +2,14 @@
 require '../../../config/config.php';
 require ROOT_PATH . '/config/database.php';
 
+require ROOT_PATH . '/src/controller/user-function.php';
 require ROOT_PATH . '/src/controller/admin-function.php';
+$nav = "dashboard";
 
 $admins = readAllAdmin();
-
-
+//$pseudo = $user['pseudo'];
+$role = $user['role'];
+$auth = $user['auth'];
 
 include(ROOT_PATH . '/src/layout/head.php');
 ?>
@@ -14,57 +17,11 @@ include(ROOT_PATH . '/src/layout/head.php');
 <title>Dashboard | Moukat A Li</title>
 
 <body>
-  <!-- NABVAR ADMIN -->
+  
   <header class="header-main ">
     <div class="container">
 
-    <!-- NAVBAR -->
-    <nav class="navigation d-flex align-items-center justify-content-between">
-      <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
-          <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
-      </a>
-      <div class="menu-toggle">
-        <input class="position" type="checkbox" />
-        <span class="position"></span>
-        <span class="position"></span>
-        <span class="position mb-0"></span>
-        <ul class="menu">
-
-            <a href=<?php echo BASE_URL . "/src/index.php" ?>>
-                <li class="text-uppercase">Accueil</li>
-            </a>
-
-            <a href=<?php echo BASE_URL . "/src/pages/admin/gestion-topic.php" ?>>
-                <li class="text-uppercase">Topics</li>
-            </a>
-            
-            <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
-                <li class="text-uppercase">Gestion profil</li>
-            </a>
-
-            <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
-                <li class="text-uppercase">Gestion topics</li>
-            </a>
-
-            <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
-                <li class="text-uppercase">moukatali</li>
-            </a>
-
-            <a href="#">
-                <li class="text-uppercase">Contact</li>
-            </a>
-
-            <?php if ( isset($_SESSION['user']) ): ?>
-                <form method="post">
-                    <div class="text-center">
-                        <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
-                    </div>
-                </form>
-            <?php endif; ?>
-
-        </ul>
-      </div>
-    </nav>
+    <?php include (ROOT_PATH . '/src/layout/navbar.php'); ?>
 
     </div>
   </header>
@@ -154,7 +111,7 @@ include(ROOT_PATH . '/src/layout/head.php');
 
 
         <?php if ($update === true) : ?>
-          <button type="submit" id="btn-update" class="btn btn-dark fw-bold text-uppercase" name="update-admin">mettre à jour</button>
+          <button type="submit" id="btn-update" class="btn btn-info fw-bold text-uppercase" name="update-admin">mettre à jour</button>
         <?php else : ?>
           <button type="submit" id="btn-create" class="btn btn-dark fw-bold text-uppercase" name="create-admin">créer un administrateur</button>
         <?php endif; ?>
@@ -206,12 +163,14 @@ include(ROOT_PATH . '/src/layout/head.php');
                     </a>
                   </td>
                   <td class="align-middle">
+                    <?php if ( $admin['id'] != $_SESSION['user']['id'] ): ?>
                     <a class="text-danger" href="dashboard.php?delete-admin=<?php echo $admin['id']; ?>" role="button">
-                      <svg width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                      <svg width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16" disabled>
                         <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                       </svg>
                     </a>
+                    <?php endif; ?>
                   </td>
                   <?php //endif; ?>
                 </tr>

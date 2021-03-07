@@ -2,10 +2,16 @@
 require '../../../config/config.php';
 require ROOT_PATH . '/config/database.php';
 
+require ROOT_PATH . '/src/controller/user-function.php';
 require ROOT_PATH . '/src/controller/admin-function.php';
 require ROOT_PATH . '/src/controller/topic-function.php';
+$nav = "gestion-topic";
 
 $topics = readAllTopics();
+$pseudo = $user['pseudo'];
+$role = $user['role'];
+$auth = $user['auth'];
+
 
 include('../../layout/head.php');
 ?>
@@ -14,60 +20,15 @@ include('../../layout/head.php');
 
 <title>Gestion Topics | Moukat A Li</title>
 
-  <body>
-    <!-- NABVAR ADMIN -->
-    <header class="header-main ">
-      <div class="container">
+<body>
+  <!-- HEADER -->
+  <header class="header-main ">
+    <div class="container">
 
-      <nav class="navigation d-flex align-items-center justify-content-between">
-      <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
-          <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
-      </a>
-      <div class="menu-toggle">
-        <input class="position" type="checkbox" />
-        <span class="position"></span>
-        <span class="position"></span>
-        <span class="position mb-0"></span>
-        <ul class="menu">
+    <?php include (ROOT_PATH . '/src/layout/navbar.php'); ?>
 
-            <a href=<?php echo BASE_URL . "/src/index.php" ?>>
-                <li class="text-uppercase">Accueil</li>
-            </a>
-
-            <a href=<?php echo BASE_URL . "/src/pages/admin/gestion-topic.php" ?>>
-                <li class="text-uppercase">Topics</li>
-            </a>
-            
-            <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
-                <li class="text-uppercase">Gestion profil</li>
-            </a>
-
-            <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
-                <li class="text-uppercase">Gestion topics</li>
-            </a>
-
-            <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
-                <li class="text-uppercase">moukatali</li>
-            </a>
-
-            <a href="#">
-                <li class="text-uppercase">Contact</li>
-            </a>
-
-            <?php if ( isset($_SESSION['user']) ): ?>
-                <form method="post">
-                    <div class="text-center">
-                        <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
-                    </div>
-                </form>
-            <?php endif; ?>
-
-        </ul>
-      </div>
-    </nav>
-
-      </div>
-    </header>
+    </div>
+  </header>
 
     <!-- SECTION -->
     <section id="form-subject">
@@ -85,9 +46,9 @@ include('../../layout/head.php');
             </div>
           <?php endif; ?>
 
-          <?php if ( count($errors) > 0 ) : ?>
+          <?php if ( count($errors_topic) > 0 ) : ?>
             <div class="alert alert-danger" role="alert">
-              <?php foreach ($errors as $error) : ?>
+              <?php foreach ($errors_topic as $error) : ?>
                 <p class="mb-0"><?php echo ($error); ?></p>
               <?php endforeach; ?>
             </div>
@@ -117,7 +78,7 @@ include('../../layout/head.php');
           <!-- BOUTON -->
           <div class="d-grid gap-2">
           <?php if ($update_topic === true) : ?>
-            <button type="submit" id="btn-update" class="btn btn-dark fw-bold text-uppercase mt-4 mb-5" name="update-topic">mettre à jour</button>
+            <button type="submit" id="btn-update" class="btn btn-info fw-bold text-uppercase mt-4 mb-5" name="update-topic">mettre à jour</button>
           <?php else : ?>
             <button type="submit" class="btn btn-dark fw-bold text-uppercase mt-4 mb-5" name="create-topic">créer</button>
           <?php endif; ?>

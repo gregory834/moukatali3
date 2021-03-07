@@ -1,164 +1,136 @@
 <?php
 
 $title = "";
-
 $image = "";
-
 $user_id = "";
 $topic_id = 0;
 $published = 0;
 $update_topic = false;
 $success = array();
-//$errors = array();
+$errors_topic = array();
 
-
-
-// si l'utilisateur clique sur le bouton créer une publication
 if (isset($_POST['create-topic'])) {
     createTopic($_POST);
 }
-// si l'utilisateur clique sur l'icône modifier
+
 if (isset($_GET['edit-topic'])) {
     $update_topic = true;
     $topic_id = $_GET['edit-topic'];
     editTopic($topic_id);
 }
-// si l'utilisateur clique sur le bouton mettre à jour
+
 if (isset($_POST['update-topic'])) {
     updateTopic($_POST);
 }
-// si l'utilisateur clique sur le bouton Supprimer la publication
+
 if (isset($_GET['delete-topic'])) {
     $topic_id = $_GET['delete-topic'];
     deleteTopic($topic_id);
 }
 
+function createTopic() {
 
-function createTopic($request_values)
-{
-
-    global $db_connect, $errors, $success, $image, $user;
+    global $db_connect, $errors_topic, $success;
 
     if (isset($_POST["create-topic"])) {
 
         
         $image = strtolower(time() . '-' . $_FILES['image']['name']);
         $title = htmlentities(trim($_POST['title']));
-        $published = 0; //par defaut le sujet n est pas actif
-        global $db_connect, $errors, $success;
-        
 
-        
-
-        // var_dump($user_id);
-
-        // 88888888888888888888888888888888888888888888888888888888888888
-        // validation formulaire
         if (empty($title)) {
-            array_push($errors, "Entrer un titre");
-            return $errors;
-            die;
+            array_push($errors_topic, "Entrer un titre");
         }
  
         if (empty($image)) {
-            array_push($errors, "Entrer une photo de profil");
-            return $errors;
-            $uploadOk = 0;
-            die;
+            array_push($errors_topic, "Télécharger une image");
         }
 
-        // VERIFICATION DE LA TAILLE DE L IMAGE
         if ($_FILES["image"]["size"] > 600000) {
-            array_push($errors, "Image volumineuse ! Elle ne peut dépasser 600ko .");
+            array_push($errors_topic, "Image volumineuse ! Elle ne peut dépasser 600ko .");
         }
 
-        $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION)); //définition de l extension de l image
-        // VERIFICATION DES EXTENSIONS
+        $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+        
         if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-            array_push($errors, "Format d'image non accepté ! Requis : png, jpeg, jpg ou png");
+            array_push($errors_topic, "Format d'image non accepté ! Requis : png, jpeg, jpg ou png");
         }
 
-        // PARAMETRAGE DES VARIBLES D ACCES, EXTENSION, UPLOAD, ET DU DOSSIER DE DESTINATION DES IMAGES UPLOADER
-        $target_dir = "../../../public/images/uploads/topics/";  //chemin du sossier ou les fichiers seront uploader
-        $target_file = $target_dir . basename($image); //parametrage du nom de l image
-
-        // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
+        
+        $target_dir = ROOT_PATH . "/public/images/uploads/topics/";
+        $target_file = $target_dir . basename($image);
+       
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-            array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
+            array_push($errors_topic, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
         }
     }
-    // return $errors;
-    // créer si aucune erreur
-    if (count($errors) == 0) {
-        // 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
-        // GOOD
+   
+    if (count($errors_topic) == 0) {
         
-        $sql = "INSERT INTO moukatali.topics ( title, image, created_at ) VALUES( '$title', '$image', now() )";
-        $reqInsert = $db_connect->prepare($sql); //preparation de la requete
-        $reqInsert->execute(); //execution de la requete
-        array_push($success, "Création du topic réussi !<br/>  ");
+        $sql = "INSERT INTO topics ( title, image, created_at ) VALUES ( '$title', '$image', now() )";
+        $reqInsert = $db_connect->query($sql);
+        array_push($success, "Topic créé avec succés");
+        
     }
 }
-/* * * * * * * * * * * * * * * * * * * * *
-* - Prend l'identifiant de publication comme paramètre
-* - Récupère le message de la base de données
-* - définit les champs de publication sur le formulaire pour modification
-* * * * * * * * * * * * * * * * * * * * * */
+
+
 function editTopic($topic_id)
 {
     global $db_connect, $title, $update_topic, $topic_id;
-    $sql = "SELECT * FROM moukatali.topics WHERE id = $topic_id LIMIT 1";
 
-    $pdoStat = $db_connect->prepare($sql);
-    $executeIsOk = $pdoStat->execute();
-    $topic = $pdoStat->fetch();
-    // $result = mysqli_query($db, $sql);
-    // $topic = mysqli_fetch_assoc($result);
-    // définir les valeurs du formulaire sur le formulaire à mettre à jour
+    $sql = "SELECT * FROM topics WHERE id = $topic_id LIMIT 1";
+
+    $res = $db_connect->query($sql);
+    $topic = $res->fetch_array();
+
     $title = $topic['title'];
 
 }
-// 8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
 function updateTopic($request_values)
 {
-  
-    // var_dump($user_id);
-    global $db_connect, $errors, $title, $image, $topic_id, $success;
+    global $db_connect, $errors_topic, $title, $image, $topic_id, $success;
+
     $image = strtolower(time() . '-' . $_FILES['image']['name']);
     $topic_id = $_POST['topic-id'];
     $title = trim($request_values['title']);
-    // validation formulaire
+    
     if (empty($title)) {
-        array_push($errors, "Entrer un titre");
+        array_push($errors_topic, "Entrer un titre");
+        return $errors_topic;
     }
 
-
-    // VERIFICATION DE LA TAILLE DE L IMAGE
     if ($_FILES["image"]["size"] > 600000) {
-        array_push($errors, "Image volumineuse ! Elle ne peut dépasser 600ko .");
+        array_push($errors_topic, "Image volumineuse ! Elle ne peut dépasser 600ko .");
     }
 
-    $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION)); //définition de l extension de l image
-    // VERIFICATION DES EXTENSIONS
+    $imageFileType = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-        array_push($errors, "Format d'image non accepté ! Requis : png, jpeg, jpg ou png");
+        array_push($errors_topic, "Format d'image non accepté ! Requis : png, jpeg, jpg ou png");
     }
 
-    // PARAMETRAGE DES VARIBLES D ACCES, EXTENSION, UPLOAD, ET DU DOSSIER DE DESTINATION DES IMAGES UPLOADER
-    $target_dir = "../../../public/images/uploads/topics/";  //chemin du sossier ou les fichiers seront uploader
-    $target_file = $target_dir . basename($image); //parametrage du nom de l image
+    $target_dir = ROOT_PATH . "/public/images/uploads/topics/";
+    $target_file = $target_dir . basename($image);
 
-    // VERIFICATION SI UNE ERREUR IMAGE EST SURVENUE
     if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-        array_push($errors, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
+        array_push($errors_topic, "Désolé, une erreur est survenue lors du transfert ... Veuillez recommençer.");
     }
 
-    // enregistrer le sujet s'il n'y a pas d'erreurs dans le formulaire
-    if (count($errors) == 0) {
+    $sql = "SELECT * FROM topics WHERE id= '$topic_id' LIMIT 1";
+    $query = $db_connect->query($sql);
+    $row = $query->fetch_array(MYSQLI_ASSOC);
+    $old_image = $row['image'];
+    $file = ROOT_PATH . '/public/images/uploads/topics/' . $old_image;
+    if ( file_exists($file) ) {
+        unlink($file);
+    }
+
+    if (count($errors_topic) == 0) {
+        
+        $sql = "UPDATE topics SET title = '$title', image='$image', updated_at = now() WHERE id = $topic_id";
+        $res = $db_connect->query($sql);
         array_push($success, "Modification du topics réussie ! ");
-        $query = "UPDATE moukatali.topics SET title = '$title',image='$image'  WHERE id = $topic_id";
-        $reqInsert = $db_connect->prepare($query); //preparation de la requete
-        $reqInsert->execute(); //execution de la requete
     }
 }
 
@@ -168,7 +140,7 @@ function updateTopic($request_values)
 function deleteTopic($topic_id)
 {
     global $db_connect, $success;
-    $sql1 = "DELETE FROM moukatali.topics WHERE id = $topic_id";
+    $sql1 = "DELETE FROM topics WHERE id = $topic_id";
     $reqDeleteAdmin = $db_connect->prepare($sql1); //preparation de la requete
     $reqDeleteAdmin->execute(); //execution de la requete
     array_push($success, "Topic supprimé avec succès");
@@ -178,35 +150,21 @@ function deleteTopic($topic_id)
 
 // si l'utilisateur clique sur le bouton de publication de l'article
 if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
-    $message = "";
-    if (isset($_GET['publish'])) {
-        $message = "Sujet publié";
-        $topic_id = $_GET['publish'];
-    } else if (isset($_GET['unpublish'])) {
-        $message = "Le sujet n'est pas publié";
-        $topic_id = $_GET['unpublish'];
-    }
-    togglePublishTopic($topic_id, $message);
-}
-
-// si l'utilisateur clique sur le bouton de publication de l'article
-if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
     
     if (isset($_GET['publish'])) {
-        $topic_id = $_GET['publish'];
         array_push($success, "Topic retiré ! ");
+        $topic_id = $_GET['publish'];
     } else if (isset($_GET['unpublish'])) {
-        $sql = "SELECT * FROM moukatali.topics WHERE published = 1 ORDER BY created_at ASC";
-        $res = $db_connect->prepare($sql);
-        $res->execute();
-        $topics_order = $res->fetchAll();
-        $rows = $res->rowCount();
+        array_push($success, "Topic publié ");
+        $sql = "SELECT * FROM topics WHERE published = 1 ORDER BY created_at ASC";
+        $res = $db_connect->query($sql);
+        $topics_order = $res->fetch_all(MYSQLI_ASSOC);
+        $rows = $res->num_rows;
         if ( $rows > 2 ) {
             $topic_id = $topics_order[0]['id'];
         } else {
             $topic_id = $_GET['unpublish'];
         }
-        array_push($success, "Topic publié ");
         
     }
     togglePublishTopic($topic_id);
@@ -217,10 +175,8 @@ if (isset($_GET['publish']) || isset($_GET['unpublish'])) {
 function togglePublishTopic($topic_id)
 {
     global $db_connect;
-
-    $sql = "UPDATE moukatali.topics SET published = !published WHERE id = $topic_id";
-    $pdoStat = $db_connect->prepare($sql);
-    $pdoStat->execute();
+    $sql = "UPDATE topics SET published = !published WHERE id = $topic_id";
+    $query = $db_connect->query($sql);
     
 }
 
@@ -228,26 +184,18 @@ function togglePublishTopic($topic_id)
 // changement d etat de la publication
 
 if (isset($_GET)) {
-    //global $topic_id;
+    
     if (isset($_GET['publish'])) {
         $topic_id = $_GET['publish'];
-        $query = "UPDATE moukatali.topics SET published = 0 WHERE published = 1 AND id = $topic_id LIMIT 1";
-        $pdoStat1 = $db_connect->prepare($query);
-        $execut1 = $pdoStat1->execute();
-        // CHANGE L ETAT DES AUTRE PUBLICATION 5CAR LIMITER A 2 sur 3 par admin
-        /*$sql = "UPDATE moukatali.topics SET published = 1 WHERE id != $topic_id";
-        $pdoStat2 = $db_connect->prepare($sql);
-        $execut2 = $pdoStat2->execute();*/
+        $query = "UPDATE topics SET published = 0 WHERE published = 1 AND id = $topic_id LIMIT 1";
+        $res = $db_connect->query($query);
+        
     } else {
         if (isset($_GET['unpublish'])) {
             $topic_id = $_GET['unpublish'];
-            $query = "UPDATE moukatali.topics SET published = 1 WHERE published = 0 AND id = $topic_id LIMIT 1";
-            $pdoStat1 = $db_connect->prepare($query);
-            $execut1 = $pdoStat1->execute();
-            // CHANGE L ETAT DES AUTRE PUBLICATION 5CAR LIMITER A 2 sur 3 par admin
-            /*$sql = "UPDATE moukatali.topics SET published = 0 WHERE id != $topic_id";
-            $pdoStat2 = $db_connect->prepare($sql);
-            $execut2 = $pdoStat2->execute();*/
+            $query = "UPDATE topics SET published = 1 WHERE published = 0 AND id = $topic_id LIMIT 1";
+            $res = $db_connect->query($query);
+            
         }
     }
     return $topic_id;
@@ -259,35 +207,28 @@ if (isset($_GET)) {
 
 function readAllTopics(){
    global $db_connect, $topics;
-   $sql = "SELECT * FROM moukatali.topics ORDER BY created_at DESC ";
-   $pdoStat = $db_connect->prepare($sql);
-    $pdoStat->execute();
+   $sql = "SELECT * FROM topics ORDER BY created_at DESC ";
+   $res = $db_connect->query($sql);
    // $listes_AllTpics = $pdoStat->fetchAll();
-   $topics = $pdoStat->fetchAll();
+   $topics = $res->fetch_all(MYSQLI_ASSOC);
    return $topics;
-
-//    var_dump($topics);
-// 88888888888888888888888888888888888888888888888888888888888888888888
 }
+
 
 function publishTopic() {
     global $db_connect;
-    $sql = "SELECT * FROM moukatali.topics WHERE published = 1 ORDER BY created_at DESC";
-    $pdoStat = $db_connect->prepare($sql);
-    $executeIsOk = $pdoStat->execute();
-    $publish_topics = $pdoStat->fetchAll();
+    $sql = "SELECT * FROM topics WHERE published = 1 ORDER BY created_at DESC";
+    $res = $db_connect->query($sql);
+    $publish_topics = $res->fetch_all(MYSQLI_ASSOC);
     return $publish_topics;
 }
 
 function allPostByTopic($main_topic) {
     global $db_connect;
 
-    $sql = "SELECT * FROM moukatali.moukatages WHERE topic_id = '$main_topic' ORDER BY created_at DESC";
+    $sql = "SELECT * FROM moukatages WHERE topic_id = '$main_topic' ORDER BY created_at DESC";
     $query = $db_connect->query($sql);
-    $moukatages = $query->fetchAll();
+    $moukatages = $query->fetch_all(MYSQLI_ASSOC);
     return $moukatages;
 
 }
-
-   
-

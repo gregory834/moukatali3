@@ -1,1 +1,58 @@
+<<<<<<< HEAD
 06/03/2021 12:16:01 Fonction connexionUser() : l'authentification a réussi
+=======
+01/03/2021 14:21:18 Fonction connexionUser() : l'authentification a réussi
+01/03/2021 16:32:43 Fonction connexionUser() : l'authentification a réussi
+01/03/2021 16:33:09 Fonction connexionUser() : l'authentification a réussi
+02/03/2021 08:34:54 Fonction connexionUser() : l'authentification a réussi
+02/03/2021 08:51:42 Fonction connexionUser() : l'authentification a réussi
+02/03/2021 10:45:50 Fonction connexionUser() : l'authentification a réussi
+03/03/2021 10:51:34 Fonction connexionUser() : l'authentification a réussi
+03/03/2021 10:54:09 Fonction connexionUser() : l'authentification a réussi : 
+03/03/2021 10:56:50 Fonction connexionUser() : l'authentification a réussi : 
+03/03/2021 12:57:06 Fonction connexionUser() : l'authentification a réussi : 
+03/03/2021 13:00:53 Fonction connexionUser() : l'authentification a réussi : 
+03/03/2021 13:09:03 Fonction connexionUser() : l'authentification a réussi : 
+03/03/2021 13:41:14 Fonction connexionUser() : l'authentification a réussi : 
+03/03/2021 13:43:22 Fonction connexionUser() : l'authentification a réussi2 : user
+03/03/2021 14:04:31 Fonction connexionUser() : l'authentification a réussi5 : user
+03/03/2021 14:45:08 Fonction connexionUser() : l'authentification a réussi11 : user
+03/03/2021 15:02:16 Fonction connexionUser() : l'authentification a réussi1 : admin
+04/03/2021 09:28:25 Fonction connexionUser() : l'authentification a réussi1 : admin
+04/03/2021 12:41:24 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 12:42:49 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 13:09:44 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+04/03/2021 13:12:46 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 13:13:48 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 13:22:48 Fonction connexionUser() : l'authentification a réussi - ID: 17 - ROLE: author
+04/03/2021 13:58:38 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+04/03/2021 14:00:50 Fonction connexionUser() : l'authentification a réussi - ID: 17 - ROLE: author
+04/03/2021 16:05:58 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 16:08:12 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 16:08:33 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 16:11:59 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 16:13:46 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+04/03/2021 16:14:49 Fonction connexionUser() : l'authentification a réussi - ID: 3 - ROLE: user
+04/03/2021 16:15:55 Fonction connexionUser() : l'authentification a réussi - ID: 3 - ROLE: user
+04/03/2021 16:42:06 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+05/03/2021 09:02:24 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+05/03/2021 09:58:22 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+05/03/2021 13:53:59 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+05/03/2021 15:23:41 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+05/03/2021 17:40:42 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+05/03/2021 18:16:12 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user
+05/03/2021 19:04:34 Fonction connexionUser() : l'authentification a réussi - ID: 3 - ROLE: user
+05/03/2021 20:11:00 Fonction connexionUser() : l'authentification a réussi - ID: 17 - ROLE: author
+05/03/2021 20:50:53 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+07/03/2021 10:08:54 Fonction connexionUser() : l'authentification a réussi - ID: 20 - ROLE: user
+07/03/2021 11:04:50 Fonction connexionUser() : l'authentification a réussi - ID: 20 - ROLE: user
+07/03/2021 11:06:53 Fonction connexionUser() : l'authentification a réussi - ID: 20 - ROLE: user
+07/03/2021 12:11:26 Fonction connexionUser() : l'authentification a réussi - ID: 20 - ROLE: user
+07/03/2021 12:25:56 Fonction connexionUser() : l'authentification a réussi - ID: 20 - ROLE: user
+07/03/2021 12:56:07 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+07/03/2021 13:12:20 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+07/03/2021 14:17:53 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+07/03/2021 14:18:59 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+07/03/2021 18:51:54 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+07/03/2021 19:25:41 Fonction connexionUser() : l'authentification a réussi - ID: 26 - ROLE: user
+>>>>>>> vincent

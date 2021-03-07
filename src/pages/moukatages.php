@@ -5,13 +5,8 @@ require ROOT_PATH . '/config/database.php';
 require ROOT_PATH . '/src/controller/user-function.php';
 require ROOT_PATH . '/src/controller/topic-function.php';
 require ROOT_PATH . '/src/controller/action-function.php';
+$nav = "moukatages";
 
-if ( isset($_SESSION['user']) ) {
-    $user = readUserById( $_SESSION['user']['id'] );
-    $user_id = $user['id'];
-    $pseudo = $user['pseudo'];
-    $role = $user['role'];
-}
 
 $all_users = getAllUsers();
 
@@ -32,7 +27,6 @@ if ( isset($_GET['main-topic']) ) {
         $moukatages = allPostByTopic($publish_topics[$main_topic]['id']);
     }
 }
- 
 
 switch ( $main_topic ) {
     case 0:
@@ -48,6 +42,8 @@ switch ( $main_topic ) {
         $index2 = 1;
         break;
 }
+
+
 include ('../layout/head.php');
 
 ?>
@@ -62,7 +58,9 @@ include ('../layout/head.php');
     <header class="header-main ">
         <div class="container">
 
+        <?php include (ROOT_PATH . '/src/layout/navbar.php'); ?>
         
+<<<<<<< HEAD
         <!-- NAVBAR -->
         <nav class="navigation d-flex align-items-center justify-content-between">
             <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
@@ -123,6 +121,8 @@ include ('../layout/head.php');
 
         
 
+=======
+>>>>>>> vincent
         </div>
     </header>
     
