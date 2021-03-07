@@ -6,11 +6,7 @@ $email = "";
 $last_name = "";
 $first_name = "";
 $role = "";
-<<<<<<< HEAD
-$auth = FALSE;
-=======
 $auth = 0;
->>>>>>> vincent
 $user = "";
 
 $errors = array();
@@ -26,11 +22,11 @@ if ( isset($_POST['connexion']) ) {
 if ( isset($_POST['modifier']) ) {
     updateUser();
 }
-
+/*
 if ( isset($_POST['supprimer']) ) {
     deleteUser();
 }
-
+*/
 if ( isset($_POST['publier']) ) {
     publier();
 }
@@ -240,7 +236,7 @@ function updateUser() {
         
         $user_id = $_POST['user-id'];
 
-        $reqt = "UPDATE users SET pseudo = '$pseudo', first_name = '$first_name', last_name = '$first_name', avatar = '$avatar', email = '$email', password = '$password_hash' WHERE id = '$user_id' ";
+        $reqt = "UPDATE users SET pseudo = '$pseudo', first_name = '$first_name', last_name = '$last_name', avatar = '$avatar', email = '$email', password = '$password_hash' WHERE id = '$user_id' ";
         
         $reqUpdate = $db_connect->prepare($reqt); //preparation de la requete
         $reqUpdate->execute(); //execution de la requete
@@ -253,7 +249,7 @@ function updateUser() {
     }
 
 }
-
+/*
 function deleteUser() {
 
     global  $db_connect, $log;
@@ -276,7 +272,7 @@ function deleteUser() {
         header('location: '.$redirect);
 
 }
-
+*/
 // FONCTION SE DECONNECTER
 function deconnexion() {
     global $db_connect;

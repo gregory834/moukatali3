@@ -83,7 +83,7 @@
 
                 <?php if ( isset($_SESSION['user']) ): ?>
                     <form method="post">
-                        <div class="text-center">
+                        <div class="text-center mt-4 mb-3">
                             <button class="btn black btn-hover letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">
                                 se déconnecter<i class="fas fa-sign-out-alt ml-2"></i>
                             </button>

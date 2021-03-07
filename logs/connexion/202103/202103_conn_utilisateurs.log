@@ -56,3 +56,5 @@
 07/03/2021 18:51:54 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
 07/03/2021 19:25:41 Fonction connexionUser() : l'authentification a réussi - ID: 26 - ROLE: user
 >>>>>>> vincent
+07/03/2021 19:30:52 Fonction connexionUser() : l'authentification a réussi - ID: 1 - ROLE: admin
+07/03/2021 19:31:15 Fonction connexionUser() : l'authentification a réussi - ID: 2 - ROLE: user

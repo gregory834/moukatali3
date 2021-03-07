@@ -24,15 +24,11 @@ include(ROOT_PATH. '/src/layout/head.php');
   <body>
     
     <header class="header-main ">
-<<<<<<< HEAD
-      <div class="container"> <?php include(ROOT_PATH . '/src/layout/nav-admin.php'); ?></div>
-=======
       <div class="container">
       
       <?php include (ROOT_PATH . '/src/layout/navbar.php'); ?>
       
       </div>
->>>>>>> vincent
     </header>
 
 
@@ -58,17 +54,18 @@ include(ROOT_PATH. '/src/layout/head.php');
             <?php if ( $all_user['role'] === "user" ): ?>
               <div class="user">
                 <tr>
-                  <th scope="row"><?php echo $i; ?></th>
+                  <th class="align-middle" scope="row"><?php echo $i; ?></th>
                   <td class="align-middle"><?php echo $all_user['pseudo']; ?></td>
                   <td class="align-middle"><?php echo $all_user['email']; ?></td>
                   <td class="align-middle"><?= dateToFrench($all_user['created_at'], 'd-m-Y') . '<br/>' . dateToFrench($all_user['created_at'], 'h:i') ?></td>
                   <td class="align-middle"> <?php echo $all_user['delete_account']; ?></td>
                   <td class="align-middle">
-                    <a class="text-dark" href="gestion-user.php?delete-user=<?= $all_user['id'] ?>" role="button">
-                      <svg width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <a class="text-danger" href="gestion-user.php?delete-user=<?php echo $all_user['id']; ?>" role="button">
+                      <svg width="25" height="25" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                       </svg>
+                    </a>
                   </td>
                 </tr>
               </div>

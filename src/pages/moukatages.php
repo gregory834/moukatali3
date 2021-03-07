@@ -60,69 +60,6 @@ include ('../layout/head.php');
 
         <?php include (ROOT_PATH . '/src/layout/navbar.php'); ?>
         
-<<<<<<< HEAD
-        <!-- NAVBAR -->
-        <nav class="navigation d-flex align-items-center justify-content-between">
-            <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
-                <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
-            </a>
-            <div class="d-flex">
-                <?php if ( $auth == true ): ?>
-                <div class="auth">
-                <i class="fas fa-sign-out-alt fa-2x mr-4"></i>
-                </div>
-                <?php endif; ?>
-                <div class="menu-toggle">
-                    <input class="position" type="checkbox" />
-                    <span class="position"></span>
-                    <span class="position"></span>
-                    <span class="position mb-0"></span>
-                    <ul class="menu">
-
-                        <a href=<?php echo BASE_URL . "/src/index.php" ?>>
-                            <li class="text-uppercase">Accueil</li>
-                        </a>
-
-                        <?php if ( $role == 'user' ): ?>
-                        <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
-                            <li class="text-uppercase">profil</li>
-                        </a>
-                        <?php endif; ?>
-
-                        <?php if ( $role == 'admin' ): ?>
-                        <a href=<?php echo BASE_URL . "/src/pages/admin/dashboard.php" ?>>
-                            <li class="text-uppercase">Dashboard</li>
-                        </a>
-                        <?php endif; ?>
-
-                        <?php if ( $auth == false ): ?>
-                        <a href=<?php echo BASE_URL . "/src/pages/login.php" ?>>
-                            <li class="text-uppercase">se connecter</li>
-                        </a>
-                        <?php endif; ?>
-
-                        <a href="#">
-                            <li class="text-uppercase">Contact</li>
-                        </a>
-
-                        <?php if ( isset($_SESSION['user']) ): ?>
-                            <form method="post">
-                                <div class="text-center">
-                                    <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
-                                </div>
-                            </form>
-                        <?php endif; ?>
-
-                    </ul>
-                </div>
-            
-            </div>
-        </nav>
-
-        
-
-=======
->>>>>>> vincent
         </div>
     </header>
     
@@ -162,12 +99,12 @@ include ('../layout/head.php');
                 <?php endif; ?>
                 <div class="form-group mb-0">
                     <?php if ( empty($_SESSION['user']) ): ?>
-                    <textarea class="form-control mb-2 border-0" id="exampleFormControlTextarea1" rows="3" placeholder="Vous devez vous inscrire pour publier." name="text" disabled></textarea>
+                    <textarea class="form-control mb-2 border-0" rows="3" placeholder="Vous devez vous inscrire ou vous connecter pour publier ou pour voter." name="text" disabled></textarea>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn black text-uppercase font-weight-bold text-light letter-spacing" disabled>publier</button>
                     </div>
                     <?php else: ?>
-                    <textarea class="form-control mb-2 border-0" id="exampleFormControlTextarea1" rows="3" placeholder="Publier un moukatage." name="text"></textarea>
+                    <textarea class="form-control mb-2 border-0" rows="3" placeholder="Publier un moukatage." name="text"></textarea>
                     <div class="d-flex justify-content-end">
                         <button type="submit" name="publier" class="btn black text-uppercase font-weight-bold text-light letter-spacing">publier</button>
                     </div>
@@ -206,7 +143,7 @@ include ('../layout/head.php');
                 </div>
                 <div class="info-profil">
                     <p class="mb-0 mt-3 ml-3 text-uppercase font-weight-bolder"><?php echo $user['pseudo']; ?></p>
-                    <p class="mb-0"><?php echo $moukatage['created_at']; ?></p>
+                    <p class="mb-0"><?php echo dateToFrench($moukatage['created_at'], 'd-m-Y h:i'); ?></p>
                 </div>
             </div>
             <?php endif; ?>
@@ -219,7 +156,7 @@ include ('../layout/head.php');
                     <div class="like-dislike d-flex justify-content-end justify-content-md-start align-items-md-end mb-4 mb-md-0 order-md-1">
                         <div class="d-flex align-items-center mr-3">
                             <!-- LIKE -->
-                            <i <?php if (userLiked($moukatage['id'])): ?> class="fas fa-thumbs-up fa-2x like-btn" <?php else: ?> class="far fa-thumbs-up fa-2x like-btn" <?php endif ?> data-id="<?php echo $moukatage['id'] ?>" disabled></i>
+                            <i <?php if (userLiked($moukatage['id'])): ?> class="fas fa-thumbs-up fa-2x like-btn" <?php else: ?> class="far fa-thumbs-up fa-2x like-btn" <?php endif ?> data-id="<?php echo $moukatage['id'] ?>"></i>
                             <div class="likes nb-vote black text-light d-flex justify-content-center align-items-center font-weight-bold mr-2"><?php echo getLikes($moukatage['id']); ?></div>
                             <!-- DISLIKE -->
                             <i <?php if (userDisliked($moukatage['id'])): ?> class="fas fa-thumbs-down fa-2x dislike-btn" <?php else: ?> class="far fa-thumbs-down fa-2x dislike-btn" <?php endif ?> data-id="<?php echo $moukatage['id'] ?>"></i>

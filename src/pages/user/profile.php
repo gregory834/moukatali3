@@ -47,7 +47,7 @@ include ('../../layout/head.php');
                     <div class="d-flex justify-content-center">
                         <div>
                             <div class="d-flex align-items-center mb-3">
-                                <i class="fas fa-user-circle fa-3x mr-4"></i><p class="mb-0"><?php echo ($user['last_name']) ?>&nbsp;<?php echo ($user['first_name']) ?></p>
+                                <i class="fas fa-user-circle fa-3x mr-4"></i><p class="mb-0"><?php echo ($user['first_name']) ?>&nbsp;<?php echo ($user['last_name']) ?></p>
                             </div>
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-envelope-square fa-3x mr-4"></i><p class="mb-0"><?php echo ($user['email']) ?></p>

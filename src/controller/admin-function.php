@@ -165,12 +165,12 @@ function updateAdmin($request_values) {
 }
 
 // supprimer l'utilisateur administrateur
-function deleteAdmin($admin_id) {
+function deleteAdmin($id) {
 
     global $db_connect, $success;
-    $sql = "DELETE FROM users WHERE id = $admin_id";
+    $sql = "DELETE FROM users WHERE id = $id";
     $query = $db_connect->query($sql); //preparation de la requete
-    array_push($success, "Compte administrateur supprimé avec succès ");
+    array_push($success, "Compte supprimé avec succès ");
 }
 
 
@@ -186,31 +186,4 @@ function readAllAdmin() {
 
 } 
 
-<<<<<<< HEAD
-
-// POUR LA PAGE AVEC LA LISTE DE TOUT LES MOUKATEUR AU ROLE DE USER
-// ok fonctionelle
-function getAllUsers()
-{
-    
-    global $db_connect;
-    $requet = "SELECT * FROM moukatali.users WHERE role= 'user'";
-    $stmt = $db_connect->prepare($requet);
-    $stmt->execute();
-    $all_users = $stmt->fetchAll();
-    return $all_users;
-}
-
-
-
-
-
-
-
-
-
-
-
-=======
 ?>
->>>>>>> vincent
