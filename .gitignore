@@ -12,7 +12,7 @@ Thumbs.db
 # Ignoring directories #
 ########################
 .vscode
-#db
+
 
 # Ignoring files by extension #
 ###############################
