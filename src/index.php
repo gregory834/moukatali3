@@ -4,7 +4,6 @@ require ROOT_PATH . '/config/database.php';
 
 require ROOT_PATH . '/src/controller/user-function.php';
 
-
 include (ROOT_PATH . '/src/layout/head.php');
 ?>
 
@@ -59,29 +58,31 @@ include (ROOT_PATH . '/src/layout/head.php');
             <?php if ( empty($_SESSION['user']) ): ?>
                 <!-- BOUTONS CONNECTION ET VISITER -->
                 <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
-                    <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href="./pages/login.php" role="button">se connecter</a>
-                    <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="./pages/moukatages.php" role="button">visiter</a>
+                    <a class="btn-connexion btn mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold" href=<?= BASE_URL . "/src/pages/login.php" ?> role="button">se connecter</a>
+                    <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/moukatages.php" ?> role="button">visiter</a>
                 </div>
             <?php endif; ?>
+
+
                 
             <?php if ( $_SESSION['user']['role'] == 'user' ): ?>
                 <!-- BOUTON MOUKATALI -->
                 <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
-                    <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href="./pages/moukatages.php" role="button">moukatali!!!</a>
+                    <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/moukatages.php" ?> role="button">moukatali!!!</a>
                 </div>
             <?php endif; ?>
 
             <?php if ( $_SESSION['user']['role'] == 'admin' ): ?>
                 <!-- BOUTON ADMINISTRATEUR -->
                 <div class="d-flex justify-content-center mt-5">
-                    <a class="btn text-uppercase font-weight-bold text-light" href="./pages/admin/dashboard.php" role="button">administrateur</a>
+                    <a class="btn text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/admin/dashboard.php" ?> role="button">administrateur</a>
                 </div>
             <?php endif; ?>
 
             <?php if ( $_SESSION['user']['role'] == 'author' ): ?>
                 <!-- BOUTON ADMINISTRATEUR -->
                 <div class="d-flex justify-content-center mt-5">
-                    <a class="btn text-uppercase font-weight-bold text-light" href="./pages/admin/gestion-topic.php" role="button">gestion topics</a>
+                    <a class="btn text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/admin/gestion-topic.php" ?> role="button">topics</a>
                 </div>
             <?php endif; ?>
 

@@ -1,15 +1,12 @@
 <?php
 
-//echo '<div class="text-light">CHEMIN CLASS OK</div>';
-date_default_timezone_set('Indian/Reunion');
-
 class Log {
 
     private $folder; # Dossier où sont enregistrés les fichiers logs (ex: /Applications/MAMP/www/monsite/logs)
     private $ready; # Le Log est prêt quand le dossier de dépôt des logs existe
     
     # archivage des logs
-    const FOLDER_ROOT  = 'VOID';  # Aucun archivage
+    const FOLDER_ROOT  = 'VOID';  # Aucun dossier d'archivage
     const FOLDER_MONTH = 'MONTH'; # Archivage mensuel
     const FOLDER_YEAR  = 'YEAR';  # Archivage annuel
     

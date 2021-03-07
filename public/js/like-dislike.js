@@ -20,7 +20,6 @@ $(document).ready(function () {
                 'moukatage_id': moukatage_id
             },
             success: function (rating) {
-                //console.log(rating);
                 res = JSON.parse(rating);
                 console.log(res.likes);
                 if (action == "like") {

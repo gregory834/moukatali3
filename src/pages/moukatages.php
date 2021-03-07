@@ -5,13 +5,8 @@ require ROOT_PATH . '/config/database.php';
 require ROOT_PATH . '/src/controller/user-function.php';
 require ROOT_PATH . '/src/controller/topic-function.php';
 require ROOT_PATH . '/src/controller/action-function.php';
+$nav = "moukatages";
 
-if ( isset($_SESSION['user']) ) {
-    $user = readUserById( $_SESSION['user']['id'] );
-    $user_id = $user['id'];
-    $pseudo = $user['pseudo'];
-    $role = $user['role'];
-}
 
 $all_users = getAllUsers();
 
@@ -32,7 +27,6 @@ if ( isset($_GET['main-topic']) ) {
         $moukatages = allPostByTopic($publish_topics[$main_topic]['id']);
     }
 }
- 
 
 switch ( $main_topic ) {
     case 0:
@@ -48,6 +42,8 @@ switch ( $main_topic ) {
         $index2 = 1;
         break;
 }
+
+
 include ('../layout/head.php');
 
 ?>
@@ -62,57 +58,8 @@ include ('../layout/head.php');
     <header class="header-main ">
         <div class="container">
 
+        <?php include (ROOT_PATH . '/src/layout/navbar.php'); ?>
         
-        <!-- NAVBAR -->
-        <nav class="navigation d-flex align-items-center justify-content-between">
-            <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
-                <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
-            </a>
-            <div class="menu-toggle">
-                <input class="position" type="checkbox" />
-                <span class="position"></span>
-                <span class="position"></span>
-                <span class="position mb-0"></span>
-                <ul class="menu">
-
-                    <a href=<?php echo BASE_URL . "/src/index.php" ?>>
-                        <li class="text-uppercase">Accueil</li>
-                    </a>
-
-                    <?php if ( $role == 'user' ): ?>
-                    <a href=<?php echo BASE_URL . "/src/pages/user/profile.php" ?>>
-                        <li class="text-uppercase">profil</li>
-                    </a>
-                    <?php endif; ?>
-
-                    <?php if ( $role == 'admin' ): ?>
-                    <a href=<?php echo BASE_URL . "/src/pages/admin/dashboard.php" ?>>
-                        <li class="text-uppercase">Dashboard</li>
-                    </a>
-                    <?php endif; ?>
-
-                    <?php if ( $auth == FALSE ): ?>
-                    <a href=<?php echo BASE_URL . "/src/pages/login.php" ?>>
-                        <li class="text-uppercase">se connecter</li>
-                    </a>
-                    <?php endif; ?>
-
-                    <a href="#">
-                        <li class="text-uppercase">Contact</li>
-                    </a>
-
-                    <?php if ( isset($_SESSION['user']) ): ?>
-                        <form method="post">
-                            <div class="text-center">
-                                <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
-                            </div>
-                        </form>
-                    <?php endif; ?>
-
-                </ul>
-            </div>
-        </nav>
-
         </div>
     </header>
     

@@ -3,10 +3,10 @@ require '../../../config/config.php';
 require ROOT_PATH . '/config/database.php';
 
 require ROOT_PATH . '/src/controller/user-function.php';
+$nav = "profile";
 
 
 $user = readUserById( $_SESSION['user']['id'] );
-$auth = TRUE;
 
 
 include ('../../layout/head.php');
@@ -22,53 +22,7 @@ include ('../../layout/head.php');
         <header class="header-main ">
             <div class="container">
 
-            <!-- NAVBAR -->
-            <nav class="navigation d-flex align-items-center justify-content-between">
-                <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
-                    <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
-                </a>
-                <div class="menu-toggle">
-                    <input class="position" type="checkbox" />
-                    <span class="position"></span>
-                    <span class="position"></span>
-                    <span class="position mb-0"></span>
-                    <ul class="menu">
-
-                        <a href=<?php echo BASE_URL . "/src/index.php" ?>>
-                            <li class="text-uppercase">Accueil</li>
-                        </a>
-
-                        <a href="<?php echo BASE_URL . "/src/pages/moukatages.php" ?>">
-                            <li class="text-uppercase">moukatali</li>
-                        </a>
-
-                        <?php if ( $role == 'admin' ): ?>
-                        <a href=<?php echo BASE_URL . "/src/pages/admin/dashboard.php" ?>>
-                            <li class="text-uppercase">Dashboard</li>
-                        </a>
-                        <?php endif; ?>
-
-                        <?php if ( $auth == FALSE ): ?>
-                        <a href=<?php echo BASE_URL . "/src/pages/login.php" ?>>
-                            <li class="text-uppercase">se connecter</li>
-                        </a>
-                        <?php endif; ?>
-
-                        <a href="#">
-                            <li class="text-uppercase">Contact</li>
-                        </a>
-
-                        <?php if ( isset($_SESSION['user']) ): ?>
-                            <form method="post">
-                                <div class="text-center">
-                                    <button class="btn black letter-spacing text-uppercase font-weight-bold text-light" type="submit" name="deconnexion">se déconnecter</button>
-                                </div>
-                            </form>
-                        <?php endif; ?>
-
-                    </ul>
-                </div>
-            </nav>
+            <?php include (ROOT_PATH . '/src/layout/navbar.php'); ?>
 
             </div>
         </header>
@@ -90,11 +44,14 @@ include ('../../layout/head.php');
                         </div>
                     </div>
                     <!---Information user (NOM, Prénom, Addresse, Tel Sexe...)-->
-                    <div class="col  d-flex justify-content-around  text-dark">
-                        <div class="justify-content-around">
-                            <h5><img src=<?= BASE_URL . "/public/images/icones/user-fill.png" ?> class="icon-size mr-4" /><?php echo ($user['last_name']) ?>&nbsp;<?php echo ($user['first_name']) ?></h5>
-                            <h5><img src=<?= BASE_URL . "/public/images/icones/mail-open-fill.png" ?> class="icon-size mr-4" /><?php echo ($user['email']) ?></h5>
-                            
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-user-circle fa-3x mr-4"></i><p class="mb-0"><?php echo ($user['last_name']) ?>&nbsp;<?php echo ($user['first_name']) ?></p>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-envelope-square fa-3x mr-4"></i><p class="mb-0"><?php echo ($user['email']) ?></p>
+                            </div>
                         </div>
                     </div>
 
