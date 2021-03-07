@@ -6,7 +6,7 @@ $local = 1;
 // définir des constantes globales
 define('ROOT_PATH', realpath(dirname(__FILE__, 2)));
 if ($local == 1) {
-    define('BASE_URL', 'http://localhost:8888/moukatali3');
+    define('BASE_URL', 'http://localhost:8888/moukatali3'); // LIEN A MODIFIER
 } else {
     define('BASE_URL', 'https://moukat-a-li.herokuapp.com');
 };
