@@ -201,10 +201,6 @@ if (isset($_GET)) {
     return $topic_id;
 }
 
-
-
-
-
 function readAllTopics(){
    global $db_connect, $topics;
    $sql = "SELECT * FROM topics ORDER BY created_at DESC ";
@@ -232,3 +228,36 @@ function allPostByTopic($main_topic) {
     return $moukatages;
 
 }
+
+if ( isset($_GET['main-topic']) ) {
+    $main_topic = $_GET['main-topic'];
+    $moukatages = allPostByTopic($_GET['topic-id']);
+} else if ( isset($_POST['main-topic']) ) {
+    $main_topic = array_search($_POST['main-topic'], $publish_topics);
+    $moukatages = allPostByTopic($_POST['main-topic']);
+} else {
+    if ( count($publish_topics) == 0 ) {
+        $moukatages = array();
+        $main_topic = "";
+    } else {
+        $main_topic = 0;
+        $moukatages = allPostByTopic($publish_topics[$main_topic]['id']);
+    }
+}
+
+switch ( $main_topic ) {
+    case 0:
+        $index1 = 1;
+        $index2 = 2;
+        break;
+    case 1:
+        $index1 = 0;
+        $index2 = 2;
+        break;
+    case 2:
+        $index1 = 0;
+        $index2 = 1;
+        break;
+}
+
+?>

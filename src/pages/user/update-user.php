@@ -137,9 +137,12 @@ include ('../../layout/head.php');
 
 
                     <!-- BOUTON INSCRIPTION -->
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
+
                         <a class="btn btn-annuler mb-3 mb-md-0 mr-md-3 text-uppercase font-weight-bold border" href=<?= BASE_URL . "/src/pages/user/profile.php" ?> role="button">annuler</a>
+
                         <button type="submit" name="modifier" class="btn btn-dark">METTRE A JOUR</button>
+
                         <input type="hidden" name="user-id" value=<?php echo $user['id']; ?> />
                     </div>
                     <div class="mt-3 d-flex justify-content-center"> <i>(* Champs obligatoires)</i></div>

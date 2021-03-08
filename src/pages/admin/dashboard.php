@@ -30,7 +30,7 @@ include(ROOT_PATH . '/src/layout/head.php');
   <section id="form-admin">
     <div class="container">
 
-      <h1 class="text-uppercase display-1 text-center py-3 mt-5">Tableau de bord</h1>
+      <h1 class="h1-section text-light text-uppercase display-1 text-center py-3 mt-5">Tableau de bord</h1>
       
       <form method="POST" class="m-auto">
         <!-- MESSAGE D ERREUR -->

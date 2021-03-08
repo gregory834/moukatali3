@@ -4,12 +4,10 @@
     <a class="navbar-brand" href=<?= BASE_URL . "/src/index.php" ?>>
         <img src=<?= BASE_URL . "/public/images/logo.png" ?> alt="Logo Moukat A Li">
     </a>
-    <!-- INFO UTILISATEUR -->
+    
     <div class="d-flex">
-        <div class="info-bar d-flex align-items-center">
-
-            
-            
+        <!-- INFO UTILISATEUR -->
+        <div class="info-bar d-none d-md-flex align-items-center">
             <?php if ( isset($_SESSION['user']['auth']) ): ?>
                 <?php $username = $user['pseudo']; ?>
                 <p class="text-dark text-center mb-0 mr-3">Bienvenue <strong><?php echo $username ?></strong></p>
@@ -20,10 +18,10 @@
                 <p class="text-dark text-center mb-0 mr-3">Bienvenue <strong>Visiteur</strong></p>
                 <a href=<?php echo BASE_URL . "/src/pages/login.php" ?> class="text-info"><i class="fas fa-sign-in-alt fa-2x mr-4"></i></a>
             <?php endif; ?>
-
         </div>
+        <!-- MENU -->
         <div class="menu-toggle">
-            
+        
             <input class="position" type="checkbox" />
             <span class="position"></span>
             <span class="position"></span>
@@ -71,13 +69,12 @@
                 </a>
                 <?php endif; ?>
 
-                <?php //if ( $role == 'admin' ): ?>
+                
                 <a href=<?php echo BASE_URL . "/src/pages/moukatages.php" ?>>
                     <li class="text-uppercase <?php echo ( $nav == "moukatages" ) ? "current-page" : "" ?>">Moukatali</li>
                 </a>
-                <?php //endif; ?>
 
-                <a href="#">
+                <a href=<?php echo BASE_URL . "/src/pages/moukatages.php#contact" ?>>
                     <li class="text-uppercase">Contact</li>
                 </a>
 

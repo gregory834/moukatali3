@@ -13,7 +13,7 @@ $role = $user['role'];
 $auth = $user['auth'];
 
 
-include('../../layout/head.php');
+include(ROOT_PATH. '/src/layout/head.php');
 ?>
 
 </head>
@@ -34,7 +34,7 @@ include('../../layout/head.php');
     <section id="form-subject">
       <div class="container text-center">
 
-      <h1 class="text-uppercase display-4 text-center py-3 mt-5">Gestion des Topics</h1>
+      <h1 class="h1-section text-light text-uppercase display-4 text-center py-3 mt-5">Gestion des Topics</h1>
 
         <form method="post" action="gestion-topic.php" enctype="multipart/form-data">
 
@@ -63,7 +63,7 @@ include('../../layout/head.php');
           <div class="form-group" id="preview">
             <!--<span class="img-div">-->
             <!--<div class="img-placeholder"  onClick="triggerClick()"></div>-->
-            <img src="../../images/uploads/<?= $topic_image ?>" onClick="triggerClick()" id="profileDisplay" alt="Preview" style="height: 310px; width: 360px;">
+            <img src="" onClick="triggerClick()" id="profileDisplay" alt="Preview" style="height: 300px; width: 370px;" class="mb-3">
             <!--</span>-->
             <label for="preview" class="form-label text-center"></label>
             <input type="file" onChange="displayImage(this)" id="image" class="form-control form-control-lg" name="image" placeholder="Uploader une image">
@@ -91,12 +91,14 @@ include('../../layout/head.php');
     <!-- SECTION -->
     <section>
       <div class="container-fluid col-11  justify-content-center mt-5 mb-5">
-        <h1 class="text-uppercase text-center py-3 mt-5 mb-5 pt-5">Listes topics</h1>
+        <h1 class="h1-section text-light text-uppercase text-center py-3 mt-5 mb-5 pt-5">Listes topics</h1>
         <!-- message -->
         <!-- include( '/includes/messages.php'); -->
 
         <?php if (empty($topics)) : ?>
-          <h1 style="text-align: center; margin-top: 20px;">Aucun topic créé.</h1>
+          <div class="text-info text-center text-uppercase py-3">
+            <p class="mb-0">Aucun topic créé pour le moment.</p>
+          </div>
         <?php else : ?>
           <div class=" d-flex justify-content-center">
             <table class="col-11 table table-bordered bg-secondary  text-center text-light">

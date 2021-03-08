@@ -37,7 +37,7 @@ include(ROOT_PATH. '/src/layout/head.php');
     <!-- SECTION -->
     <section>
       <div class="container">
-        <h1 class="text-uppercase display-4 text-center py-3 mt-5">liste des moukateurs</h1>
+        <h1 class="h1-section text-light text-uppercase display-4 text-center py-3 mt-5">liste des moukateurs</h1>
         <table class="col-11 table table-bordered bg-secondary text-center text-light">
           <thead>
             <tr>

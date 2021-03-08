@@ -22,11 +22,11 @@ if ( isset($_POST['connexion']) ) {
 if ( isset($_POST['modifier']) ) {
     updateUser();
 }
-/*
+
 if ( isset($_POST['supprimer']) ) {
     deleteUser();
 }
-*/
+
 if ( isset($_POST['publier']) ) {
     publier();
 }
@@ -130,34 +130,38 @@ function connexionUser() {
         array_push($errors, "Mot de passe requis");
     }
 
-    if ( empty($errors) ) {}
 
     $sql = "SELECT * FROM users WHERE email = '$email' ";
     $res = $db_connect->query($sql);
-    $rows = $res->num_rows;
+    //$rows = $res->num_rows;
+    $user = $res->fetch_array(MYSQLI_ASSOC);
     
-    if ( $rows > 0 ) {
-        $user = $res->fetch_array();
-        if ( password_verify($password, $user['password']) ) {
-            $_SESSION['user']['id'] = $user['id'];
-            $_SESSION['user']['role'] = $user['role'];
-            $sql = "UPDATE users SET auth = 1 WHERE email = '$email'";
-            $query = $db_connect->query($sql);
-            $_SESSION['user']['auth'] = 1;
-            $log->log('connexion', 'conn_utilisateurs', "Fonction connexionUser() : l'authentification a réussi " . "- ID: " . $user['id'] . ' - ROLE: ' . $user['role'], Log::FOLDER_MONTH);
-            switch ( $user['role'] ) {
-                case "admin":
-                    header('location: ./admin/dashboard.php');
-                    break;
-                case "author":
-                    header('location: ./admin/gestion-topic.php');
-                    break;
-                default:
-                    header('location: ./moukatages.php');
+    if ( $user != null ) { //$rows > 0
+        if ( $user['delete_account'] == 0 ) {
+            if ( password_verify($password, $user['password']) ) {
+                $_SESSION['user']['id'] = $user['id'];
+                $_SESSION['user']['role'] = $user['role'];
+                $sql = "UPDATE users SET auth = 1 WHERE email = '$email'";
+                $query = $db_connect->query($sql);
+                $_SESSION['user']['auth'] = 1;
+                $log->log('connexion', 'conn_utilisateurs', "Fonction connexionUser() : l'authentification a réussi " . "- ID: " . $user['id'] . ' - ROLE: ' . $user['role'], Log::FOLDER_MONTH);
+                switch ( $user['role'] ) {
+                    case "admin":
+                        header('location: ./admin/dashboard.php');
+                        break;
+                    case "author":
+                        header('location: ./admin/gestion-topic.php');
+                        break;
+                    default:
+                        header('location: ./moukatages.php');
+                }
+            } else {
+                array_push($errors, "Mot de passe incorrect");
             }
         } else {
-            array_push($errors, "Mot de passe incorrect");
+            array_push($errors, " Compte inexistant... <br/> Veuillez créer un compte.");
         }
+        
     } else {
         array_push($errors, " Compte inexistant... <br/> Veuillez créer un compte.");
     }
@@ -249,30 +253,24 @@ function updateUser() {
     }
 
 }
-/*
+
 function deleteUser() {
 
     global  $db_connect, $log;
 
-    // si le bouton supprimer est cliqué alors :
-   
-        // requete de suppression methode PDO
-        $user_id = $_SESSION['user']['id'];
-        $delete_account = 1;
-        $reqt = "UPDATE users SET delete_account = '$delete_account' WHERE id = '$user_id' "; //supprime la ligne du compte en repérant l id en bdd en fontion de l id de session . L id de session est stocker dans la varaible $delete_id_user.
-        $reqUpdate = $db_connect->prepare($reqt); //preparation de la requete
-        $reqUpdate->execute(); //execution de la requete
-        $log->log('utilisateurs', 'del_utilisateurs', "Fonction deleteUser() : suppression utilisateur", Log::FOLDER_MONTH);
+    $user_id = $_SESSION['user']['id'];
+    $delete_account = 1;
+    $sql = "UPDATE users SET delete_account = '$delete_account' WHERE id = '$user_id' ";
+    $query = $db_connect->query($sql);
+    $log->log('utilisateurs', 'del_utilisateurs', "Fonction deleteUser() : suppression utilisateur", Log::FOLDER_MONTH);
 
-        // On efface également les donnée en session pour evité des bug d affichage
-        //si le compte disparait et que la session est tjs active ainsi on détruit aussi la session
-        session_destroy();
-        unset($_SESSION['user']);
-        $redirect = BASE_URL . '/index.php';
-        header('location: '.$redirect);
+    session_destroy();
+    unset($_SESSION['user']);
+    $redirect = BASE_URL . '/src/index.php';
+    header('location: '.$redirect);
 
 }
-*/
+
 // FONCTION SE DECONNECTER
 function deconnexion() {
     global $db_connect;

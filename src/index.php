@@ -23,7 +23,7 @@ include (ROOT_PATH . '/src/layout/head.php');
     <section>
         <div class="container">
             <!-- TITRE H1 -->
-            <h1 class="text-uppercase text-center mb-5">&ldquo;moukatage&rdquo;</h1>
+            <h1 class="tagline text-uppercase text-center mb-5">&ldquo;moukatage&rdquo;</h1>
             <!-- CAROUSEL -->
             <div class="owl-carousel text-light" id="slider">
 
@@ -65,24 +65,24 @@ include (ROOT_PATH . '/src/layout/head.php');
 
 
                 
-            <?php if ( $_SESSION['user']['role'] == 'user' ): ?>
+            <?php if ( $role == 'user' ): ?>
                 <!-- BOUTON MOUKATALI -->
                 <div class="bouton d-flex flex-column align-items-center flex-md-row justify-content-md-center">
                     <a class="btn-visiter btn text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/moukatages.php" ?> role="button">moukatali!!!</a>
                 </div>
             <?php endif; ?>
 
-            <?php if ( $_SESSION['user']['role'] == 'admin' ): ?>
+            <?php if ( $role == 'admin' ): ?>
                 <!-- BOUTON ADMINISTRATEUR -->
                 <div class="d-flex justify-content-center mt-5">
-                    <a class="btn text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/admin/dashboard.php" ?> role="button">administrateur</a>
+                    <a class="btn btn-visiter text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/admin/dashboard.php" ?> role="button">administrateur</a>
                 </div>
             <?php endif; ?>
 
-            <?php if ( $_SESSION['user']['role'] == 'author' ): ?>
+            <?php if ( $role == 'author' ): ?>
                 <!-- BOUTON ADMINISTRATEUR -->
                 <div class="d-flex justify-content-center mt-5">
-                    <a class="btn text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/admin/gestion-topic.php" ?> role="button">topics</a>
+                    <a class="btn btn-visiter text-uppercase font-weight-bold text-light" href=<?= BASE_URL . "/src/pages/admin/gestion-topic.php" ?> role="button">topics</a>
                 </div>
             <?php endif; ?>
 

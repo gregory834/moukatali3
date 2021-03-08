@@ -29,11 +29,19 @@ include ('../../layout/head.php');
 
         <!-- SECTION  -->
         <section>
-            <div class="container py-5 text-center">
-                <h5 class="text-light">Bienvenue <?php echo $user['pseudo']; ?></h5>
-            </div>
+            <div class="container pt-md-5">
 
-            <div class="container col-lg-8 col-md-8 d-flex justify-content-center">
+                <div class="d-block d-md-none py-4">
+                <?php if ( isset($_SESSION['user']['auth']) ): ?>
+                    <?php $username = $user['pseudo']; ?>
+                    <p class="text-light text-center mb-0 mr-3">Bienvenue <strong><?php echo $username ?></strong></p>
+                <?php else: ?>
+                    <p class="text-light text-center mb-0 mr-3">Bienvenue <strong>Visiteur</strong></p>
+                <?php endif; ?>
+                </div>
+
+                <h1 class="h1-section text-light text-uppercase display-1 text-center">Mon profil</h1>
+            
                 <div id="user_info">
                     
                     <!-- photo_de_profile -->
@@ -44,7 +52,7 @@ include ('../../layout/head.php');
                         </div>
                     </div>
                     <!---Information user (NOM, Prénom, Addresse, Tel Sexe...)-->
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center mb-5">
                         <div>
                             <div class="d-flex align-items-center mb-3">
                                 <i class="fas fa-user-circle fa-3x mr-4"></i><p class="mb-0"><?php echo ($user['first_name']) ?>&nbsp;<?php echo ($user['last_name']) ?></p>
@@ -110,18 +118,9 @@ include ('../../layout/head.php');
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
             crossorigin="anonymous"></script>
-        <script src="../../../public/js/btn-sup-modal.js"></script>
-        <script>
-
-            btn = document.getElementById('confirm');
-
-            popup = document.getElementById('popup');
-
-            btn.addEventListener('click', evt => {
-                popup.classList.remove('hidden')
-                popup.classList.add('visibility')
-            })
-        </script>
+        <script src=<?php echo BASE_URL . '/public/js/btn-sup-modal.js' ?>></script>
+        <script src=<?php echo BASE_URL . '/public/js/script.js' ?>></script>
+        
 
     </body>
 

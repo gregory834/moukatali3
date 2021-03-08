@@ -7,45 +7,12 @@ require ROOT_PATH . '/src/controller/topic-function.php';
 require ROOT_PATH . '/src/controller/action-function.php';
 $nav = "moukatages";
 
-
 $all_users = getAllUsers();
 
 $publish_topics = publishTopic();
 
-if ( isset($_GET['main-topic']) ) {
-    $main_topic = $_GET['main-topic'];
-    $moukatages = allPostByTopic($_GET['topic-id']);
-} else if ( isset($_POST['main-topic']) ) {
-    $main_topic = array_search($_POST['main-topic'], $publish_topics);
-    $moukatages = allPostByTopic($_POST['main-topic']);
-} else {
-    if ( count($publish_topics) == 0 ) {
-        $moukatages = array();
-        $main_topic = "";
-    } else {
-        $main_topic = 0;
-        $moukatages = allPostByTopic($publish_topics[$main_topic]['id']);
-    }
-}
-
-switch ( $main_topic ) {
-    case 0:
-        $index1 = 1;
-        $index2 = 2;
-        break;
-    case 1:
-        $index1 = 0;
-        $index2 = 2;
-        break;
-    case 2:
-        $index1 = 0;
-        $index2 = 1;
-        break;
-}
-
 
 include ('../layout/head.php');
-
 ?>
 
 <title>Sujets & Moukatages | Moukat A Li</title>
@@ -63,19 +30,23 @@ include ('../layout/head.php');
         </div>
     </header>
     
-    <div class="container">
-        <?php if ( isset($_SESSION['user']['auth']) ): ?>
-            <h6 class="text-light py-5 text-center">Bienvenue <?php echo $pseudo; ?></h6>
-            <?php else: ?>
-            
-            <h6 class="text-light py-5 text-center">Bienvenue Visiteur</h6>
-        <?php endif; ?>
-        
-        <h1 class="text-uppercase display-4 text-center py-3 mt-5">&ldquo;MoukatAli !!&rdquo;</h1>
-    </div>
+   
+       
+    
 
     <section>
         <div class="container pt-4">
+
+        <div class="d-block d-md-none">
+            <?php if ( isset($_SESSION['user']['auth']) ): ?>
+                <?php $username = $user['pseudo']; ?>
+                <p class="text-light text-center mb-0 mr-3">Bienvenue <strong><?php echo $username ?></strong></p>
+            <?php else: ?>
+                <p class="text-light text-center mb-0 mr-3">Bienvenue <strong>Visiteur</strong></p>
+            <?php endif; ?>
+            </div>
+
+        <h1 class="h1-section text-light text-uppercase display-6 text-center mb-5">&ldquo;MoukatAli !!&rdquo;</h1>
 
             <!-- SUJET BRUT-->
             
@@ -85,9 +56,11 @@ include ('../layout/head.php');
                         <p class="mb-0">aucun topic proposé pour le moment<br/>revenez plus tard</p>
                     </div>
                 <?php else: ?>
-                <div class="image mb-2 mb-md-0 mr-md-2 d-lg-none"><img src=<?= BASE_URL . "/public/images/uploads/topics/" . $publish_topics[$main_topic]['image'] ?> alt="Image du sujet" class="img-fluid"></div>
-                <div class="image mr-lg-2 d-none d-lg-block"><img src=<?= BASE_URL . "/public/images/uploads/topics/" . $publish_topics[$main_topic]['image'] ?> alt="Image du sujet" class="img-fluid"></div>
-                <div class="w-50 text-center"><p class="text-dark"><?= $publish_topics[$main_topic]['title'] ?></p></div>
+                
+                <div class="image">
+                    <img src=<?= BASE_URL . "/public/images/uploads/topics/" . $publish_topics[$main_topic]['image'] ?> alt="Image du sujet" class="img-fluid">
+                </div>
+                <div class="sujet-text text-center pt-3 pb-2 pt-md-0 pb-md-0"><p class="text-dark mb-0"><?= $publish_topics[$main_topic]['title'] ?></p></div>
                 <?php endif; ?>
             </div>
 
@@ -201,10 +174,26 @@ include ('../layout/head.php');
 
     <!-- FOOTER -->
     <footer class="text-center py-5 d-flex flex-column">
-        <a href="#" class="mb-1">Contact</a>
-        <a href="#" class="mb-1">C.G.V.</a>
-        <a href="#" class="mb-1">C.G.U.</a>
-        <a href="#">Mentions légales</a>
+        <div id="contact" class="d-lg-flex justify-content-around mb-5">
+            <div class="mb-3">
+                <i class="fas fa-map-marker-alt fa-3x"></i>
+                <p class="mb-0">64 A chemin Ortaire Lorion<br />97430 Tampon</p>
+            </div>
+            <div class="mb-3">
+                <i class="fas fa-at fa-3x"></i>
+                <p class="mb-0">direction@passerelle-services.re</p>
+            </div>
+            <div class="mb-3">
+                <i class="fas fa-phone-alt fa-3x"></i>
+                <p class="mb-0">+262(0)262 83 72 76</p>
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-center mb-2 mt-3 mt-md-0">
+            <a href="#" class="mb-2">C.G.V.</a>
+            <a href="#" class="mb-2 mx-lg-5">C.G.U.</a>
+            <a href="#">Mentions légales</a>
+        </div>
+        <p class="mb-0">&copy; 2021 passerelle services</p>
     </footer>
 
     <!-- jQuery and Bootstrap Bundle (includes Popper) 

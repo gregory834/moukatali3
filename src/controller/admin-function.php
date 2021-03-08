@@ -53,6 +53,18 @@ function createAdmin($request_values) {
     $password_1 = trim($request_values['password_1']);
     $password_2 = trim($request_values['password_2']);
     $role = trim($request_values['role']);
+
+    switch ($role) {
+        case "admin":
+            $avatar = "admin.png";
+            break;
+        case "author":
+            $avatar  = "author.png";
+            break;
+        case "user":
+            $avatar = "user.png";
+            break;
+    }
     
     if (empty($pseudo)) {
         array_push($errors, "Entrer un pseudonyme");
@@ -93,7 +105,7 @@ function createAdmin($request_values) {
      
     if ( count($errors) == 0 ) {
         $password = password_hash($password_1, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users ( pseudo, first_name, last_name, email, password, role, created_at ) VALUES ( '$pseudo','$first_name','$last_name', '$email', '$password', '$role', now() )";
+        $sql = "INSERT INTO users ( pseudo, avatar, first_name, last_name, email, password, role, created_at ) VALUES ( '$pseudo', '$avatar', '$first_name', '$last_name', '$email', '$password', '$role', now() )";
         $query = $db_connect->query($sql); 
         array_push($success, "Compte créé avec succès ");
     }

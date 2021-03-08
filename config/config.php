@@ -2,7 +2,7 @@
 
 session_start();
 
-$local = 1;
+$local = 1; // test en local = 1, test en ligne = 0
 // définir des constantes globales
 define('ROOT_PATH', realpath(dirname(__FILE__, 2)));
 if ($local == 1) {

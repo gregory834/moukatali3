@@ -1,3 +1,16 @@
+
+// MODAL SUPPRESSION UTILISATEUR
+btn = document.getElementById('confirm');
+
+popup = document.getElementById('popup');
+
+btn.addEventListener('click', evt => {
+    popup.classList.remove('hidden')
+    popup.classList.add('visibility')
+})
+
+
+// AFFICHAGE IMAGE TOPIC LORS DE LA CREATION
 function triggerClick(e) {
     document.querySelector('#picture').click();
   }
@@ -10,3 +23,5 @@ function triggerClick(e) {
       reader.readAsDataURL(e.files[0]);
     }
   }
+
+  
